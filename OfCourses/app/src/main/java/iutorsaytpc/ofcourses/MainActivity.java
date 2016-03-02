@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         System.out.print("lol");
+        System.out.print("loli");
     }
 
     @Override
