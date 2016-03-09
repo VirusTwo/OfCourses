@@ -1,0 +1,209 @@
+DROP table ob_connexion;
+/
+DROP table ob_matiere;
+/
+DROP table ob_classe;
+/
+DROP table ob_note;
+/
+DROP table ob_cours;
+/
+DROP table ob_edt;
+/
+DROP table ob_personne;
+/
+DROP table ob_salle;
+/
+DROP table ob_pointBonus;
+
+/
+DROP TYPE ob_personne_ty;
+/
+DROP TYPE ob_pointsBonus_array;
+/
+DROP TYPE ob_matieres_array;
+/
+DROP TYPE ob_notes_array;
+/
+DROP TYPE ob_classes_array;
+/
+DROP type ob_EDT_ty;
+/
+DROP TYPE ob_cours_array;
+/
+DROP TYPE ob_cours_ty;
+/
+DROP TYPE ob_classe_ty;
+/
+DROP type ob_salle_ty;
+/
+DROP TYPE ob_note_ty;
+/
+DROP type ob_matiere_ty;
+/
+DROP type ob_pointBonus_ty;
+/
+
+
+
+Create or replace Type ob_connexion_ty AS Object (
+    id_co NUMBER(5),
+    login VARCHAR2(20),
+    mdp VARCHAR2(20)
+);
+/
+
+Create or replace Type ob_salle_ty AS Object (
+    id_salle INTEGER,
+    num VARCHAR2(20)
+);
+/
+Create or replace Type ob_matiere_ty AS Object (
+    id_matiere INTEGER,
+    nom VARCHAR2(20),
+    coeff FLOAT
+);
+/
+CREATE OR REPLACE TYPE ob_matieres_array AS VARRAY(20) OF ob_matiere_ty;
+/
+Create or replace Type ob_pointBonus_ty AS Object (
+    id_pointBonus INTEGER,
+    description VARCHAR2(20),
+    point INTEGER
+);
+/
+CREATE OR REPLACE TYPE ob_pointsBonus_array AS VARRAY(50) OF ob_pointBonus_ty;
+/
+Create or replace Type ob_note_ty AS Object (
+    id_note INTEGER,
+    coeff FLOAT,
+    note FLOAT,
+    saMatiere REF ob_matiere_ty
+);
+/
+CREATE OR REPLACE TYPE ob_notes_array AS VARRAY(50) OF ob_note_ty;
+/
+Create or replace Type ob_classe_ty AS Object (
+    id_classe INTEGER,
+    nom VARCHAR2(20),
+    MEMBER FUNCTION getMoyenne RETURN FLOAT
+);
+/
+CREATE OR REPLACE TYPE ob_classes_array AS VARRAY(50) OF ob_classe_ty; /** pour prof tout court et pas prof ref**/
+/
+Create or replace Type ob_cours_ty AS Object (
+    id_cours INTEGER,
+    dateDebut DATE,
+    dateFin  DATE,
+    saMatiere REF ob_matiere_ty,
+    saClasse REF ob_classe_ty,
+    saSalle REF ob_salle_ty
+);
+/
+CREATE OR REPLACE TYPE ob_cours_array AS VARRAY(12) OF ob_cours_ty;
+/
+Create or replace Type ob_EDT_ty AS Object (
+    id_Edt INTEGER,
+    sesCours ob_cours_array,
+    MEMBER PROCEDURE ajouterCours(cours in ob_cours_ty),
+    MEMBER PROCEDURE getSesCours(cours out SYS_REFCURSOR)
+);
+/
+
+
+Create or replace Type ob_personne_ty AS Object (
+    id_personne INTEGER,
+    email VARCHAR2(20),
+    nom VARCHAR2(20),
+    prenom VARCHAR2(20),
+    fonction VARCHAR2(20),
+    sesPointsBonus ob_pointsBonus_array,
+    sesNotes ob_notes_array,
+    saClasse REF ob_classe_ty, /*** cas �tudiant : sa classe � lui 
+                                    cas ensaignant : sa classe dont il est parrain
+                                    sesClasses (cas enseignant) : toutes les classes dont il est prof**/
+    sesClasses ob_classes_array,
+    
+    sonEdt REF ob_EDT_ty,
+    saConnexion REF ob_connexion_ty,
+    sesMatieres ob_matieres_array,
+    MEMBER FUNCTION getMoyenne RETURN FLOAT,
+    MEMBER PROCEDURE getSesNotes(notes out SYS_REFCURSOR),
+    MEMBER PROCEDURE gererPointBonus(etudiant in ob_personne_ty, point in INTEGER, description in VARCHAR2),
+    MEMBER PROCEDURE ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float)
+    
+);
+/
+
+CREATE OR REPLACE TYPE BODY ob_personne_ty AS 
+
+  MEMBER function getMoyenne RETURN FLOAT IS
+    BEGIN 
+       FOR i IN sesNotes.FIRST .. sesNotes.LAST
+        LOOP
+            moyenne := moyenne + sesNotes(i).note;
+        END LOOP;
+        moyenne :=  moyenne / (sesNotes.LAST - sesNotes.FIRST);
+        RETURN moyenne;
+    END;
+  
+  MEMBER PROCEDURE getSesNotes(notes out SYS_REFCURSOR) IS 
+    BEGIN
+      /*  OPEN notes FOR
+            SELECT * FROM ob_note; /*� revoir je ne sais pas si c'est �a*/
+    END;  
+  
+  Member procedure gererPointBonus(etudiant in ob_personne.ob_personne_ty%TYPE, point in INTEGER, description in VARCHAR2) is
+    BEGIN
+    END;
+  
+  Member procedure ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float) is
+    BEGIN
+    END;
+
+END;
+/
+          
+CREATE TABLE ob_connexion of ob_connexion_ty
+(id_co PRIMARY KEY);
+/
+
+CREATE OR REPLACE PROCEDURE isLogin(login in ob_connexion.login%type, mdp in ob_connexion.mdp%type);
+/
+
+CREATE TABLE ob_salle of ob_salle_ty
+(id_salle PRIMARY KEY);
+/
+
+CREATE Table ob_matiere of ob_matiere_ty
+(id_matiere PRIMARY KEY);
+/
+
+CREATE Table ob_pointBonus of ob_pointBonus_ty
+(id_pointBonus PRIMARY KEY);
+/
+
+CREATE Table ob_note of ob_note_ty
+(id_note PRIMARY KEY);
+/
+
+CREATE TABLE ob_classe of ob_classe_ty
+(id_classe PRIMARY KEY);
+/
+
+CREATE TABLE ob_cours of ob_cours_ty
+(id_cours PRIMARY KEY);
+/
+
+CREATE TABLE ob_personne of ob_personne_ty
+(id_personne PRIMARY KEY);
+/
+
+CREATE Table ob_edt of ob_edt_ty
+(id_edt PRIMARY KEY);
+/
+
+
+
+
+
