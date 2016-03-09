@@ -15,35 +15,24 @@ DROP table ob_personne;
 DROP table ob_salle;
 /
 DROP table ob_pointBonus;
-
-/
-DROP TYPE ob_personne_ty;
-/
-DROP TYPE ob_pointsBonus_array;
-/
-DROP TYPE ob_matieres_array;
-/
-DROP TYPE ob_notes_array;
-/
-DROP TYPE ob_classes_array;
-/
-DROP type ob_EDT_ty;
-/
-DROP TYPE ob_cours_array;
-/
-DROP TYPE ob_cours_ty;
-/
-DROP TYPE ob_classe_ty;
-/
-DROP type ob_salle_ty;
-/
-DROP TYPE ob_note_ty;
-/
-DROP type ob_matiere_ty;
-/
-DROP type ob_pointBonus_ty;
 /
 
+DROP type ob_EDT_ty FORCE;
+/
+DROP TYPE ob_cours_ty FORCE;
+/
+DROP TYPE ob_classe_ty FORCE;
+/
+DROP type ob_salle_ty FORCE;
+/
+DROP TYPE ob_note_ty FORCE;
+/
+DROP type ob_matiere_ty FORCE;
+/
+DROP type ob_pointBonus_ty FORCE;
+/
+DROP TYPE ob_personne_ty FORCE;
+/
 
 
 Create or replace Type ob_connexion_ty AS Object (
@@ -64,52 +53,12 @@ Create or replace Type ob_matiere_ty AS Object (
     coeff FLOAT
 );
 /
-CREATE OR REPLACE TYPE ob_matieres_array AS VARRAY(20) OF ob_matiere_ty;
-/
-Create or replace Type ob_pointBonus_ty AS Object (
-    id_pointBonus INTEGER,
-    description VARCHAR2(20),
-    point INTEGER
-);
-/
-CREATE OR REPLACE TYPE ob_pointsBonus_array AS VARRAY(50) OF ob_pointBonus_ty;
-/
-Create or replace Type ob_note_ty AS Object (
-    id_note INTEGER,
-    coeff FLOAT,
-    note FLOAT,
-    saMatiere REF ob_matiere_ty
-);
-/
-CREATE OR REPLACE TYPE ob_notes_array AS VARRAY(50) OF ob_note_ty;
-/
-Create or replace Type ob_classe_ty AS Object (
-    id_classe INTEGER,
-    nom VARCHAR2(20),
-    MEMBER FUNCTION getMoyenne RETURN FLOAT
-);
-/
-CREATE OR REPLACE TYPE ob_classes_array AS VARRAY(50) OF ob_classe_ty; /** pour prof tout court et pas prof ref**/
-/
-Create or replace Type ob_cours_ty AS Object (
-    id_cours INTEGER,
-    dateDebut DATE,
-    dateFin  DATE,
-    saMatiere REF ob_matiere_ty,
-    saClasse REF ob_classe_ty,
-    saSalle REF ob_salle_ty
-);
-/
-CREATE OR REPLACE TYPE ob_cours_array AS VARRAY(12) OF ob_cours_ty;
-/
+
 Create or replace Type ob_EDT_ty AS Object (
     id_Edt INTEGER,
-    sesCours ob_cours_array,
-    MEMBER PROCEDURE ajouterCours(cours in ob_cours_ty),
     MEMBER PROCEDURE getSesCours(cours out SYS_REFCURSOR)
 );
 /
-
 
 Create or replace Type ob_personne_ty AS Object (
     id_personne INTEGER,
@@ -117,58 +66,53 @@ Create or replace Type ob_personne_ty AS Object (
     nom VARCHAR2(20),
     prenom VARCHAR2(20),
     fonction VARCHAR2(20),
-    sesPointsBonus ob_pointsBonus_array,
-    sesNotes ob_notes_array,
-    saClasse REF ob_classe_ty, /*** cas �tudiant : sa classe � lui 
-                                    cas ensaignant : sa classe dont il est parrain
-                                    sesClasses (cas enseignant) : toutes les classes dont il est prof**/
-    sesClasses ob_classes_array,
-    
+    saClasse REF ob_classe_ty,   
     sonEdt REF ob_EDT_ty,
-    saConnexion REF ob_connexion_ty,
-    sesMatieres ob_matieres_array,
-    MEMBER FUNCTION getMoyenne RETURN FLOAT,
+    saConnexion REF ob_connexion_ty
+    /*MEMBER FUNCTION getMoyenne RETURN FLOAT,
     MEMBER PROCEDURE getSesNotes(notes out SYS_REFCURSOR),
     MEMBER PROCEDURE gererPointBonus(etudiant in ob_personne_ty, point in INTEGER, description in VARCHAR2),
-    MEMBER PROCEDURE ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float)
+    MEMBER PROCEDURE ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float)*/
     
 );
 /
 
-CREATE OR REPLACE TYPE BODY ob_personne_ty AS 
+Create or replace Type ob_classe_ty AS Object (
+    id_classe INTEGER,
+    nom VARCHAR2(20),
+    MEMBER FUNCTION getMoyenne RETURN FLOAT
+);
+/
 
-  MEMBER function getMoyenne RETURN FLOAT IS
-    BEGIN 
-       FOR i IN sesNotes.FIRST .. sesNotes.LAST
-        LOOP
-            moyenne := moyenne + sesNotes(i).note;
-        END LOOP;
-        moyenne :=  moyenne / (sesNotes.LAST - sesNotes.FIRST);
-        RETURN moyenne;
-    END;
-  
-  MEMBER PROCEDURE getSesNotes(notes out SYS_REFCURSOR) IS 
-    BEGIN
-      /*  OPEN notes FOR
-            SELECT * FROM ob_note; /*� revoir je ne sais pas si c'est �a*/
-    END;  
-  
-  Member procedure gererPointBonus(etudiant in ob_personne.ob_personne_ty%TYPE, point in INTEGER, description in VARCHAR2) is
-    BEGIN
-    END;
-  
-  Member procedure ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float) is
-    BEGIN
-    END;
+Create or replace Type ob_cours_ty AS Object (
+    id_cours INTEGER,
+    dateDebut DATE,
+    dateFin  DATE,
+    saMatiere REF ob_matiere_ty,
+    saClasse REF ob_classe_ty,
+    saSalle REF ob_salle_ty,
+    sonEDT REF ob_EDT_ty
+);
+/
 
-END;
+Create or replace Type ob_pointBonus_ty AS Object (
+    id_pointBonus INTEGER,
+    description VARCHAR2(20),
+    sonEtudiant REF ob_personne_ty,
+    point INTEGER
+);
+/
+Create or replace Type ob_note_ty AS Object (
+    id_note INTEGER,
+    coeff FLOAT,
+    note FLOAT,
+    saMatiere REF ob_matiere_ty,
+    sonEtudiant REF ob_personne_ty
+);
 /
           
 CREATE TABLE ob_connexion of ob_connexion_ty
 (id_co PRIMARY KEY);
-/
-
-CREATE OR REPLACE PROCEDURE isLogin(login in ob_connexion.login%type, mdp in ob_connexion.mdp%type);
 /
 
 CREATE TABLE ob_salle of ob_salle_ty
