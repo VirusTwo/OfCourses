@@ -47,6 +47,7 @@ Create or replace Type ob_salle_ty AS Object (
     num VARCHAR2(20)
 );
 /
+
 Create or replace Type ob_matiere_ty AS Object (
     id_matiere INTEGER,
     nom VARCHAR2(20),
@@ -60,11 +61,18 @@ Create or replace Type ob_EDT_ty AS Object (
 );
 /
 
+Create or replace Type ob_classe_ty AS Object (
+    id_classe INTEGER,
+    nom VARCHAR2(20),
+    MEMBER FUNCTION getMoyenne RETURN FLOAT
+);
+/
+
 Create or replace Type ob_personne_ty AS Object (
     id_personne INTEGER,
-    email VARCHAR2(20),
     nom VARCHAR2(20),
     prenom VARCHAR2(20),
+    email VARCHAR2(20),
     fonction VARCHAR2(20),
     saClasse REF ob_classe_ty,   
     sonEdt REF ob_EDT_ty,
@@ -73,14 +81,6 @@ Create or replace Type ob_personne_ty AS Object (
     MEMBER PROCEDURE getSesNotes(notes out SYS_REFCURSOR),
     MEMBER PROCEDURE gererPointBonus(etudiant in ob_personne_ty, point in INTEGER, description in VARCHAR2),
     MEMBER PROCEDURE ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float)*/
-    
-);
-/
-
-Create or replace Type ob_classe_ty AS Object (
-    id_classe INTEGER,
-    nom VARCHAR2(20),
-    MEMBER FUNCTION getMoyenne RETURN FLOAT
 );
 /
 
@@ -102,6 +102,7 @@ Create or replace Type ob_pointBonus_ty AS Object (
     point INTEGER
 );
 /
+
 Create or replace Type ob_note_ty AS Object (
     id_note INTEGER,
     coeff FLOAT,
@@ -110,6 +111,7 @@ Create or replace Type ob_note_ty AS Object (
     sonEtudiant REF ob_personne_ty
 );
 /
+    
           
 CREATE TABLE ob_connexion of ob_connexion_ty
 (id_co PRIMARY KEY);
@@ -146,8 +148,3 @@ CREATE TABLE ob_personne of ob_personne_ty
 CREATE Table ob_edt of ob_edt_ty
 (id_edt PRIMARY KEY);
 /
-
-
-
-
-

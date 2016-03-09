@@ -1,18 +1,25 @@
 package iutorsaytpc.ofcourses.bd;
 
+import android.os.AsyncTask;
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.concurrent.ExecutionException;
 
 public class BD {
-	
-	public static Connection connexion(String url) {
+
+	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+
+	private static Connection connexion() {
 		Connection co=null;
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			co=DriverManager.getConnection(url);
+			co=DriverManager.getConnection(URL_BD);
 		}
 		catch (ClassNotFoundException e) {
 			System.out.println("Driver oracle introuvable");
@@ -20,14 +27,15 @@ public class BD {
 			System.exit(1);
 		}
 		catch(SQLException e) {
-			System.out.println("Impossible de se connecter à l'url "+url);
+			System.out.println("Impossible de se connecter à l'url " + URL_BD);
 			e.printStackTrace();
 			System.exit(1);
 		}
-		return co;
+        System.out.println("Connexion ouverte.");
+        return co;
 	}
 	
-	public static ResultSet requete(String requete, Connection co, int type) {
+	private ResultSet requeteSelect(String requete, Connection co, int type) {
 		ResultSet res=null;
 		try {
 			Statement st;
@@ -36,13 +44,52 @@ public class BD {
 			res=st.executeQuery(requete);
 		}
 		catch(SQLException e) {
-			System.out.println("Problème lors de l'execution de la requête "+requete);
+			System.out.println("Problème lors de l'execution de la requête " + requete);
 			e.printStackTrace();
 		}
 		return res;
 	}
+
+    public static String getNomClasse(final int id_personne) {
+        String res = "";
+
+        try {
+            res = new AsyncTask<Void, Void, String>() {
+
+                @Override
+                protected String doInBackground(Void... params) {
+                    Connection co;
+                    CallableStatement cst;
+                    String res = null;
+
+                    co = connexion();
+                    try {
+
+                        cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+                        cst.registerOutParameter(1, Types.VARCHAR);
+                        cst.setInt(2, id_personne);
+                        cst.executeQuery();
+                        res = cst.getString(1);
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+                    deconnexion(co);
+
+                    return res;
+
+                }
+            }.execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        System.out.print(res);
+        return res;
+    }
 	
-	public static void deconnexion(Connection co) {
+	private static void deconnexion(Connection co) {
 		try {
 			co.close();
 			System.out.println("Connexion fermée.");

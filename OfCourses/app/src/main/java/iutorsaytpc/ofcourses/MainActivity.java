@@ -8,6 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import java.sql.Connection;
+
+import iutorsaytpc.ofcourses.bd.BD;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        TextView hello = (TextView) findViewById(R.id.hello);
+        hello.setText(BD.getNomClasse(1));
     }
 
     @Override
