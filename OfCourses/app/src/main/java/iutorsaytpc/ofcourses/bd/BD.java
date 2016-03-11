@@ -11,6 +11,8 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.concurrent.ExecutionException;
 
+import iutorsaytpc.ofcourses.MainActivity;
+
 public class BD {
 
 	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
@@ -53,37 +55,41 @@ public class BD {
     public static String getNomClasse(final int id_personne) {
         String res = "";
 
-        try {
-            res = new AsyncTask<Void, Void, String>() {
+        new AsyncTask<Void, Void, String>() {
 
-                @Override
-                protected String doInBackground(Void... params) {
-                    Connection co;
-                    CallableStatement cst;
-                    String res = null;
+            @Override
+            protected void onPreExecute() {
+                MainActivity.attachDetachLoadingFragment();
+            }
 
-                    co = connexion();
-                    try {
+            @Override
+            protected String doInBackground(Void... params) {
+                Connection co;
+                CallableStatement cst;
+                String res = null;
+                co = connexion();
+                try {
 
-                        cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-                        cst.registerOutParameter(1, Types.VARCHAR);
-                        cst.setInt(2, id_personne);
-                        cst.executeQuery();
-                        res = cst.getString(1);
+                    cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+                    cst.registerOutParameter(1, Types.VARCHAR);
+                    cst.setInt(2, id_personne);
+                    cst.executeQuery();
+                    res = cst.getString(1);
 
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                    deconnexion(co);
-
-                    return res;
-
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            }.execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
+
+                deconnexion(co);
+
+                return res;
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                MainActivity.attachDetachLoadingFragment();
+            }
+        }.execute();
 
         System.out.print(res);
         return res;

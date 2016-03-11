@@ -1,5 +1,7 @@
 package iutorsaytpc.ofcourses;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,8 +15,15 @@ import android.widget.TextView;
 import java.sql.Connection;
 
 import iutorsaytpc.ofcourses.bd.BD;
+import iutorsaytpc.ofcourses.fragment.LoadingFragment;
+import iutorsaytpc.ofcourses.view.ConnexionView;
 
 public class MainActivity extends AppCompatActivity {
+
+    //Fragment
+    private static LoadingFragment loadingFragment = new LoadingFragment();
+    private static FragmentManager fragmentManager;
+    private static FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         TextView hello = (TextView) findViewById(R.id.hello);
-        hello.setText(BD.getNomClasse(1));
+        ConnexionView connexionView = new ConnexionView(this);
+        setContentView(connexionView);
+        initFragment();
+
     }
 
     @Override
@@ -57,4 +69,22 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void initFragment(){
+        fragmentManager = getFragmentManager();
+    }
+
+    public static void attachDetachLoadingFragment(){
+        fragmentTransaction = fragmentManager.beginTransaction();
+        if(loadingFragment.isAdded()){
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            fragmentTransaction.remove(loadingFragment);
+        }
+        else{
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.add(R.id.layoutParent,loadingFragment);
+        }
+        fragmentTransaction.commit();
+    }
+
 }
