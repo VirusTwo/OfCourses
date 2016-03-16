@@ -12,13 +12,16 @@ import java.sql.Types;
 import java.util.concurrent.ExecutionException;
 
 import iutorsaytpc.ofcourses.MainActivity;
+import iutorsaytpc.ofcourses.view.ConnexionView;
 
 public class BD {
 
-	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+	private static String res;
 
+	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
 	private static Connection connexion() {
 		Connection co=null;
+
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			co=DriverManager.getConnection(URL_BD);
@@ -36,7 +39,7 @@ public class BD {
         System.out.println("Connexion ouverte.");
         return co;
 	}
-	
+
 	private ResultSet requeteSelect(String requete, Connection co, int type) {
 		ResultSet res=null;
 		try {
@@ -53,9 +56,9 @@ public class BD {
 	}
 
     public static String getNomClasse(final int id_personne) {
-        String res = "";
 
-        new AsyncTask<Void, Void, String>() {
+        AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
+			String resTask = "";
 
             @Override
             protected void onPreExecute() {
@@ -63,34 +66,41 @@ public class BD {
             }
 
             @Override
-            protected String doInBackground(Void... params) {
-                Connection co;
-                CallableStatement cst;
-                String res = null;
-                co = connexion();
-                try {
+            protected Boolean doInBackground(Void... params) {
+				Connection co;
+				CallableStatement cst;
+				co = connexion();
+				try {
 
-                    cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-                    cst.registerOutParameter(1, Types.VARCHAR);
-                    cst.setInt(2, id_personne);
-                    cst.executeQuery();
-                    res = cst.getString(1);
+					cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+					cst.registerOutParameter(1, Types.VARCHAR);
+					cst.setInt(2, id_personne);
+					Boolean success = cst.execute();
+					resTask = cst.getString(1);
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return false;
+				}
 
-                deconnexion(co);
-
-                return res;
-            }
+				deconnexion(co);
+				return true;
+			}
 
             @Override
-            protected void onPostExecute(String s) {
-                MainActivity.attachDetachLoadingFragment();
+            protected void onPostExecute(Boolean b) {
+				if(b) {
+					res = resTask;
+					MainActivity.attachDetachLoadingFragment();
+				}
             }
-        }.execute();
+        };
 
+		task.execute();
+
+		while(task.getStatus() == AsyncTask.Status.RUNNING) {
+			System.out.print("je suis dans la boucle de merde");
+		}
         System.out.print(res);
         return res;
     }
@@ -104,4 +114,47 @@ public class BD {
 			e.printStackTrace();
 		}
 	}
+	/*public static int isLogin(final String log, final String mdp) {
+		int res2;
+		new AsyncTask<Void, Void, Integer>() {
+
+			@Override
+			protected void onPreExecute() {
+				MainActivity.attachDetachLoadingFragment();
+			}
+
+			@Override
+			protected Integer doInBackground(Void... params) {
+				Connection co;
+				CallableStatement cst;
+				int res2 = 0;
+				co = connexion();
+				try {
+
+					cst = co.prepareCall("{ ? = call isLogin(?,?) }");
+					cst.registerOutParameter(1, Types.INTEGER);
+					cst.setString(2, log);
+					cst.setString(3, mdp);
+					cst.executeQuery();
+					res2 = cst.getInt(1);
+
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+
+				deconnexion(co);
+
+				return res2;
+			}
+
+			@Override
+			protected void onPostExecute(Integer s) {
+				MainActivity.attachDetachLoadingFragment();
+				System.out.print(res2);
+				return res2;
+			}
+		}.execute();
+
+
+	}*/
 }
