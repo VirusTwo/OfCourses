@@ -38,7 +38,8 @@ DROP TYPE ob_personne_ty FORCE;
 Create or replace Type ob_connexion_ty AS Object (
     id_co NUMBER(5),
     login VARCHAR2(20),
-    mdp VARCHAR2(20)
+    mdp VARCHAR2(20),
+    sonEnseignant ref ob_personne_ty
 );
 /
 
@@ -75,12 +76,19 @@ Create or replace Type ob_personne_ty AS Object (
     email VARCHAR2(20),
     fonction VARCHAR2(20),
     saClasse REF ob_classe_ty,   
-    sonEdt REF ob_EDT_ty,
-    saConnexion REF ob_connexion_ty
+    sonEdt REF ob_EDT_ty
     /*MEMBER FUNCTION getMoyenne RETURN FLOAT,
     MEMBER PROCEDURE getSesNotes(notes out SYS_REFCURSOR),
     MEMBER PROCEDURE gererPointBonus(etudiant in ob_personne_ty, point in INTEGER, description in VARCHAR2),
     MEMBER PROCEDURE ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float)*/
+);
+/
+
+Create or replace Type ob_connexion_ty AS Object (
+    id_co NUMBER(5),
+    login VARCHAR2(20),
+    mdp VARCHAR2(20),
+    sonEnseignant REF ob_personne_ty
 );
 /
 
