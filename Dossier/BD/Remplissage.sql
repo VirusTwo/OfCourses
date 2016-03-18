@@ -8,7 +8,9 @@ DELETE FROM ob_personne;
 DELETE FROM ob_pointbonus;
 DELETE FROM ob_salle;
 
+
 /* OB_CONNEXION */
+/*
 INSERT INTO ob_connexion
 VALUES(1,'guizmo', '123');
 
@@ -43,24 +45,24 @@ INSERT INTO ob_connexion
 VALUES(11,'jonathan', '123');
 
 INSERT INTO ob_connexion
-VALUES(12,'clement', '123');
+VALUES(12,'clement', '123');*/
 
-/*OB_SALLE */
+/*OB_SALLE 
 INSERT INTO ob_salle
 VALUES(1,'I208');
 
-/*OB_MATIERE */
+/*OB_MATIERE 
 INSERT INTO ob_matiere
-VALUES(1, 'Java', 8);
+VALUES(1, 'Java', 5);
 
-/*OB_CLASSE */
+/*OB_CLASSE 
 INSERT INTO ob_classe
 VALUES(1, '3C1');
 
 INSERT INTO ob_classe
 VALUES(2, '3C2');
 
-/*classe C1   */
+/*classe C1   
 INSERT INTO ob_personne
 SELECT 1, 'MARTINEZ', 'Guizmo', 'guizmo@mail.fr', 'etudiant', ref(Cl), null, ref(Co)
 FROM ob_classe Cl, ob_connexion Co
@@ -106,7 +108,7 @@ AND Co.id_co = 11;
 
 
 
-/*classe C2   */
+/*classe C2   
 INSERT INTO ob_personne
 SELECT 1, 'CREBOUW', 'Cyril', 'c.cyril@mail.fr', 'etudiant', ref(Cl), null, ref(Co)
 FROM ob_classe Cl, ob_connexion Co
@@ -136,5 +138,7 @@ SELECT 1, 'SAUVARD', 'Clement', 'l.julien@mail.fr', 'etudiant', ref(Cl), null, r
 FROM ob_classe Cl, ob_connexion Co
 WHERE Cl.id_classe = 2
 AND Co.id_co = 8;
+*/
 
+/*INSERTION*/
 
