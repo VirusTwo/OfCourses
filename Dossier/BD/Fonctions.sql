@@ -70,3 +70,9 @@ BEGIN
 END;
 /
 
+create or replace procedure addPointsBonus(idPointB in INTEGER, descritpion in VARCHAR, sonEtudiant in ob_pointBonus%type) AS
+BEGIN
+    INSERT INTO ob_pointBonus
+    VALUES(idPointB, descritpion, sonEtudiant);
+END;
+/
