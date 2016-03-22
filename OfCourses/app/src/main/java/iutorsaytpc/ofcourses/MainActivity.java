@@ -68,21 +68,21 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initFragment(){
+    private void initFragment() {
         fragmentManager = getFragmentManager();
     }
 
-    public static void attachDetachLoadingFragment(){
+    public static void detachLoadingFragment() {
         fragmentTransaction = fragmentManager.beginTransaction();
-        if(loadingFragment.isAdded()){
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-            fragmentTransaction.remove(loadingFragment);
-        }
-        else{
-            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            fragmentTransaction.add(R.id.layoutParent,loadingFragment);
-        }
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        fragmentTransaction.remove(loadingFragment);
         fragmentTransaction.commit();
     }
 
+    public static void attachLoadingFragment() {
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.add(R.id.layoutParent, loadingFragment);
+        fragmentTransaction.commit();
+    }
 }

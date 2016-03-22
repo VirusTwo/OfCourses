@@ -15,10 +15,14 @@ import iutorsaytpc.ofcourses.MainActivity;
 
 public class BD {
 
-	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+    static String res = "rien";
+    static Connection co=null;
 
-	private static Connection connexion() {
-		Connection co=null;
+
+    private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+
+    private static Connection connexion() {
+
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			co=DriverManager.getConnection(URL_BD);
@@ -34,6 +38,7 @@ public class BD {
 			System.exit(1);
 		}
         System.out.println("Connexion ouverte.");
+
         return co;
 	}
 	
@@ -49,24 +54,26 @@ public class BD {
 			System.out.println("Problème lors de l'execution de la requête " + requete);
 			e.printStackTrace();
 		}
+
 		return res;
 	}
 
     public static String getNomClasse(final int id_personne) {
-        String res = "";
 
-        new AsyncTask<Void, Void, String>() {
+        String res1 = "";
+
+        final AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
 
             @Override
             protected void onPreExecute() {
-                MainActivity.attachDetachLoadingFragment();
+                MainActivity.attachLoadingFragment();
             }
 
             @Override
             protected String doInBackground(Void... params) {
                 Connection co;
                 CallableStatement cst;
-                String res = null;
+                String resTask = null;
                 co = connexion();
                 try {
 
@@ -74,7 +81,7 @@ public class BD {
                     cst.registerOutParameter(1, Types.VARCHAR);
                     cst.setInt(2, id_personne);
                     cst.executeQuery();
-                    res = cst.getString(1);
+                    resTask = cst.getString(1);
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -82,17 +89,39 @@ public class BD {
 
                 deconnexion(co);
 
-                return res;
+                //return resTask;
+                return "lol";
             }
 
             @Override
             protected void onPostExecute(String s) {
-                MainActivity.attachDetachLoadingFragment();
+                MainActivity.detachLoadingFragment();
             }
-        }.execute();
+        };
 
-        System.out.print(res);
-        return res;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    res = task.execute().get();
+
+                    MainActivity.detachLoadingFragment();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        //MainActivity.attachLoadingFragment();
+
+        try {
+            return task.execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 	
 	private static void deconnexion(Connection co) {

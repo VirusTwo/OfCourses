@@ -1,8 +1,8 @@
 package iutorsaytpc.ofcourses.controller;
 
-import android.content.DialogInterface;
 import android.view.View;
 
+import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.view.ConnexionView;
@@ -21,7 +21,14 @@ public class ConnexionController implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.connexion:
-                String lol = BD.getNomClasse(1);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String lol = BD.getNomClasse(1);
+                        System.out.println(lol);
+                    }
+                }).start();
+
                 break;
         }
     }
