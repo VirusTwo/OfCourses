@@ -8,8 +8,6 @@ DROP table ob_note;
 /
 DROP table ob_cours;
 /
-DROP table ob_edt;
-/
 DROP table ob_personne;
 /
 DROP table ob_salle;
@@ -17,8 +15,6 @@ DROP table ob_salle;
 DROP table ob_pointBonus;
 /
 
-DROP type ob_EDT_ty FORCE;
-/
 DROP TYPE ob_cours_ty FORCE;
 /
 DROP TYPE ob_classe_ty FORCE;
@@ -34,15 +30,6 @@ DROP type ob_pointBonus_ty FORCE;
 DROP TYPE ob_personne_ty FORCE;
 /
 
-
-Create or replace Type ob_connexion_ty AS Object (
-    id_co NUMBER(5),
-    login VARCHAR2(20),
-    mdp VARCHAR2(20),
-    sonEnseignant ref ob_personne_ty
-);
-/
-
 Create or replace Type ob_salle_ty AS Object (
     id_salle INTEGER,
     num VARCHAR2(20)
@@ -53,12 +40,6 @@ Create or replace Type ob_matiere_ty AS Object (
     id_matiere INTEGER,
     nom VARCHAR2(20),
     coeff FLOAT
-);
-/
-
-Create or replace Type ob_EDT_ty AS Object (
-    id_Edt INTEGER,
-    MEMBER PROCEDURE getSesCours(cours out SYS_REFCURSOR)
 );
 /
 
@@ -75,12 +56,7 @@ Create or replace Type ob_personne_ty AS Object (
     prenom VARCHAR2(20),
     email VARCHAR2(20),
     fonction VARCHAR2(20),
-    saClasse REF ob_classe_ty,   
-    sonEdt REF ob_EDT_ty
-    /*MEMBER FUNCTION getMoyenne RETURN FLOAT,
-    MEMBER PROCEDURE getSesNotes(notes out SYS_REFCURSOR),
-    MEMBER PROCEDURE gererPointBonus(etudiant in ob_personne_ty, point in INTEGER, description in VARCHAR2),
-    MEMBER PROCEDURE ajouterNote(etudiant in ob_personne_ty, matiere in ob_matiere_ty, note in float)*/
+    saClasse REF ob_classe_ty   
 );
 /
 
@@ -99,7 +75,7 @@ Create or replace Type ob_cours_ty AS Object (
     saMatiere REF ob_matiere_ty,
     saClasse REF ob_classe_ty,
     saSalle REF ob_salle_ty,
-    sonEDT REF ob_EDT_ty
+    sonEnseignant REF ob_personne_ty
 );
 /
 
@@ -151,8 +127,4 @@ CREATE TABLE ob_cours of ob_cours_ty
 
 CREATE TABLE ob_personne of ob_personne_ty
 (id_personne PRIMARY KEY);
-/
-
-CREATE Table ob_edt of ob_edt_ty
-(id_edt PRIMARY KEY);
 /
