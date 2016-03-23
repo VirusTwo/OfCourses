@@ -28,12 +28,10 @@ public class BD {
 		catch (ClassNotFoundException e) {
 			System.out.println("Driver oracle introuvable");
 			e.printStackTrace();
-			System.exit(1);
 		}
 		catch(SQLException e) {
 			System.out.println("Impossible de se connecter à l'url " + URL_BD);
 			e.printStackTrace();
-			System.exit(1);
 		}
         System.out.println("Connexion ouverte.");
 
@@ -63,7 +61,10 @@ public class BD {
         String res = null;
         Connection co;
         CallableStatement cst;
+
         co = connexion();
+        if (co == null) return null;
+
         try {
             cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
             cst.registerOutParameter(1, Types.VARCHAR);
