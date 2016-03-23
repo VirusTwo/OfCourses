@@ -1,6 +1,7 @@
 package iutorsaytpc.ofcourses.bd;
 
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -15,11 +16,11 @@ import iutorsaytpc.ofcourses.MainActivity;
 
 public class BD {
 
-    private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
 
-    private static Connection connexion() {
+	private static Connection connexion() {
 
-        Connection co=null;
+		Connection co=null;
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -35,11 +36,11 @@ public class BD {
 			e.printStackTrace();
 			System.exit(1);
 		}
-        System.out.println("Connexion ouverte.");
+		System.out.println("Connexion ouverte.");
 
-        return co;
+		return co;
 	}
-	
+
 	private ResultSet requeteSelect(String requete, Connection co, int type) {
 		ResultSet res=null;
 		try {
@@ -56,32 +57,32 @@ public class BD {
 		return res;
 	}
 
-    public static String getNomClasse(final int id_personne) {
+	public static String getNomClasse(final int id_personne) {
 
-        MainActivity.attachLoadingFragment();
+		MainActivity.attachLoadingFragment();
 
-        String res = null;
-        Connection co;
-        CallableStatement cst;
-        co = connexion();
-        try {
-            cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-            cst.registerOutParameter(1, Types.VARCHAR);
-            cst.setInt(2, id_personne);
-            cst.executeQuery();
-            res = cst.getString(1);
+		String res = null;
+		Connection co;
+		CallableStatement cst;
+		co = connexion();
+		try {
+			cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+			cst.registerOutParameter(1, Types.VARCHAR);
+			cst.setInt(2, id_personne);
+			cst.executeQuery();
+			res = cst.getString(1);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-        deconnexion(co);
+		deconnexion(co);
 
-        MainActivity.detachLoadingFragment();
+		MainActivity.detachLoadingFragment();
 
-        return res;
-    }
-	
+		return res;
+	}
+
 	private static void deconnexion(Connection co) {
 		try {
 			co.close();
@@ -91,4 +92,25 @@ public class BD {
 			e.printStackTrace();
 		}
 	}
-}
+	public static int isLogin(final String log, final String mdp) {
+		int res2 = 0;
+
+			Connection co;
+			CallableStatement cst;
+			co = connexion();
+			try {
+				cst = co.prepareCall("{ ? = call isLogin(?,?) }");
+				cst.registerOutParameter(1, Types.INTEGER);
+				cst.setString(2, log);
+				cst.setString(3, mdp);
+				cst.executeQuery();
+				res2 = cst.getInt(1);
+				System.out.println(res2);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			deconnexion(co);
+			return res2;
+		}
+	}
