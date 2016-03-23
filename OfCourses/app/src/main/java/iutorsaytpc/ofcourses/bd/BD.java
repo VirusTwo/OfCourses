@@ -23,6 +23,9 @@ public class BD {
 
     private static Connection connexion() {
 
+
+        Connection co=null;
+
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			co=DriverManager.getConnection(URL_BD);
@@ -59,70 +62,55 @@ public class BD {
 	}
 
     public static String getNomClasse(final int id_personne) {
+		String res1 = "";
 
-        String res1 = "";
+		final AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
 
-        final AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+			@Override
+			protected void onPreExecute() {
+				MainActivity.attachLoadingFragment();
+			}
 
-            @Override
-            protected void onPreExecute() {
-                MainActivity.attachLoadingFragment();
-            }
+			@Override
+			protected String doInBackground(Void... params) {
+				Connection co;
+				CallableStatement cst;
+				String resTask = null;
+				co = connexion();
+				try {
+					cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+					cst.registerOutParameter(1, Types.VARCHAR);
+					cst.setInt(2, id_personne);
+					cst.executeQuery();
+					resTask = cst.getString(1);
 
-            @Override
-            protected String doInBackground(Void... params) {
-                Connection co;
-                CallableStatement cst;
-                String resTask = null;
-                co = connexion();
-                try {
+					MainActivity.attachLoadingFragment();
 
-                    cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-                    cst.registerOutParameter(1, Types.VARCHAR);
-                    cst.setInt(2, id_personne);
-                    cst.executeQuery();
-                    resTask = cst.getString(1);
+					String res = null;
+					Connection co;
+					CallableStatement cst;
+					co = connexion();
+					try {
+						cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+						cst.registerOutParameter(1, Types.VARCHAR);
+						cst.setInt(2, id_personne);
+						cst.executeQuery();
+						res = cst.getString(1);
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 
-                deconnexion(co);
+					return resTask;
+					//return "lol";
+				}
 
-                return resTask;
-                //return "lol";
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                MainActivity.detachLoadingFragment();
-            }
-        };
-
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    res = task.execute().get();
-
-                    MainActivity.detachLoadingFragment();
-                } catch (InterruptedException | ExecutionException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        });
-
-        //MainActivity.attachLoadingFragment();
-
-        try {
-            return task.execute().get();
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
+				protected void onPostExecute (String s){
+					MainActivity.detachLoadingFragment();
+				}
+			}
+		}
+	}
 
 	private static void deconnexion(Connection co) {
 		try {
