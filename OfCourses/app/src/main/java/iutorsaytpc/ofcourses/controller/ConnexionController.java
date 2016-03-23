@@ -26,6 +26,8 @@ public class ConnexionController implements View.OnClickListener {
                     public void run() {
                         String lol = BD.getNomClasse(1);
                         System.out.println(lol);
+                        int resultConnexion  = BD.isLogin(view.getLogin(),view.getPassword());
+                        System.out.println(resultConnexion);
                     }
                 }).start();
 

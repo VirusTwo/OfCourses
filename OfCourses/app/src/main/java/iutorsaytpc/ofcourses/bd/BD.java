@@ -91,4 +91,25 @@ public class BD {
 			e.printStackTrace();
 		}
 	}
-}
+	public static int isLogin(final String log, final String mdp) {
+		int res2 = 0;
+
+			Connection co;
+			CallableStatement cst;
+			co = connexion();
+			try {
+				cst = co.prepareCall("{ ? = call isLogin(?,?) }");
+				cst.registerOutParameter(1, Types.INTEGER);
+				cst.setString(2, log);
+				cst.setString(3, mdp);
+				cst.executeQuery();
+				res2 = cst.getInt(1);
+				System.out.println(res2);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+			deconnexion(co);
+			return res2;
+		}
+	}
