@@ -15,10 +15,12 @@ import iutorsaytpc.ofcourses.MainActivity;
 
 public class BD {
 
-	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+    private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
 
-	private static Connection connexion() {
-		Connection co=null;
+    private static Connection connexion() {
+
+        Connection co=null;
+
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			co=DriverManager.getConnection(URL_BD);
@@ -34,6 +36,7 @@ public class BD {
 			System.exit(1);
 		}
         System.out.println("Connexion ouverte.");
+
         return co;
 	}
 	
@@ -49,49 +52,33 @@ public class BD {
 			System.out.println("Problème lors de l'execution de la requête " + requete);
 			e.printStackTrace();
 		}
+
 		return res;
 	}
 
     public static String getNomClasse(final int id_personne) {
-        String res = "";
 
-        new AsyncTask<Void, Void, String>() {
+        MainActivity.attachLoadingFragment();
 
-            @Override
-            protected void onPreExecute() {
-                MainActivity.attachDetachLoadingFragment();
-            }
+        String res = null;
+        Connection co;
+        CallableStatement cst;
+        co = connexion();
+        try {
+            cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+            cst.registerOutParameter(1, Types.VARCHAR);
+            cst.setInt(2, id_personne);
+            cst.executeQuery();
+            res = cst.getString(1);
 
-            @Override
-            protected String doInBackground(Void... params) {
-                Connection co;
-                CallableStatement cst;
-                String res = null;
-                co = connexion();
-                try {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-                    cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-                    cst.registerOutParameter(1, Types.VARCHAR);
-                    cst.setInt(2, id_personne);
-                    cst.executeQuery();
-                    res = cst.getString(1);
+        deconnexion(co);
 
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+        MainActivity.detachLoadingFragment();
 
-                deconnexion(co);
-
-                return res;
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                MainActivity.attachDetachLoadingFragment();
-            }
-        }.execute();
-
-        System.out.print(res);
         return res;
     }
 	
