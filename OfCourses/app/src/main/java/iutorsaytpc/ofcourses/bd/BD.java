@@ -12,15 +12,16 @@ import java.sql.Types;
 import java.util.concurrent.ExecutionException;
 
 import iutorsaytpc.ofcourses.MainActivity;
-import iutorsaytpc.ofcourses.view.ConnexionView;
 
 public class BD {
 
-	private static String res;
+    static String res = "rien";
+    static Connection co=null;
 
-	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
-	private static Connection connexion() {
-		Connection co=null;
+
+    private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+
+    private static Connection connexion() {
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -37,6 +38,7 @@ public class BD {
 			System.exit(1);
 		}
         System.out.println("Connexion ouverte.");
+
         return co;
 	}
 
@@ -52,59 +54,76 @@ public class BD {
 			System.out.println("Problème lors de l'execution de la requête " + requete);
 			e.printStackTrace();
 		}
+
 		return res;
 	}
 
     public static String getNomClasse(final int id_personne) {
 
-        AsyncTask<Void, Void, Boolean> task = new AsyncTask<Void, Void, Boolean>() {
-			String resTask = "";
+        String res1 = "";
+
+        final AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
 
             @Override
             protected void onPreExecute() {
-                MainActivity.attachDetachLoadingFragment();
+                MainActivity.attachLoadingFragment();
             }
 
             @Override
-            protected Boolean doInBackground(Void... params) {
-				Connection co;
-				CallableStatement cst;
-				co = connexion();
-				try {
+            protected String doInBackground(Void... params) {
+                Connection co;
+                CallableStatement cst;
+                String resTask = null;
+                co = connexion();
+                try {
 
-					cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-					cst.registerOutParameter(1, Types.VARCHAR);
-					cst.setInt(2, id_personne);
-					Boolean success = cst.execute();
-					resTask = cst.getString(1);
+                    cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+                    cst.registerOutParameter(1, Types.VARCHAR);
+                    cst.setInt(2, id_personne);
+                    cst.executeQuery();
+                    resTask = cst.getString(1);
 
-				} catch (SQLException e) {
-					e.printStackTrace();
-					return false;
-				}
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
-				deconnexion(co);
-				return true;
-			}
+                deconnexion(co);
+
+                return resTask;
+                //return "lol";
+            }
 
             @Override
-            protected void onPostExecute(Boolean b) {
-				if(b) {
-					res = resTask;
-					MainActivity.attachDetachLoadingFragment();
-				}
+            protected void onPostExecute(String s) {
+                MainActivity.detachLoadingFragment();
             }
         };
 
-		task.execute();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
 
-		while(task.getStatus() == AsyncTask.Status.RUNNING) {
-			System.out.print("je suis dans la boucle de merde");
-		}
-        System.out.print(res);
-        return res;
+                try {
+                    res = task.execute().get();
+
+                    MainActivity.detachLoadingFragment();
+                } catch (InterruptedException | ExecutionException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        //MainActivity.attachLoadingFragment();
+
+        try {
+            return task.execute().get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
-	
+
 	private static void deconnexion(Connection co) {
 		try {
 			co.close();
@@ -114,47 +133,4 @@ public class BD {
 			e.printStackTrace();
 		}
 	}
-	/*public static int isLogin(final String log, final String mdp) {
-		int res2;
-		new AsyncTask<Void, Void, Integer>() {
-
-			@Override
-			protected void onPreExecute() {
-				MainActivity.attachDetachLoadingFragment();
-			}
-
-			@Override
-			protected Integer doInBackground(Void... params) {
-				Connection co;
-				CallableStatement cst;
-				int res2 = 0;
-				co = connexion();
-				try {
-
-					cst = co.prepareCall("{ ? = call isLogin(?,?) }");
-					cst.registerOutParameter(1, Types.INTEGER);
-					cst.setString(2, log);
-					cst.setString(3, mdp);
-					cst.executeQuery();
-					res2 = cst.getInt(1);
-
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-
-				deconnexion(co);
-
-				return res2;
-			}
-
-			@Override
-			protected void onPostExecute(Integer s) {
-				MainActivity.attachDetachLoadingFragment();
-				System.out.print(res2);
-				return res2;
-			}
-		}.execute();
-
-
-	}*/
 }
