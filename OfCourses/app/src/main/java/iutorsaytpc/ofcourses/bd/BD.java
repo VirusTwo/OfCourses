@@ -15,16 +15,11 @@ import iutorsaytpc.ofcourses.MainActivity;
 
 public class BD {
 
-    static String res = "rien";
-    static Connection co=null;
+	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
 
+	private static Connection connexion() {
 
-    private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
-
-    private static Connection connexion() {
-
-
-        Connection co=null;
+		Connection co=null;
 
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -40,9 +35,9 @@ public class BD {
 			e.printStackTrace();
 			System.exit(1);
 		}
-        System.out.println("Connexion ouverte.");
+		System.out.println("Connexion ouverte.");
 
-        return co;
+		return co;
 	}
 
 	private ResultSet requeteSelect(String requete, Connection co, int type) {
@@ -61,55 +56,30 @@ public class BD {
 		return res;
 	}
 
-    public static String getNomClasse(final int id_personne) {
-		String res1 = "";
+	public static String getNomClasse(final int id_personne) {
 
-		final AsyncTask<Void, Void, String> task = new AsyncTask<Void, Void, String>() {
+		MainActivity.attachLoadingFragment();
 
-			@Override
-			protected void onPreExecute() {
-				MainActivity.attachLoadingFragment();
-			}
+		String res = null;
+		Connection co;
+		CallableStatement cst;
+		co = connexion();
+		try {
+			cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
+			cst.registerOutParameter(1, Types.VARCHAR);
+			cst.setInt(2, id_personne);
+			cst.executeQuery();
+			res = cst.getString(1);
 
-			@Override
-			protected String doInBackground(Void... params) {
-				Connection co;
-				CallableStatement cst;
-				String resTask = null;
-				co = connexion();
-				try {
-					cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-					cst.registerOutParameter(1, Types.VARCHAR);
-					cst.setInt(2, id_personne);
-					cst.executeQuery();
-					resTask = cst.getString(1);
-
-					MainActivity.attachLoadingFragment();
-
-					String res = null;
-					Connection co;
-					CallableStatement cst;
-					co = connexion();
-					try {
-						cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
-						cst.registerOutParameter(1, Types.VARCHAR);
-						cst.setInt(2, id_personne);
-						cst.executeQuery();
-						res = cst.getString(1);
-
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-
-					return resTask;
-					//return "lol";
-				}
-
-				protected void onPostExecute (String s){
-					MainActivity.detachLoadingFragment();
-				}
-			}
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
+
+		deconnexion(co);
+
+		MainActivity.detachLoadingFragment();
+
+		return res;
 	}
 
 	private static void deconnexion(Connection co) {
