@@ -1,6 +1,7 @@
 package iutorsaytpc.ofcourses.controller;
 
 import android.view.View;
+import android.widget.Toast;
 
 import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
@@ -28,6 +29,7 @@ public class ConnexionController implements View.OnClickListener {
                         System.out.println(lol);
                         int resultConnexion  = BD.isLogin(view.getLogin(),view.getPassword());
                         System.out.println(resultConnexion);
+                        Toast.makeText(view.getContext(),"TESt",Toast.LENGTH_SHORT).show();
                     }
                 }).start();
 
