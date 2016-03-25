@@ -20,6 +20,17 @@ create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexi
   end;
 /
 
+create or replace procedure getCours(id in ob_personne.id_personne%type, res out sys_refcursor) as
+  begin
+    open res for
+      select dateDebut, dateFin, (deref(saMatiere)).nom, (deref(saClasse)).nom, (deref(saSalle)).num
+      from ob_cours C
+      where (deref(sonEnseignant)).id_personne = id;
+  end;
+/
+
+create or replace procedure getNotesClasse(id
+
 create or replace procedure addUneMatiere(numMatiere in INTEGER, nomMatiere in VARCHAR, coeffMatiere in FLOAT) AS 
 BEGIN
   INSERT INTO ob_matiere

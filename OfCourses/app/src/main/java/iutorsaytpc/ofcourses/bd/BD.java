@@ -10,9 +10,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 import iutorsaytpc.ofcourses.MainActivity;
+import iutorsaytpc.ofcourses.modele.EnseignantSingleton;
+import oracle.jdbc.OracleCallableStatement;
+import oracle.jdbc.OracleTypes;
 
 public class BD {
 
@@ -55,7 +61,7 @@ public class BD {
 		return res;
 	}
 
-	public static String getNomClasse(final int id_personne) {
+	public static String getNomClasse() {
 
 		MainActivity.attachLoadingFragment();
 
@@ -69,7 +75,7 @@ public class BD {
         try {
             cst = co.prepareCall("{ ? = call getNomSaClasse(?) }");
             cst.registerOutParameter(1, Types.VARCHAR);
-            cst.setInt(2, id_personne);
+            cst.setInt(2, EnseignantSingleton.getId());
             cst.executeQuery();
             res = cst.getString(1);
 		} catch (SQLException e) {
@@ -93,24 +99,61 @@ public class BD {
 		}
 	}
 	public static int isLogin(final String log, final String mdp) {
-		int res2 = 0;
+		int res = 0;
 
-			Connection co;
-			CallableStatement cst;
-			co = connexion();
-			try {
-				cst = co.prepareCall("{ ? = call isLogin(?,?) }");
-				cst.registerOutParameter(1, Types.INTEGER);
-				cst.setString(2, log);
-				cst.setString(3, mdp);
-				cst.executeQuery();
-				res2 = cst.getInt(1);
-				System.out.println(res2);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+        Connection co;
+        CallableStatement cst;
+        co = connexion();
+        if (co == null) return -2;
 
-			deconnexion(co);
-			return res2;
-		}
-	}
+        try {
+            cst = co.prepareCall("{ ? = call isLogin(?,?) }");
+            cst.registerOutParameter(1, Types.INTEGER);
+            cst.setString(2, log);
+            cst.setString(3, mdp);
+            cst.executeQuery();
+            res = cst.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        if (res != -1) EnseignantSingleton.setId_personne(res);
+
+        deconnexion(co);
+        return res;
+    }
+
+    public static ArrayList<Objects> getCours() {
+        MainActivity.attachLoadingFragment();
+
+        CallableStatement cst=null;
+        ResultSet resSet=null;
+        ArrayList<Objects> res = new ArrayList<>();
+        Connection co;
+
+        co = connexion();
+        if (co == null) return null;
+
+        try {
+            cst=co.prepareCall(" { call getCours(?, ?) } ");
+            cst.setInt(1, EnseignantSingleton.getId());
+            cst.registerOutParameter(2, OracleTypes.CURSOR);
+            cst.execute();
+            resSet=((OracleCallableStatement)cst).getCursor(2);
+            while(resSet.next()) {
+                Date dateDebut = resSet.getDate(1);
+                Date dateFin = resSet.getDate(2);
+                String matiere = resSet.getString(3);
+                String classe = resSet.getString(4);
+                String salle = resSet.getString(5);
+                System.out.println(matiere);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        MainActivity.detachLoadingFragment();
+        return null;
+    }
+}

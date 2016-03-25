@@ -3,6 +3,9 @@ package iutorsaytpc.ofcourses.controller;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
@@ -25,7 +28,7 @@ public class ConnexionController implements View.OnClickListener {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String lol = BD.getNomClasse(1);
+                        ArrayList<Objects> lol = BD.getCours();
                         System.out.println(lol);
                         int resultConnexion  = BD.isLogin(view.getLogin(),view.getPassword());
                         System.out.println(resultConnexion);
@@ -41,7 +44,6 @@ public class ConnexionController implements View.OnClickListener {
                             //Connexion error
 
                         }
-                        Toast.makeText(view.getContext(),"TESt",Toast.LENGTH_SHORT).show();
                     }
                 }).start();
 
