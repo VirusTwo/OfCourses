@@ -29,6 +29,18 @@ public class ConnexionController implements View.OnClickListener {
                         System.out.println(lol);
                         int resultConnexion  = BD.isLogin(view.getLogin(),view.getPassword());
                         System.out.println(resultConnexion);
+                        if(resultConnexion == 1 ){
+                            // Afficher page d'accueil ( Connexion Reussi )
+
+                        }
+                        else if(resultConnexion == -1){
+                            //Erreur mot de passe
+                            //Afficher une erreur de mot de passe
+                        }
+                        else {
+                            //Connexion error
+
+                        }
                         Toast.makeText(view.getContext(),"TESt",Toast.LENGTH_SHORT).show();
                     }
                 }).start();
