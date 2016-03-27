@@ -5,7 +5,7 @@ package iutorsaytpc.ofcourses.modele;
  */
 public class EnseignantSingleton {
 
-    private static int id_personne;
+    private static int id_personne = 1;
 
     public static int getId() {
         return id_personne;

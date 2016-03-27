@@ -32,6 +32,5 @@
     <string name="commentary">Commentaire :</string>
     <string name="finalMark">Note Finale :</string>
     <string name="next">Suivant</string>
-
-
+    <string name="title_activity_liste_groupe">listeGroupeActivity</string>
 </resources>
