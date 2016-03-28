@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView hello = (TextView) findViewById(R.id.hello);
         ConnexionView connexionView = new ConnexionView(this);
-        setContentView(connexionView);
+        //setContentView(connexionView);
         initFragment();
 
     }
