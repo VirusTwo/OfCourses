@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         viewGroup = (ViewGroup) findViewById(R.id.layoutParent);
 
         ConnexionView connexionView = new ConnexionView(this);
+        //setContentView(connexionView);
+        initFragment();
         ListeElevesView listeElevesView = new ListeElevesView(this);
         listeElevesView.createDemoDataListeEleve();
 

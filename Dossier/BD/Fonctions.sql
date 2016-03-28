@@ -9,12 +9,16 @@ create or replace function getNomSaClasse(id in ob_personne.id_personne%type) re
 /
 
 create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexion.mdp%type) return ob_personne.id_personne%type is
-  res ob_personne.id_personne%type := -1;
+  res ob_personne.id_personne%type;
   begin
     select (deref(sonEnseignant)).id_personne into res
     from ob_connexion C
     where login = l
     and mdp = m;
+    
+    if res is null then
+      res := -1;
+    end if;
     
     return res;
   end;

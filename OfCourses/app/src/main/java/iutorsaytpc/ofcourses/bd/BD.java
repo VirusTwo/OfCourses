@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -70,6 +71,7 @@ public class BD {
 		CallableStatement cst;
 
         co = connexion();
+
         if (co == null) return null;
 
         try {
@@ -115,9 +117,10 @@ public class BD {
             res = cst.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1;
         }
 
-        if (res != -1) EnseignantSingleton.setId_personne(res);
+        EnseignantSingleton.setId_personne(res);
 
         deconnexion(co);
         return res;
@@ -146,7 +149,12 @@ public class BD {
                 String matiere = resSet.getString(3);
                 String classe = resSet.getString(4);
                 String salle = resSet.getString(5);
-                System.out.println(matiere);
+
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(dateDebut);
+                int day = calendar.get(Calendar.DAY_OF_WEEK);
+                System.out.print(day);
+
 
             }
         } catch (SQLException e) {
@@ -154,6 +162,6 @@ public class BD {
         }
 
         MainActivity.detachLoadingFragment();
-        return null;
+        return res;
     }
 }
