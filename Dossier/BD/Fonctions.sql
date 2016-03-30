@@ -1,4 +1,4 @@
-create or replace function getNomSaClasse(id in ob_personne.id_personne%type) return ob_classe.nom%type is
+create or replace function getNomClasse(id in ob_personne.id_personne%type) return ob_classe.nom%type is
   res ob_classe.nom%type;
   begin
     select (deref(saClasse)).nom into res
@@ -24,6 +24,25 @@ create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexi
   end;
 /
 
+create or replace procedure getMatieres(id in ob_personne.id_personne%type, res out sys_refcursor) as
+  begin
+    open res for
+      select (deref(C.saMatiere)).nom, (deref(C.saMatiere)).id_matiere
+      from ob_cours C
+      where (deref(C.sonEnseignant)).id_personne = id;
+  end;
+/
+
+create or replace procedure getClasses(id in ob_personne.id_personne%type, res out sys_refcursor) as
+  begin
+    open res for
+      select distinct(deref(C.saClasse)).nom, (deref(C.saClasse)).id_classe
+      from ob_cours C
+      where (deref(C.sonEnseignant)).id_personne = id;
+  end;
+/
+
+
 create or replace procedure getCours(id in ob_personne.id_personne%type, res out sys_refcursor) as
   begin
     open res for
@@ -36,7 +55,7 @@ create or replace procedure getCours(id in ob_personne.id_personne%type, res out
 create or replace procedure getNotesFromEtudiant(idPersonne in ob_personne.id_personne%type, idMatiere in ob_matiere.id_matiere%type, res out sys_refcursor) as
   begin
     open res for
-      select N.id_note, N.note, P.description, type
+      select N.id_note, N.note, P.description, N.type
       from ob_note N, ob_pointBonus P
       where (deref(saMatiere)).id_matiere = idMatiere
       and (deref(N.sonEtudiant)).id_personne = idPersonne

@@ -33,3 +33,9 @@ WHERE M.id_matiere = 1
 AND C.id_classe = 1
 AND S.id_salle = 1
 AND E.id_personne = 1;
+
+INSERT INTO ob_note
+SELECT 1, 1, 20, 'CC', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 1
+AND id_personne = 1;

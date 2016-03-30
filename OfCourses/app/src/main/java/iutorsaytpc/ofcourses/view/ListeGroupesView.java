@@ -1,5 +1,6 @@
 package iutorsaytpc.ofcourses.view;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import iutorsaytpc.ofcourses.R;
+import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.controller.ConnexionController;
 import iutorsaytpc.ofcourses.controller.ListeEleveController;
 import iutorsaytpc.ofcourses.controller.ListeGroupesController;
@@ -38,10 +40,14 @@ public class ListeGroupesView extends LinearLayout {
     private Spinner spinnerGroupe;
     private List<String> groupList = new ArrayList<String>();
     private List<String> matiereList = new ArrayList<String>();
+    private List<Integer> groupIdList = new ArrayList<Integer>();
+    private List<Integer> matiereIdList = new ArrayList<Integer>();
 
     private Button buttonSuivant;
     private boolean editActiv = false;
 
+
+    ArrayList<Object> res;
 
     public ListeGroupesView(Context context) {
         super(context);
@@ -49,6 +55,7 @@ public class ListeGroupesView extends LinearLayout {
 
         inflate();
         bindViews();
+        demoListeGroupeMatiere();
     }
 
     private void inflate() {
@@ -86,22 +93,28 @@ public class ListeGroupesView extends LinearLayout {
     }
 
     public void demoListeGroupeMatiere(){
-        List listTMP = new ArrayList<String>();
-        listTMP.add("Développement Android");
-        listTMP.add("Développement IOS");
-        listTMP.add("Maths ingénieur");
-        listTMP.add("Robotique");
-        listTMP.add("Personal");
-        setMatList(listTMP);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                res = BD.getMatieresClasses();
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setMatList((List<String>) res.get(0));
+                        setGroupeList((List<String>) res.get(1));
+                        matiereIdList = (List<Integer>) res.get(2);
+                        groupIdList = (List<Integer>) res.get(3);
+                    }
+                });
+            }
+        }).start();
+    }
 
-        List listTMP2 = new ArrayList<String>();
-        listTMP2.add("A1");
-        listTMP2.add("A2");
-        listTMP2.add("B1");
-        listTMP2.add("B2");
-        listTMP2.add("C1");
-        listTMP2.add("C2");
-        setGroupeList(listTMP2);
+    public int getSelectedIdMatiere() {
+        return matiereIdList.get(spinnerMatiere.getSelectedItemPosition());
+    }
 
+    public int getSelectedIdClasse() {
+        return groupIdList.get(spinnerGroupe.getSelectedItemPosition());
     }
 }
