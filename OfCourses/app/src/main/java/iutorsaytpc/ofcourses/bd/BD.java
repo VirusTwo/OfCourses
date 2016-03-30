@@ -153,9 +153,6 @@ public class BD {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dateDebut);
                 int day = calendar.get(Calendar.DAY_OF_WEEK);
-                System.out.print(day);
-
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
