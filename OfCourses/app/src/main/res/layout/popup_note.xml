@@ -14,6 +14,7 @@
         android:layout_alignBaseline="@+id/noteEleve"
         android:layout_alignBottom="@+id/noteEleve"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:textColor="@android:color/black" />
 
     <EditText
@@ -25,6 +26,7 @@
         android:layout_gravity="center_horizontal"
         android:numeric="integer|decimal"
         android:layout_below="@+id/spinnerEtudiant"
+        android:layout_toRightOf="@+id/noteLblTxt"
         android:layout_toEndOf="@+id/noteLblTxt" />
         <!--android:layout_alignStart="@+id/linearLayout"-->
 
