@@ -24,6 +24,7 @@ import oracle.jdbc.OracleTypes;
 public class BD {
 
 	private static final String URL_BD = "jdbc:oracle:thin:gmarti3/coucouboss@oracle.iut-orsay.fr:1521:etudom";
+    private static final int TIME_ERROR = 2000;
 
 	private static Connection connexion() {
 
@@ -111,11 +112,12 @@ public class BD {
         if (co == null) {
             MainActivity.errorConnexion();
             try {
-                Thread.sleep(2000);
+                Thread.sleep(TIME_ERROR);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
             return -2;
         }
 
@@ -130,11 +132,12 @@ public class BD {
             e.printStackTrace();
             MainActivity.errorLogin();
             try {
-                Thread.sleep(2000);
+                Thread.sleep(TIME_ERROR);
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
             MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
             return -1;
         }
 

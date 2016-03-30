@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
 import iutorsaytpc.ofcourses.view.ConnexionView;
 import iutorsaytpc.ofcourses.view.ListeElevesView;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         //On lance la page de connexion
         ConnexionView connexionView = new ConnexionView(this);
-        setContentView(connexionView);
+        ((RelativeLayout) findViewById(R.id.layoutParent)).addView(connexionView);
     }
 
     @Override
@@ -92,4 +94,7 @@ public class MainActivity extends AppCompatActivity {
         loadingView.errorLogin();
     }
 
+    public static void resetLoading() {
+        loadingView.reset();
+    }
 }
