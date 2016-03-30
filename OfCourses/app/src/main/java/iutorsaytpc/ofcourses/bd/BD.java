@@ -101,12 +101,23 @@ public class BD {
 		}
 	}
 	public static int isLogin(final String log, final String mdp) {
+        MainActivity.attachLoadingFragment();
+
 		int res = 0;
 
         Connection co;
         CallableStatement cst;
         co = connexion();
-        if (co == null) return -2;
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            return -2;
+        }
 
         try {
             cst = co.prepareCall("{ ? = call isLogin(?,?) }");
@@ -117,12 +128,22 @@ public class BD {
             res = cst.getInt(1);
         } catch (SQLException e) {
             e.printStackTrace();
+            MainActivity.errorLogin();
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
             return -1;
         }
 
         EnseignantSingleton.setId_personne(res);
 
         deconnexion(co);
+
+        MainActivity.detachLoadingFragment();
+
         return res;
     }
 
@@ -166,6 +187,8 @@ public class BD {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        deconnexion(co);
 
         MainActivity.detachLoadingFragment();
         

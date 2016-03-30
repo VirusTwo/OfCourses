@@ -13,14 +13,18 @@ import android.view.ViewGroup;
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
 import iutorsaytpc.ofcourses.view.ConnexionView;
 import iutorsaytpc.ofcourses.view.ListeElevesView;
+import iutorsaytpc.ofcourses.view.LoadingView;
+
 public class MainActivity extends AppCompatActivity {
 
     //Fragment
-    private static LoadingFragment loadingFragment = new LoadingFragment();
+    private static LoadingFragment loadingFragment;
+    private static LoadingView loadingView;
     private static FragmentManager fragmentManager;
     private static FragmentTransaction fragmentTransaction;
 
     private ViewGroup viewGroup;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,21 +34,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
 
-        viewGroup = (ViewGroup) findViewById(R.id.layoutParent);
-
-        ConnexionView connexionView = new ConnexionView(this);
-        //setContentView(connexionView);
+        //Réglage du fragment loading;
+        loadingView = new LoadingView(this);
+        loadingFragment = new LoadingFragment(loadingView);
         initFragment();
-        ListeElevesView listeElevesView = new ListeElevesView(this);
-        listeElevesView.createDemoDataListeEleve();
 
-        //viewGroup.addView(connexionView);
-        viewGroup.addView(listeElevesView);
-
-
-        //On peut retirer facilement la vue actuel de cette façon, les élèments de base de l'activity main restent
-        // viewGroup.removeAllViews();
-
+        //On lance la page de connexion
+        ConnexionView connexionView = new ConnexionView(this);
+        setContentView(connexionView);
     }
 
     @Override
@@ -87,5 +84,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    public static void errorConnexion () {
+        loadingView.errorConnnexion();
+    }
+
+    public static void errorLogin() {
+        loadingView.errorLogin();
+    }
 
 }
