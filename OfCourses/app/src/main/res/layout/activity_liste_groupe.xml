@@ -45,7 +45,6 @@
 
         </LinearLayout>
     </TabHost>
-    <include layout="@layout/content_liste_groupe" />
 
 
 </RelativeLayout>

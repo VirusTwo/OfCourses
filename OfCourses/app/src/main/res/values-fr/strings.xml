@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Paramètres</string>
+    <string name="app_name">Options</string>
+    <string name="btnQuit">Sauver et Quitter</string>
+    <string name="checkBox">Vert</string>
+    <string name="checkBox2">Orange</string>
+    <string name="checkBox3">Bleu</string>
+    <string name="checkBox4">Activer les notifications</string>
+    <string name="textView">Accessibilité</string>
+    <string name="textView2">Langue actuelle :</string>
+    <string name="textView3">Langue :</string>
+    <string name="textView4">Design</string>
+    <string name="textView5">Police actuelle :</string>
+    <string name="textView6">Couleur :</string>
+    <string name="textView7">Notifications</string>
+    <string name="textView8">Français</string>
+    <string name="textView9">Police actuelle :</string>
+</resources>
