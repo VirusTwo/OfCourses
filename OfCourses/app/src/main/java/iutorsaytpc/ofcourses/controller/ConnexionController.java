@@ -1,16 +1,13 @@
 package iutorsaytpc.ofcourses.controller;
 
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.view.ConnexionView;
-import iutorsaytpc.ofcourses.view.FragmentView;
 
 /**
  * Created by VirusTwoIUT on 11/03/2016.
