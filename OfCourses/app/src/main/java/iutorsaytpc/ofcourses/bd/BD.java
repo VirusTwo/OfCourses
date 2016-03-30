@@ -138,6 +138,7 @@ public class BD {
             }
             MainActivity.detachLoadingFragment();
             MainActivity.resetLoading();
+            deconnexion(co);
             return -1;
         }
 
@@ -227,4 +228,63 @@ public class BD {
 
         return res;
     }
+
+    //
+
+    public static ArrayList<Object> getMatieresClasses() {
+        MainActivity.attachLoadingFragment();
+
+        CallableStatement cst=null;
+        ResultSet resSet=null;
+        ArrayList<String> resMatieres = new ArrayList<>();
+        ArrayList<String> resClasses = new ArrayList<>();
+        ArrayList<Integer> resIdMatieres = new ArrayList<>();
+        ArrayList<Integer> resIdClasses = new ArrayList<>();
+        Connection co;
+
+        co = connexion();
+        if (co == null) return null;
+
+        //Matieres
+        try {
+            cst=co.prepareCall(" { call getMatieres(?, ?) } ");
+            cst.setInt(1, EnseignantSingleton.getId());
+            cst.registerOutParameter(2, OracleTypes.CURSOR);
+            cst.execute();
+            resSet=((OracleCallableStatement)cst).getCursor(2);
+            while(resSet.next()) {
+                resMatieres.add(resSet.getString(1));
+                resIdMatieres.add(resSet.getInt(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //Classes
+        try {
+            cst=co.prepareCall(" { call getClasses(?, ?) } ");
+            cst.setInt(1, EnseignantSingleton.getId());
+            cst.registerOutParameter(2, OracleTypes.CURSOR);
+            cst.execute();
+            resSet=((OracleCallableStatement)cst).getCursor(2);
+            while(resSet.next()) {
+                resClasses.add(resSet.getString(1));
+                resIdClasses.add(resSet.getInt(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        deconnexion(co);
+
+        MainActivity.detachLoadingFragment();
+
+        ArrayList<Object> resTemp = new ArrayList<>();
+        resTemp.add(resMatieres);
+        resTemp.add(resClasses);
+        resTemp.add(resIdMatieres);
+        resTemp.add(resIdClasses);
+
+        return resTemp;
+    }
 }
+

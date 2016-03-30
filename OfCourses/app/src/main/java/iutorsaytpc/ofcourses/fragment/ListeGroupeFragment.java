@@ -1,20 +1,22 @@
 package iutorsaytpc.ofcourses.fragment;
 
+import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import iutorsaytpc.ofcourses.view.LoadingView;
+import iutorsaytpc.ofcourses.view.ListeGroupesView;
 
 /**
  * Created by guillaumemartinez on 30/03/2016
  */
+@SuppressLint("ValidFragment")
 public class ListeGroupeFragment extends Fragment {
-    private View view;
+    private ListeGroupesView view;
 
-    public ListeGroupeFragment(Liste view) {
+    public ListeGroupeFragment(ListeGroupesView view) {
         this.view = view;
     }
 
