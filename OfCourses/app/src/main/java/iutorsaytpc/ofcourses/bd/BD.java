@@ -126,12 +126,12 @@ public class BD {
         return res;
     }
 
-    public static ArrayList<Objects> getCours() {
+    public static ArrayList<String> getCours() {
         MainActivity.attachLoadingFragment();
 
         CallableStatement cst=null;
         ResultSet resSet=null;
-        ArrayList<Objects> res = new ArrayList<>();
+        ArrayList<String> res = new ArrayList<>();
         Connection co;
 
         co = connexion();
@@ -153,15 +153,52 @@ public class BD {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dateDebut);
                 int day = calendar.get(Calendar.DAY_OF_WEEK);
-                System.out.print(day);
+                int heureDebut = dateDebut.getHours();
+                int heureFin = dateFin.getHours();
 
+                String code = getCode(day, heureDebut, heureFin);
 
+                res.add(code);
+                res.add(matiere);
+                res.add(classe);
+                res.add(salle);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         MainActivity.detachLoadingFragment();
+        
+        return res;
+    }
+
+    private static String getCode(int day, int heureDebut, int heureFin) {
+        String res = "";
+
+        switch (day) {
+            case 0 :
+                res += "lun";
+                break;
+            case 1 :
+                res += "mar";
+                break;
+            case 2 :
+                res += "mer";
+                break;
+            case 3 :
+                res += "jeu";
+                break;
+            case 4 :
+                res += "ven";
+                break;
+        }
+
+        if(heureDebut >= 0 && heureDebut <= 9) res += "0";
+        res += heureDebut;
+
+        if(heureFin >= 0 && heureFin <= 9) res += "0";
+        res += heureFin;
+
         return res;
     }
 }
