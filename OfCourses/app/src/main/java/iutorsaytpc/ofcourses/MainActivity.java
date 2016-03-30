@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         initFragment();
 
         //On lance la page de connexion
-        setContentView(R.layout.activity_main);
         ConnexionView connexionView = new ConnexionView(this);
         ((RelativeLayout) findViewById(R.id.layoutParent)).addView(connexionView);
     }
@@ -95,4 +94,7 @@ public class MainActivity extends AppCompatActivity {
         loadingView.errorLogin();
     }
 
+    public static void resetLoading() {
+        loadingView.reset();
+    }
 }

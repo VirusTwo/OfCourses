@@ -2,6 +2,7 @@ package iutorsaytpc.ofcourses.controller;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -33,11 +34,12 @@ public class ConnexionController implements View.OnClickListener {
                         int id = BD.isLogin(view.getLogin(), view.getPassword());
 
                         if(id >= 0) {
-
                             ((Activity) view.getContext()).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ((Activity) view.getContext()).setContentView(new FragmentView(view.getContext()));
+                                    RelativeLayout content = ((RelativeLayout) ((Activity) view.getContext()).findViewById(R.id.layoutParent));
+                                    content.removeAllViews();
+                                    content.addView(new FragmentView(view.getContext()));
                                 }
                             });
                         }

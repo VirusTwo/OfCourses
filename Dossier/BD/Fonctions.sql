@@ -33,7 +33,16 @@ create or replace procedure getCours(id in ob_personne.id_personne%type, res out
   end;
 /
 
-create or replace procedure getNotesClasse(id
+create or replace procedure getNotesFromEtudiant(idPersonne in ob_personne.id_personne%type, idMatiere in ob_matiere.id_matiere%type, res out sys_refcursor) as
+  begin
+    open res for
+      select N.id_note, N.note, P.description, type
+      from ob_note N, ob_pointBonus P
+      where (deref(saMatiere)).id_matiere = idMatiere
+      and (deref(N.sonEtudiant)).id_personne = idPersonne
+      and (deref(P.sonEtudiant)).id_personne = idPersonne;
+  end;
+/
 
 create or replace procedure addUneMatiere(numMatiere in INTEGER, nomMatiere in VARCHAR, coeffMatiere in FLOAT) AS 
 BEGIN

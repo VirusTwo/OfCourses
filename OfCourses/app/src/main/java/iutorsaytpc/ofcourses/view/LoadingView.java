@@ -48,4 +48,13 @@ public class LoadingView extends RelativeLayout {
             }
         });
     }
+
+    public void reset() {
+        ((Activity) getContext()).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loadingText.setText("LOADING");
+            }
+        });
+    }
 }
