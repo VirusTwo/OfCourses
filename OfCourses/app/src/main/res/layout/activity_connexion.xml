@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="iutorsaytpc.ofcourses.MainActivity"
-    android:id="@+id/activityMainLayout">
+    tools:context="com.example.virustwoiut.connexionpage.ConnexionActivity"
+    android:id="@+id/layoutconnexion">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -18,11 +18,10 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="#98ca3c"
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-            />
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main" />
 
 </android.support.design.widget.CoordinatorLayout>
