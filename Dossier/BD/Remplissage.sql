@@ -21,8 +21,18 @@ SELECT 1, 'MARTINEZ', 'Guizmo', 'guizmo@mail.fr', 'enseignant', ref(Cl)
 FROM ob_classe Cl
 WHERE Cl.id_classe = 1;
 
+INSERT INTO ob_personne
+SELECT 2, 'MARTINEZ', 'GuizmoEtudiant', 'guizmo@mail.fr', 'etudiant', ref(Cl)
+FROM ob_classe Cl
+WHERE Cl.id_classe = 1;
+
+INSERT INTO ob_personne
+SELECT 3, 'LAMERE', 'SimonEtudiant', 'guizmo@mail.fr', 'etudiant', ref(Cl)
+FROM ob_classe Cl
+WHERE Cl.id_classe = 1;
+
 INSERT INTO ob_connexion
-SELECT 1,'guizmo', 'coucou', ref(E)
+SELECT 1,'a', 'a', ref(E)
 FROM ob_personne E
 WHERE id_personne = 1;
 
@@ -35,7 +45,27 @@ AND S.id_salle = 1
 AND E.id_personne = 1;
 
 INSERT INTO ob_note
-SELECT 1, 1, 20, 'CC', ref(M), ref(E)
+SELECT 1, 1, 20, 'CC1', ref(M), ref(E)
 FROM ob_matiere M, ob_personne E
 WHERE id_matiere = 1
-AND id_personne = 1;
+AND id_personne = 2;
+
+INSERT INTO ob_note
+SELECT 2, 1, 19, 'DS1', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 1
+AND id_personne = 2;
+
+INSERT INTO ob_note
+SELECT 3, 1, 3.5, 'CC1', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 1
+AND id_personne = 3;
+
+INSERT INTO ob_note
+SELECT 4, 1, 3.5, 'CC3', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 1
+AND id_personne = 3;
+
+COMMIT;

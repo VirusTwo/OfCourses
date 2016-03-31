@@ -13,15 +13,17 @@ import android.widget.ViewSwitcher;
 public class NoteSwitcher extends ViewSwitcher {
     private TextView noteTextView;
     private EditText noteEditText;
+    private int id_note;
     private StudentRow eleve;
     private float note;
     private boolean hadChanged = false;
 
-    public NoteSwitcher(Context context,float note,StudentRow eleve){
+    public NoteSwitcher(Context context,float note,StudentRow eleve, int id_note){
         super(context);
         setLayoutParams(StudentRow.LPSWITCHTER);
         this.note = note;
         this.eleve = eleve;
+        this.id_note = id_note;
         noteTextView = new TextView(super.getContext());
         noteTextView.setText(String.valueOf(note));
         noteTextView.setTextSize(15);

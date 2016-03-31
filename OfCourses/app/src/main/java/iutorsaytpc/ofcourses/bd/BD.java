@@ -16,8 +16,12 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
+import javax.net.ssl.SSLContext;
+
 import iutorsaytpc.ofcourses.MainActivity;
+import iutorsaytpc.ofcourses.modele.ClasseSingleton;
 import iutorsaytpc.ofcourses.modele.EnseignantSingleton;
+import iutorsaytpc.ofcourses.modele.MatiereSingleton;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 
@@ -160,8 +164,17 @@ public class BD {
         Connection co;
 
         co = connexion();
-        if (co == null) return null;
-
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(TIME_ERROR);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
+            return null;
+        }
         try {
             cst=co.prepareCall(" { call getCours(?, ?) } ");
             cst.setInt(1, EnseignantSingleton.getId());
@@ -229,8 +242,6 @@ public class BD {
         return res;
     }
 
-    //
-
     public static ArrayList<Object> getMatieresClasses() {
         MainActivity.attachLoadingFragment();
 
@@ -243,7 +254,17 @@ public class BD {
         Connection co;
 
         co = connexion();
-        if (co == null) return null;
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(TIME_ERROR);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
+            return null;
+        }
 
         //Matieres
         try {
@@ -285,6 +306,125 @@ public class BD {
         resTemp.add(resIdClasses);
 
         return resTemp;
+    }
+
+    //
+
+    public static ArrayList<Object> getNotes() {
+        //MainActivity.attachLoadingFragment();
+
+        CallableStatement cst=null;
+        ResultSet resSet=null;
+        ArrayList<Object> res = new ArrayList<>();
+        ArrayList<Object> notesCC = new ArrayList<>();
+        ArrayList<Object> notesDS = new ArrayList<>();
+        ArrayList<Object> students = new ArrayList<>();
+        int maxCC = 0;
+        int maxDS = 0;
+        Connection co;
+        co = connexion();
+
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(TIME_ERROR);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
+            return null;
+        }
+
+        //Récupération des élèves de la classe
+        try {
+            cst=co.prepareCall(" { call getStudentFromClass(?, ?) } ");
+            cst.setInt(1, ClasseSingleton.getId());
+            cst.registerOutParameter(2, OracleTypes.CURSOR);
+            cst.execute();
+            resSet=((OracleCallableStatement)cst).getCursor(2);
+            while(resSet.next()) {
+                students.add(resSet.getInt(1));
+                students.add(resSet.getString(2) + " " + resSet.getString(3));
+                //students.add(resSet.getString(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //Récupération des notes CC/DS pour chaque élève (prendre en compte le nombre de note max pour la suite
+        try {
+            //Récupération du nombre max de controle CC
+            cst=co.prepareCall(" { ? = call getNbNoteMaxCC(?, ?) } ");
+            cst.registerOutParameter(1, Types.INTEGER);
+            cst.setInt(2, ClasseSingleton.getId());
+            cst.setInt(3, MatiereSingleton.getId());
+            cst.execute();
+            maxCC = cst.getInt(1);
+            //Récupération du nombre max de controle DS
+            cst=co.prepareCall(" { ? = call getNbNoteMaxDS(?, ?) } ");
+            cst.registerOutParameter(1, Types.INTEGER);
+            cst.setInt(2, ClasseSingleton.getId());
+            cst.setInt(3, MatiereSingleton.getId());
+            cst.execute();
+            maxDS = cst.getInt(1);
+
+            //Récupération des notes CC pour chaque eleve
+            for (int i = 0; i < students.size(); i+=2) {
+                int id_student = (int) students.get(i);
+                cst = co.prepareCall(" { call getNotesCC(?, ?) } ");
+                cst.setInt(1, id_student);
+                cst.registerOutParameter(2, OracleTypes.CURSOR);
+                cst.execute();
+                resSet = ((OracleCallableStatement) cst).getCursor(2);
+                int cpt = 0;
+                while (resSet.next()) {
+                    notesCC.add(resSet.getInt(1));
+                    notesCC.add(resSet.getFloat(2));
+                    cpt++;
+                }
+                for(int j = cpt; j < maxCC; j++) {
+                    notesCC.add((int) 0);
+                    notesCC.add((float) 0);
+                }
+            }
+            //Récupération des notes DS pour chaque eleve
+            for (int i = 0; i < students.size(); i+=2) {
+                int id_student = (int) students.get(i);
+                cst = co.prepareCall(" { call getNotesDS(?, ?) } ");
+                cst.setInt(1, id_student);
+                cst.registerOutParameter(2, OracleTypes.CURSOR);
+                cst.execute();
+                resSet = ((OracleCallableStatement) cst).getCursor(2);
+                int cpt = 0;
+                while (resSet.next()) {
+                    notesDS.add(resSet.getInt(1));
+                    notesDS.add(resSet.getFloat(2));
+                    cpt++;
+                }
+                for(int j = cpt; j < maxDS; j++) {
+                    notesDS.add((int) 0);
+                    notesDS.add((float) 0);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        res.add(maxCC);
+        res.add(maxDS);
+
+        res.add(students);
+
+        res.add(notesCC);
+        res.add(notesDS);
+
+        deconnexion(co);
+
+        //MainActivity.detachLoadingFragment();
+
+        return res;
     }
 }
 

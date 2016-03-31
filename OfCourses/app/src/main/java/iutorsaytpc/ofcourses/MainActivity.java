@@ -1,5 +1,6 @@
 package iutorsaytpc.ofcourses;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.widget.RelativeLayout;
 
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
 import iutorsaytpc.ofcourses.view.ConnexionView;
+import iutorsaytpc.ofcourses.view.FragmentView;
 import iutorsaytpc.ofcourses.view.ListeElevesView;
 import iutorsaytpc.ofcourses.view.LoadingView;
 
@@ -25,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private static FragmentManager fragmentManager;
     private static FragmentTransaction fragmentTransaction;
 
-    private ViewGroup viewGroup;
+    //Views
+    private static FragmentView fragmentView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
+
+        //Réglage des onglets
+        fragmentView = new FragmentView(this);
 
         //Réglage du fragment loading;
         loadingView = new LoadingView(this);
@@ -96,5 +102,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static void resetLoading() {
         loadingView.reset();
+    }
+
+    @Override
+    public void onBackPressed() {
+        RelativeLayout onglets = (RelativeLayout) findViewById(R.id.layoutParent);
+        onglets.removeAllViews();
+        onglets.addView(fragmentView);
+        if(loadingFragment.isAdded()) detachLoadingFragment();
     }
 }

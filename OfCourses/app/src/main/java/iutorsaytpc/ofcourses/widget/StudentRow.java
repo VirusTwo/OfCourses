@@ -54,11 +54,18 @@ public class StudentRow extends TableRow {
         tmpTxtView.setLayoutParams(LPTEXT);
         addView(tmpTxtView);
 
-        for(float x:note){
-            noteSwitcher =  new NoteSwitcher(super.getContext(),x,this);
+        for(int i = 0; i < note.length; i+=2){
+            noteSwitcher =  new NoteSwitcher(super.getContext(),note[i + 1],this, (int) note[i]);
             addView(noteSwitcher);
             noteSwitchers.add(noteSwitcher);
         }
+
+        /*
+        for(float x:note){
+            noteSwitcher =  new NoteSwitcher(super.getContext(),x,this, id_note);
+            addView(noteSwitcher);
+            noteSwitchers.add(noteSwitcher);
+        }*/
 
         tmpTxtView = new TextView(super.getContext());
         tmpTxtView.setText(commentaire);

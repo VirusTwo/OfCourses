@@ -52,6 +52,69 @@ create or replace procedure getCours(id in ob_personne.id_personne%type, res out
   end;
 /
 
+create or replace procedure getStudentFromClass(id in ob_classe.id_classe%type, res out sys_refcursor) as
+  begin
+    open res for
+      select id_personne, nom, prenom
+      from ob_personne P
+      where (deref(saClasse)).id_classe = id
+      and fonction = 'etudiant';
+      /*and (deref(B.sonEtudiant)).id_personne = P.id_personne;*/
+  end;
+/
+
+create or replace procedure getNotesCC(id in ob_personne.id_personne%type, res out sys_refcursor) as
+  begin
+    open res for
+      select id_note, note, type
+      from ob_note N
+      where (deref(N.sonEtudiant)).id_personne = id
+      and REGEXP_LIKE (N.type, '^CC(*)')
+      group by type, note, id_note;
+  end;
+/
+
+create or replace procedure getNotesDS(id in ob_personne.id_personne%type, res out sys_refcursor) as
+  begin
+    open res for
+      select id_note, note, type
+      from ob_note N
+      where (deref(N.sonEtudiant)).id_personne = id
+      and REGEXP_LIKE (N.type, '^DS(*)')
+      group by type, note, id_note;
+  end;
+/
+
+create or replace function getNbNoteMaxCC(idClasse in ob_classe.id_classe%type, idMatiere in ob_matiere.id_matiere%type) return integer is
+  res integer;
+  begin
+    select MAX(COUNT(id_note)) into res
+    from ob_personne P, ob_note N
+    where (deref(P.saClasse)).id_classe = idClasse
+    and (deref(N.saMatiere)).id_matiere = idMatiere
+    and (deref(N.sonEtudiant)).id_personne = P.id_personne
+    and REGEXP_LIKE (N.type, '^CC(*)')
+    group by id_note;
+    
+    return res;
+  end;
+/
+
+create or replace function getNbNoteMaxDS(idClasse in ob_classe.id_classe%type, idMatiere in ob_matiere.id_matiere%type) return integer is
+  res integer;
+  begin
+    select MAX(COUNT(id_note)) into res
+    from ob_personne P, ob_note N
+    where (deref(P.saClasse)).id_classe = idClasse
+    and (deref(N.saMatiere)).id_matiere = idMatiere
+    and (deref(N.sonEtudiant)).id_personne = P.id_personne
+    and REGEXP_LIKE (N.type, '^DS(*)')
+    group by id_note;
+    
+    return res;
+  end;
+/
+
 create or replace procedure getNotesFromEtudiant(idPersonne in ob_personne.id_personne%type, idMatiere in ob_matiere.id_matiere%type, res out sys_refcursor) as
   begin
     open res for
@@ -63,6 +126,7 @@ create or replace procedure getNotesFromEtudiant(idPersonne in ob_personne.id_pe
   end;
 /
 
+/*
 create or replace procedure addUneMatiere(numMatiere in INTEGER, nomMatiere in VARCHAR, coeffMatiere in FLOAT) AS 
 BEGIN
   INSERT INTO ob_matiere
@@ -119,3 +183,4 @@ BEGIN
     VALUES(idPointB, descritpion, sonEtudiant);
 END;
 /
+*/
