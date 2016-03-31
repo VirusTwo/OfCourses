@@ -60,13 +60,6 @@ public class StudentRow extends TableRow {
             noteSwitchers.add(noteSwitcher);
         }
 
-        /*
-        for(float x:note){
-            noteSwitcher =  new NoteSwitcher(super.getContext(),x,this, id_note);
-            addView(noteSwitcher);
-            noteSwitchers.add(noteSwitcher);
-        }*/
-
         tmpTxtView = new TextView(super.getContext());
         tmpTxtView.setText(commentaire);
         tmpTxtView.setTextSize(15);

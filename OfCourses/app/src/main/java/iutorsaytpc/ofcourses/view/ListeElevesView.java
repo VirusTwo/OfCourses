@@ -165,63 +165,64 @@ public class ListeElevesView extends LinearLayout {
             public void run() {
                 res = BD.getNotes();
 
-                ((Activity) getContext()).runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                if (res != null) {
 
-                        int maxCC = (int) res.get(0);
-                        int maxDS = (int) res.get(1);
-                        ArrayList<Object> students = (ArrayList<Object>) res.get(2);
-                        ArrayList<Object> notesCC = (ArrayList<Object>) res.get(3);
-                        ArrayList<Object> notesDS = (ArrayList<Object>) res.get(4);
-                        StudentRow tmpRow;
+                    ((Activity) getContext()).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
 
-                        //HEADER
-                        String header[] = new String[3 + maxCC + maxDS];
-                        header[0] = "Élèves";//,"CC1","DS1", "Commentaire","Moyenne"};
-                        //Colonnes CC
-                        for (int i = 1; i <= maxCC; i++) {
-                            header[i] = "CC" + i;
-                        }
-                        //Colonnes DS
-                        for (int i = 1; i <= maxDS; i++) {
-                            header[i + maxCC] = "DS" + i;
-                        }
-                        header[1 + maxCC + maxDS] = "Commentaire";
-                        header[2 + maxCC + maxDS] = "Moyenne";
+                            int maxCC = (int) res.get(0);
+                            int maxDS = (int) res.get(1);
+                            ArrayList<Object> students = (ArrayList<Object>) res.get(2);
+                            ArrayList<Object> notesCC = (ArrayList<Object>) res.get(3);
+                            ArrayList<Object> notesDS = (ArrayList<Object>) res.get(4);
+                            StudentRow tmpRow;
 
-                        createHeadTable(header);
-
-                        //NOTES
-                        for (int i = 0; i < students.size(); i += 2) {
-                            int id_personne = (int) students.get(i);
-                            String nom_personne = (String) students.get(i + 1);
-                            //String commentaire = (String) students.get(i+2);
-
-                            float[] notes = new float[2*(maxCC + maxDS)];
-                            int cpt = 0;
-                            for(int j = i ; j < i + maxCC * 2; j += 2) {
-                                int id_note = (int) notesCC.get(j);
-                                float note = (float) notesCC.get(j + 1);
-                                notes[cpt] = id_note;
-                                notes[cpt + 1] = note;
-                                cpt+=2;
+                            //HEADER
+                            String header[] = new String[3 + maxCC + maxDS];
+                            header[0] = "Élèves";//,"CC1","DS1", "Commentaire","Moyenne"};
+                            //Colonnes CC
+                            for (int i = 1; i <= maxCC; i++) {
+                                header[i] = "CC" + i;
                             }
-
-                            for(int j = i ; j < i + maxDS * 2; j += 2) {
-                                int id_note = (int) notesDS.get(j);
-                                float note = (float) notesDS.get(j + 1);
-                                notes[cpt] = id_note;
-                                notes[cpt + 1] = note;
-                                cpt+=2;
+                            //Colonnes DS
+                            for (int i = 1; i <= maxDS; i++) {
+                                header[i + maxCC] = "DS" + i;
                             }
+                            header[1 + maxCC + maxDS] = "Commentaire";
+                            header[2 + maxCC + maxDS] = "Moyenne";
+
+                            createHeadTable(header);
+
+                            //NOTES
+                            for (int i = 0; i < students.size(); i += 2) {
+                                int id_personne = (int) students.get(i);
+                                String nom_personne = (String) students.get(i + 1);
+
+                                float[] notes = new float[2 * (maxCC + maxDS)];
+                                int cpt = 0;
+                                for (int j = i; j < i + maxCC * 2; j += 2) {
+                                    int id_note = (int) notesCC.get(j);
+                                    float note = (float) notesCC.get(j + 1);
+                                    notes[cpt] = id_note;
+                                    notes[cpt + 1] = note;
+                                    cpt += 2;
+                                }
+
+                                for (int j = i; j < i + maxDS * 2; j += 2) {
+                                    int id_note = (int) notesDS.get(j);
+                                    float note = (float) notesDS.get(j + 1);
+                                    notes[cpt] = id_note;
+                                    notes[cpt + 1] = note;
+                                    cpt += 2;
+                                }
 
 
-                            tmpRow = new StudentRow(getContext(), nom_personne, "je sais pas encore", notes);
-                            tmpRow.generateRow();
-                            tableEleve.addView(tmpRow);
-                            studentRows.add(tmpRow);
-                        }
+                                tmpRow = new StudentRow(getContext(), nom_personne, "je sais pas encore", notes);
+                                tmpRow.generateRow();
+                                tableEleve.addView(tmpRow);
+                                studentRows.add(tmpRow);
+                            }
 /*
                         float note[] = {12,15};
                         tmpRow = new StudentRow(getContext(),"Michelle", "Gros nul", note);
@@ -234,12 +235,10 @@ public class ListeElevesView extends LinearLayout {
                         tmpRow.generateRow();
                         studentRows.add(tmpRow);
                         tableEleve.addView(tmpRow);*/
-                    }
-                });
+                        }
+                    });
+                }
             }
         }).start();
-
-
-
     }
 }
