@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    public static boolean isLoadingFragmentAdded() {
+        return loadingFragment.isAdded();
+    }
+
     public static void errorConnexion () {
         loadingView.errorConnnexion();
     }

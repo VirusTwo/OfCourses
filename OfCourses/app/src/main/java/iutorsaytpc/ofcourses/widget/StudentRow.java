@@ -26,7 +26,7 @@ public class StudentRow extends TableRow {
 
     public StudentRow(Context context,String nomEleve, String commentaire, float note[]){
         super(context);
-        this.noteSwitchers = new ArrayList<NoteSwitcher>();
+        this.noteSwitchers = new ArrayList<>();
         this.note = note.clone();
         this.nomEleve = nomEleve;
         this.commentaire = commentaire;

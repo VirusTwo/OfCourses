@@ -51,21 +51,33 @@ WHERE id_matiere = 1
 AND id_personne = 2;
 
 INSERT INTO ob_note
-SELECT 2, 1, 19, 'DS1', ref(M), ref(E)
+SELECT 2, 1, 3.5, 'CC1', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 1
+AND id_personne = 3;
+
+INSERT INTO ob_note
+SELECT 3, 1, 19, 'DS1', ref(M), ref(E)
 FROM ob_matiere M, ob_personne E
 WHERE id_matiere = 1
 AND id_personne = 2;
 
 INSERT INTO ob_note
-SELECT 3, 1, 3.5, 'CC1', ref(M), ref(E)
+SELECT 4, 1, 3, 'DS1', ref(M), ref(E)
 FROM ob_matiere M, ob_personne E
 WHERE id_matiere = 1
 AND id_personne = 3;
 
-INSERT INTO ob_note
-SELECT 4, 1, 3.5, 'CC3', ref(M), ref(E)
-FROM ob_matiere M, ob_personne E
-WHERE id_matiere = 1
-AND id_personne = 3;
+INSERT INTO ob_pointBonus
+SELECT 1, '', ref(E), -1, ref(M)
+FROM ob_personne E, ob_matiere M
+WHERE id_personne = 2
+and id_matiere = 1;
+
+INSERT INTO ob_pointBonus
+SELECT 2, 'abc', ref(E), 5, ref(M)
+FROM ob_personne E, ob_matiere M
+WHERE id_personne = 3
+and id_matiere = 1;
 
 COMMIT;

@@ -311,7 +311,7 @@ public class BD {
     //
 
     public static ArrayList<Object> getNotes() {
-        MainActivity.attachLoadingFragment();
+        if(!MainActivity.isLoadingFragmentAdded()) MainActivity.attachLoadingFragment();
 
         CallableStatement cst=null;
         ResultSet resSet=null;
@@ -319,6 +319,7 @@ public class BD {
         ArrayList<Object> notesCC = new ArrayList<>();
         ArrayList<Object> notesDS = new ArrayList<>();
         ArrayList<Object> students = new ArrayList<>();
+        ArrayList<Object> pointBonus = new ArrayList<>();
         int maxCC = 0;
         int maxDS = 0;
         Connection co;
@@ -336,6 +337,8 @@ public class BD {
             return null;
         }
 
+        ClasseSingleton.setId_students(new ArrayList<Integer>());
+        ClasseSingleton.setNom_students(new ArrayList<String>());
         //Récupération des élèves de la classe
         try {
             cst=co.prepareCall(" { call getStudentFromClass(?, ?) } ");
@@ -345,7 +348,9 @@ public class BD {
             resSet=((OracleCallableStatement)cst).getCursor(2);
             while(resSet.next()) {
                 students.add(resSet.getInt(1));
+                ClasseSingleton.getStudents().add(resSet.getInt(1));
                 students.add(resSet.getString(2) + " " + resSet.getString(3));
+                ClasseSingleton.getNomStudents().add(resSet.getString(2) + " " + resSet.getString(3));
                 //students.add(resSet.getString(4));
             }
         } catch (SQLException e) {
@@ -355,14 +360,14 @@ public class BD {
         //Récupération des notes CC/DS pour chaque élève (prendre en compte le nombre de note max pour la suite
         try {
             //Récupération du nombre max de controle CC
-            cst=co.prepareCall(" { ? = call getNbNoteMaxCC(?, ?) } ");
+            cst=co.prepareCall(" { ? = call getMaxCC(?, ?) } ");
             cst.registerOutParameter(1, Types.INTEGER);
             cst.setInt(2, ClasseSingleton.getId());
             cst.setInt(3, MatiereSingleton.getId());
             cst.execute();
             maxCC = cst.getInt(1);
             //Récupération du nombre max de controle DS
-            cst=co.prepareCall(" { ? = call getNbNoteMaxDS(?, ?) } ");
+            cst=co.prepareCall(" { ? = call getMaxDS(?, ?) } ");
             cst.registerOutParameter(1, Types.INTEGER);
             cst.setInt(2, ClasseSingleton.getId());
             cst.setInt(3, MatiereSingleton.getId());
@@ -377,15 +382,9 @@ public class BD {
                 cst.registerOutParameter(2, OracleTypes.CURSOR);
                 cst.execute();
                 resSet = ((OracleCallableStatement) cst).getCursor(2);
-                int cpt = 0;
                 while (resSet.next()) {
                     notesCC.add(resSet.getInt(1));
                     notesCC.add(resSet.getFloat(2));
-                    cpt++;
-                }
-                for(int j = cpt; j < maxCC; j++) {
-                    notesCC.add((int) 0);
-                    notesCC.add((float) 0);
                 }
             }
             //Récupération des notes DS pour chaque eleve
@@ -396,15 +395,23 @@ public class BD {
                 cst.registerOutParameter(2, OracleTypes.CURSOR);
                 cst.execute();
                 resSet = ((OracleCallableStatement) cst).getCursor(2);
-                int cpt = 0;
                 while (resSet.next()) {
                     notesDS.add(resSet.getInt(1));
                     notesDS.add(resSet.getFloat(2));
-                    cpt++;
                 }
-                for(int j = cpt; j < maxDS; j++) {
-                    notesDS.add((int) 0);
-                    notesDS.add((float) 0);
+            }
+
+            //Récupération des points bonus
+            for (int i = 0; i < students.size(); i+=2) {
+                int id_student = (int) students.get(i);
+                cst = co.prepareCall(" { call getPointBonus(?, ?) } ");
+                cst.setInt(1, id_student);
+                cst.registerOutParameter(2, OracleTypes.CURSOR);
+                cst.execute();
+                resSet = ((OracleCallableStatement) cst).getCursor(2);
+                while (resSet.next()) {
+                    pointBonus.add(resSet.getInt(1));
+                    pointBonus.add(resSet.getString(2));
                 }
             }
 
@@ -417,14 +424,150 @@ public class BD {
 
         res.add(students);
 
+        System.out.println(notesCC);
+        System.out.println(notesDS);
+
         res.add(notesCC);
         res.add(notesDS);
+
+        res.add(pointBonus);
+
+        deconnexion(co);
+
+        if(MainActivity.isLoadingFragmentAdded()) MainActivity.detachLoadingFragment();
+
+        return res;
+    }
+
+    public static void setNote(int id_note, float note) {
+
+        Connection co;
+        CallableStatement cst;
+
+        co = connexion();
+
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(TIME_ERROR);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
+        }
+
+        try {
+            cst = co.prepareCall("{ call setNote(?, ?) }");
+            cst.setInt(1, id_note);
+            cst.setFloat(2, note);
+            cst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        deconnexion(co);
+
+    }
+
+    public static void addCC() {
+        MainActivity.attachLoadingFragment();
+
+        Connection co;
+        CallableStatement cst;
+
+        co = connexion();
+
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(TIME_ERROR);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
+        }
+
+        try {
+            cst = co.prepareCall("{ call addCC(?, ?) }");
+            cst.setInt(1, ClasseSingleton.getId());
+            cst.setInt(2, MatiereSingleton.getId());
+            cst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         deconnexion(co);
 
         MainActivity.detachLoadingFragment();
+    }
 
-        return res;
+    public static void addDS() {
+        MainActivity.attachLoadingFragment();
+
+        Connection co;
+        CallableStatement cst;
+
+        co = connexion();
+
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(TIME_ERROR);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
+        }
+
+        try {
+            cst = co.prepareCall("{ call addDS(?, ?) }");
+            cst.setInt(1, ClasseSingleton.getId());
+            cst.setInt(2, MatiereSingleton.getId());
+            cst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        deconnexion(co);
+
+        MainActivity.detachLoadingFragment();
+    }
+
+    public static void setPointBonus(int id_personne, int point, String description) {
+        MainActivity.attachLoadingFragment();
+
+        Connection co;
+        CallableStatement cst;
+
+        co = connexion();
+
+        if (co == null) {
+            MainActivity.errorConnexion();
+            try {
+                Thread.sleep(TIME_ERROR);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            MainActivity.detachLoadingFragment();
+            MainActivity.resetLoading();
+        }
+
+        try {
+            cst = co.prepareCall("{ call setPointBonus(?, ?, ?) }");
+            cst.setInt(1, id_personne);
+            cst.setInt(2, MatiereSingleton.getId());
+            cst.setString(3, description);
+            cst.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        deconnexion(co);
+
+        MainActivity.detachLoadingFragment();
     }
 }
 

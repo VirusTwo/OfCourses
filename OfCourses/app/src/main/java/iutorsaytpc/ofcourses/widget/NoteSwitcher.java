@@ -7,6 +7,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import iutorsaytpc.ofcourses.bd.BD;
+
 /**
  * Created by Cyril on 18/03/2016.
  */
@@ -25,7 +27,8 @@ public class NoteSwitcher extends ViewSwitcher {
         this.eleve = eleve;
         this.id_note = id_note;
         noteTextView = new TextView(super.getContext());
-        noteTextView.setText(String.valueOf(note));
+        if(note == -1) noteTextView.setText("");
+        else noteTextView.setText(String.valueOf(note));
         noteTextView.setTextSize(15);
         noteTextView.setLayoutParams(StudentRow.LPTEXT);
         addView(noteTextView);
@@ -41,11 +44,20 @@ public class NoteSwitcher extends ViewSwitcher {
     }
 
     public void showNext(){
-        if(noteTextView.getText() != noteEditText.getText()){
+        System.out.println(noteTextView.getText().toString());
+        System.out.println(noteEditText.getText().toString());
+        if(noteTextView.getText().toString().compareTo(noteEditText.getText().toString()) != 0 && Float.parseFloat(noteEditText.getText().toString()) != -1) {
             hadChanged = true;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    BD.setNote(id_note, Float.parseFloat(noteEditText.getText().toString()));
+                }
+            }).start();
         }
         noteEditText.setEnabled(!noteEditText.isEnabled());
-        noteTextView.setText(noteEditText.getText());
+        if(noteTextView.getText().toString().compareTo("") == 0) noteTextView.setText("");
+        else  noteTextView.setText(noteEditText.getText());
         super.showNext();
     }
 }

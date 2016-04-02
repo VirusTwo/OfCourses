@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
+import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.controller.ConnexionController;
@@ -100,10 +102,13 @@ public class ListeElevesView extends LinearLayout {
         tableEleve.addView(headRow);
     }
     public void switchallSwitch(){
+        MainActivity.attachLoadingFragment();
 
         for(StudentRow a:studentRows){
             a.switchView();
         }
+
+        MainActivity.detachLoadingFragment();
     }
     public void participationDialog() {
         AlertDialog.Builder builder;
@@ -120,6 +125,13 @@ public class ListeElevesView extends LinearLayout {
                 System.out.println(pop.getSomme());
                 System.out.println(pop.getCommentaire());
                 System.out.println(pop.getEtudiant());
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        BD.setPointBonus(pop.getIdEtudiant(), pop.getSomme(), pop.getCommentaire());
+                    }
+                }).start();
 
                 participationDialog.dismiss();
             }
@@ -147,7 +159,33 @@ public class ListeElevesView extends LinearLayout {
                 System.out.print(noteDialog.getNote());
                 System.out.print(noteDialog.getTypeEval());
                 //Toast.makeText(getApplicationContext(), "Vous avez ajouter une note à " + noteDialog.getEtudiant() + "\n et il a eu  " + noteDialog.getNote() + " à un " + noteDialog.getTypeEval(), Toast.LENGTH_SHORT).show();
+
+                // ajout des notes
+                Runnable runnable = null;
+
+                switch (noteDialog.getTypeEval()) {
+                    case "DS" :
+                        runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                BD.addDS();
+                            }
+                        };
+                        break;
+
+                    case "CC" :
+                        runnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                BD.addCC();
+                            }
+                        };
+                        break;
+                }
+
+                new Thread(runnable).start();
                 marksDialog.dismiss();
+                createDemoDataListeEleve();
             }
         });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -160,6 +198,7 @@ public class ListeElevesView extends LinearLayout {
     }
 
     public void createDemoDataListeEleve() {
+        tableEleve.removeAllViews();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -176,6 +215,7 @@ public class ListeElevesView extends LinearLayout {
                             ArrayList<Object> students = (ArrayList<Object>) res.get(2);
                             ArrayList<Object> notesCC = (ArrayList<Object>) res.get(3);
                             ArrayList<Object> notesDS = (ArrayList<Object>) res.get(4);
+                            ArrayList<Object> pointBonus = (ArrayList<Object>) res.get(5);
                             StudentRow tmpRow;
 
                             //HEADER
@@ -201,40 +241,32 @@ public class ListeElevesView extends LinearLayout {
 
                                 float[] notes = new float[2 * (maxCC + maxDS)];
                                 int cpt = 0;
-                                for (int j = i; j < i + maxCC * 2; j += 2) {
-                                    int id_note = (int) notesCC.get(j);
-                                    float note = (float) notesCC.get(j + 1);
+                                for (int j = 0; j < maxCC * 2; j += 2) {
+                                    int id_note = (int) notesCC.get(j + maxCC * i);
+                                    float note = (float) notesCC.get(j + maxCC * i + 1);
                                     notes[cpt] = id_note;
                                     notes[cpt + 1] = note;
                                     cpt += 2;
                                 }
 
-                                for (int j = i; j < i + maxDS * 2; j += 2) {
-                                    int id_note = (int) notesDS.get(j);
-                                    float note = (float) notesDS.get(j + 1);
+                                for (int j = 0; j < maxDS * 2; j += 2) {
+                                    int id_note = (int) notesDS.get(j + maxDS * i);
+                                    float note = (float) notesDS.get(j + maxDS * i + 1);
                                     notes[cpt] = id_note;
                                     notes[cpt + 1] = note;
                                     cpt += 2;
                                 }
+                                String res = "";
+                                for(int j = 1; j < notes.length; j+=2) {
+                                    res+=notes[j] + ", ";
+                                }
+                                System.out.println(res);
 
-
-                                tmpRow = new StudentRow(getContext(), nom_personne, "je sais pas encore", notes);
+                                tmpRow = new StudentRow(getContext(), nom_personne, (String) pointBonus.get(i + 1), notes);
                                 tmpRow.generateRow();
                                 tableEleve.addView(tmpRow);
                                 studentRows.add(tmpRow);
                             }
-/*
-                        float note[] = {12,15};
-                        tmpRow = new StudentRow(getContext(),"Michelle", "Gros nul", note);
-                        tmpRow.generateRow();
-                        tableEleve.addView(tmpRow);
-                        studentRows.add(tmpRow);
-
-                        float note2[] = {19,20};
-                        tmpRow = new StudentRow(getContext(),"SuperMan", "Gros nul", note2);
-                        tmpRow.generateRow();
-                        studentRows.add(tmpRow);
-                        tableEleve.addView(tmpRow);*/
                         }
                     });
                 }
