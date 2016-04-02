@@ -47,7 +47,6 @@ public class PopupNote extends LinearLayout {
             spinnerEtudiant = (Spinner) findViewById(R.id.spinnerEtudiant);
             spinnerTypeEval = (Spinner) findViewById(R.id.spinnerTypeTest);
 
-
             //-- la liste des etudiants --
             ArrayList<String>  listeEtudiant = new ArrayList<String>();
             listeEtudiant.add("Cyril");

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.controller.PopupAppreciationController;
+import iutorsaytpc.ofcourses.modele.ClasseSingleton;
 
 /**
  * Created by simon on 24/03/2016.
@@ -62,7 +63,7 @@ public class PopupAppreciation extends LinearLayout {
         lstEtudiant.add("Rick");
         lstEtudiant.add("Carl");
 
-        ArrayAdapter<String> dataApadaterEtudiant = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, lstEtudiant );
+        ArrayAdapter<String> dataApadaterEtudiant = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item, ClasseSingleton.getNomStudents());
         dataApadaterEtudiant.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEtudiant.setAdapter(dataApadaterEtudiant);
 
@@ -90,6 +91,10 @@ public class PopupAppreciation extends LinearLayout {
     public String getEtudiant()
     {
         return spinnerEtudiant.getSelectedItem().toString();
+    }
+
+    public int getIdEtudiant() {
+        return ClasseSingleton.getStudents().get(spinnerEtudiant.getSelectedItemPosition());
     }
 }
 
