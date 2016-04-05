@@ -22,7 +22,7 @@
     <string name="textView8">English</string>
     <string name="textView9">Actual font :</string>
 
-    <string name="title_activity_liste_eleve">Les des élèves</string>
+    <string name="title_activity_liste_eleve">List of students</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="add_mark_popup_title">Add mark</string>
     <string name="add_appreciation_popup_title">Add an appreciation to a student</string>
@@ -33,8 +33,8 @@
     <string name="save">Save</string>
     <string name="tp">TP : </string>
     <string name="subject">Subject : </string>
-    <string name="listeOfStudents">Student list</string>
-    <string name="listeOfGroups">Group list</string>
+    <string name="listeOfStudents">List of students</string>
+    <string name="listeOfGroups">List of groups</string>
     <string name="chooseASubject">Choose a subject</string>
     <string name="chooseAGroup">Choose a group</string>
     <string name="chooseAStudent">Select a student</string>
@@ -47,11 +47,12 @@
     <string name="finalMark">Final mark : </string>
     <string name="next">Next</string>
     <string name="title_activity_liste_groupe">listeGroupeActivity</string>
-    <string name="categories_evaluation">Evaluation's categories :</string>
+    <string name="categories_evaluation">Categories of evalutions : </string>
     <string name="scheduler">Scheduler</string>
-    <string name="listgroup">Group list</string>
+    <string name="listgroup">List of group</string>
     <string name="connexion">Connection</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="Groupe4CIUTOrsay">Group 4C : IUT Orsay</string>
+    <string name="section_format"></string>
 </resources>

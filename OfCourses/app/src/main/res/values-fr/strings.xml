@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">OfCourses</string>
     <string name="action_settings">Paramètres</string>
-    <string name="action_sign_in">Se connecter ou s'enregistrer</string>
+    <string name="action_sign_in">Se connecter ou s\'enregistrer</string>
     <string name="action_sign_in_short">Se connecter</string>
     <string name="error_invalid_email">Adresse email invalide</string>
     <string name="error_invalid_password">Mot de passe trop court</string>
@@ -21,10 +21,11 @@
     <string name="textView7">Notifications</string>
     <string name="textView8">Anglais</string>
     <string name="textView9">Police actuelle :</string>
+    <string name="btnQuit">Quitter</string>
 
-    <string name="title_activity_liste_eleve">Les des élèves</string>
+    <string name="title_activity_liste_eleve">Liste des élèves</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="section_format">null</string>
     <string name="add_mark_popup_title">Ajouter une note</string>
     <string name="add_appreciation_popup_title">Ajouter une appréciation à un élève</string>
     <string name="ok">Valider</string>
@@ -48,7 +49,7 @@
     <string name="finalMark">Note Finale : </string>
     <string name="next">Suivant</string>
     <string name="title_activity_liste_groupe">listeGroupeActivity</string>
-    <string name="categories_evaluation">Catégories d'évaluation :</string>
+    <string name="categories_evaluation">Catégories d\'évaluation :</string>
     <string name="scheduler">Emploi du temps</string>
     <string name="listgroup">Liste de groupe</string>
     <string name="connexion">Connexion</string>
