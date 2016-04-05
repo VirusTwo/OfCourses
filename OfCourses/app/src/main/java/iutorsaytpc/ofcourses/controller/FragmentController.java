@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.FrameLayout;
 import iutorsaytpc.ofcourses.R;
+import iutorsaytpc.ofcourses.view.EdtView;
 import iutorsaytpc.ofcourses.view.FragmentView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
 import iutorsaytpc.ofcourses.view.EdtView;
@@ -21,19 +22,17 @@ public class FragmentController implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        FrameLayout content = null;
         switch (v.getId()){
             case R.id.edt:
-                //changement de vue vers edt
-                FrameLayout contentedt = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
-                contentedt.removeAllViews();
-                contentedt.addView(new EdtView(view.getContext()));
-                contentedt.setContentDescription("EdtView");
+                content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
+                content.removeAllViews();
+                content.addView(new EdtView(view.getContext()));
                 break;
             case R.id.listeGroupe:
-                FrameLayout contentlg = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
-                contentlg.removeAllViews();
-                contentlg.addView(new ListeGroupesView(view.getContext()));
-                contentlg.setContentDescription("ListeGroupView");
+                content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
+                content.removeAllViews();
+                content.addView(new ListeGroupesView(view.getContext()));
                 break;
         }
     }
