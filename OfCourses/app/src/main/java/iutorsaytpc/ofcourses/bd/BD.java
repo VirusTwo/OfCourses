@@ -311,7 +311,6 @@ public class BD {
     //
 
     public static ArrayList<Object> getNotes() {
-        if(!MainActivity.isLoadingFragmentAdded()) MainActivity.attachLoadingFragment();
 
         CallableStatement cst=null;
         ResultSet resSet=null;
@@ -433,8 +432,6 @@ public class BD {
         res.add(pointBonus);
 
         deconnexion(co);
-
-        if(MainActivity.isLoadingFragmentAdded()) MainActivity.detachLoadingFragment();
 
         return res;
     }
