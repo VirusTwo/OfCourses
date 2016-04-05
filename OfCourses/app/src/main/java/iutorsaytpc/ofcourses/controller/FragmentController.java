@@ -1,7 +1,6 @@
 package iutorsaytpc.ofcourses.controller;
 
 import android.view.View;
-
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.view.FragmentView;
 
@@ -20,9 +19,10 @@ public class FragmentController implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.edt:
-
+                //load edt
                 break;
             case R.id.listeGroupe:
+                //load listeGroupe
                 break;
         }
     }
