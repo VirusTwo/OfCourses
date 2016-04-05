@@ -27,6 +27,7 @@ public class ListeGroupesController implements View.OnClickListener {
                 FrameLayout content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 content.removeAllViews();
                 content.addView(new ListeElevesView(view.getContext()));
+                content.setContentDescription("ListeEleveView");
                 ClasseSingleton.setId_classe(view.getSelectedIdClasse());
                 MatiereSingleton.setId_matiere(view.getSelectedIdMatiere());
                 break;
