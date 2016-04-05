@@ -147,21 +147,6 @@
                     android:textSize="10dp"
                     android:textColor="#ffffff"
                     android:layout_gravity="center_horizontal">
-
-                </Button>
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
-                    android:text="@string/save"
-                    android:id="@+id/sauvegarderButton"
-                    android:background="@drawable/greenbutton"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:layout_marginLeft="5dp"
-                    android:maxWidth="100dp"
-                    android:textSize="10dp"
-                    android:textColor="#ffffff">
-
                 </Button>
             </LinearLayout>
         </LinearLayout>
