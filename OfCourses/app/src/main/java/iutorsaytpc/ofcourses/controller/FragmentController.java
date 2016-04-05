@@ -31,6 +31,7 @@ public class FragmentController implements View.OnClickListener{
                 FrameLayout content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 content.removeAllViews();
                 content.addView(new ListeGroupesView(view.getContext()));
+                content.setContentDescription("ListeGroupView");
                 break;
         }
     }
