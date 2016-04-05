@@ -82,11 +82,13 @@ public class ListeGroupesView extends LinearLayout {
     }
 
     public void setMatList(List<String> matiereList) {
+        this.matiereList = matiereList;
         ArrayAdapter<String> dataAdapterMatiere = new ArrayAdapter<String>(super.getContext(), android.R.layout.simple_spinner_item, matiereList);
         dataAdapterMatiere.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerMatiere.setAdapter(dataAdapterMatiere);
     }
     public void setGroupeList(List<String> groupList){
+        this.groupList = groupList;
         ArrayAdapter<String> dataAdapterGroupe = new ArrayAdapter<String>(super.getContext(), android.R.layout.simple_spinner_item, groupList);
         dataAdapterGroupe.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerGroupe.setAdapter(dataAdapterGroupe);
@@ -113,8 +115,14 @@ public class ListeGroupesView extends LinearLayout {
     public int getSelectedIdMatiere() {
         return matiereIdList.get(spinnerMatiere.getSelectedItemPosition());
     }
-
+    public String getSelectedNameMatiere() {
+        return matiereList.get(spinnerMatiere.getSelectedItemPosition());
+    }
     public int getSelectedIdClasse() {
         return groupIdList.get(spinnerGroupe.getSelectedItemPosition());
+    }
+
+    public String getSelectedNameClasse() {
+        return groupList.get(spinnerGroupe.getSelectedItemPosition());
     }
 }
