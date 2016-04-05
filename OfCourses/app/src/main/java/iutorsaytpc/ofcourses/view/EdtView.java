@@ -1,4 +1,4 @@
-package com.example.lydia.edt.V;
+package iutorsaytpc.ofcourses.view;
 
 
 import android.content.Context;
@@ -11,10 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.example.lydia.edt.M.M;
-import com.example.lydia.edt.R;
+
 
 import java.util.ArrayList;
+
+import iutorsaytpc.ofcourses.R;
+import iutorsaytpc.ofcourses.bd.BD;
 
 /**
  * Created by XU Minghao on 2016/4/5.
@@ -29,7 +31,7 @@ public class EdtView extends RelativeLayout {
         this.context = context;
 
         inflate();
-        edt=BD.getCours();
+        edt= BD.getCours();
 
         updateLabel(edt);
 
@@ -72,7 +74,7 @@ public class EdtView extends RelativeLayout {
                 case 0:
                     code=ar.get(i);
                     //sert à récupérer le code et à s'en servir pour identifier la textView à modifier
-                    id = res.getIdentifier(code, "id",getPackageName());
+                    id = res.getIdentifier(code, "id","iutorsaytpc.ofcourses.R");
                     view = (TextView) findViewById(id);
                     break;
 

@@ -33,4 +33,11 @@
     <string name="finalMark">Note Finale :</string>
     <string name="next">Suivant</string>
     <string name="title_activity_liste_groupe">listeGroupeActivity</string>
+    <string name="lblLlundi">Lun</string>
+    <string name="lblMardi">Mardi</string>
+    <string name="lblMercredi">Mercredi</string>
+    <string name="LblMard">Mar</string>
+    <string name="lblMer">Mer</string>
+    <string name="lblJeu">Jeu</string>
+    <string name="lblVend">Ven</string>
 </resources>
