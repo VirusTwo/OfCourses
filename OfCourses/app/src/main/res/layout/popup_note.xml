@@ -9,17 +9,16 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Catégorie d&apos;évaluation :"
+        android:text="@string/categories_evaluation"
         android:id="@+id/typeTestLbl"
         android:textStyle="bold"
-        android:layout_marginTop="54dp"
         android:textColor="@android:color/black" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerTypeTest"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="10dp"
         android:layout_alignTop="@+id/typeTestLbl"
         android:layout_toEndOf="@+id/typeTestLbl" />
 
