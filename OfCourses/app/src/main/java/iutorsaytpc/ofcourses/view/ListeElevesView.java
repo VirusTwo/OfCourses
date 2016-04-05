@@ -39,7 +39,6 @@ public class ListeElevesView extends LinearLayout {
     private Button btnAddAppreciation;
     private Button btnAddNote;
     private Button btnModifier;
-    private Button btnSauvergarder;
 
     private TextView txtViewNameClasse;
     private TextView txtViewNameMatiere;
@@ -50,6 +49,7 @@ public class ListeElevesView extends LinearLayout {
     private AlertDialog participationDialog;
     private AlertDialog marksDialog;
 
+    private boolean inEdit = false;
     private boolean editActiv = false;
 
     ArrayList<Object>  res;
@@ -74,7 +74,6 @@ public class ListeElevesView extends LinearLayout {
         btnAddAppreciation = (Button) findViewById(R.id.addAppreciation);
         btnAddNote = (Button) findViewById(R.id.addNote);
         btnModifier = (Button) findViewById(R.id.modifierButton);
-        btnSauvergarder = (Button) findViewById(R.id.sauvegarderButton);
 
 
         txtViewNameClasse = (TextView) findViewById(R.id.textViewTP);
@@ -85,7 +84,6 @@ public class ListeElevesView extends LinearLayout {
         btnAddAppreciation.setOnClickListener(controller);
         btnAddNote.setOnClickListener(controller);
         btnModifier.setOnClickListener(controller);
-        btnSauvergarder.setOnClickListener(controller);
 
         String tmpvar = MatiereSingleton.getName_matiere();
         txtViewNameMatiere.setText(MatiereSingleton.getName_matiere());
@@ -118,6 +116,14 @@ public class ListeElevesView extends LinearLayout {
     public void switchallSwitch(){
 
         MainActivity.attachLoadingFragment();
+        if(inEdit) {
+            btnModifier.setText(this.getContext().getString(R.string.modifier));
+            inEdit = false;
+        }
+        else{
+            btnModifier.setText(super.getContext().getString(R.string.save));
+            inEdit = true;
+        }
 
         for(StudentRow a:studentRows){
             a.switchView();
