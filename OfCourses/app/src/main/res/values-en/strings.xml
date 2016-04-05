@@ -54,5 +54,6 @@
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="Groupe4CIUTOrsay">Group 4C : IUT Orsay</string>
-    <string name="section_format"></string>
+    <string name="section_format">null</string>
+    <string name="btnQuit">Quit</string>
 </resources>
