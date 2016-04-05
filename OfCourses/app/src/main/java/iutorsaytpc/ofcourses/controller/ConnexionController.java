@@ -36,9 +36,6 @@ public class ConnexionController implements View.OnClickListener {
                                     RelativeLayout content = ((RelativeLayout) ((Activity) view.getContext()).findViewById(R.id.layoutParent));
                                     content.removeAllViews();
                                     content.addView(new FragmentView(view.getContext()));
-                                    //ajout de l'edt dans le frameLayout
-                                    FrameLayout contentFrame = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
-                                    contentFrame.addView(new EdtView(view.getContext()));
                                 }
                             });
                         }
