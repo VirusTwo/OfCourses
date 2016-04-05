@@ -1,8 +1,5 @@
 package iutorsaytpc.ofcourses.bd;
 
-import android.os.AsyncTask;
-import android.widget.Toast;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,11 +9,7 @@ import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
-
-import javax.net.ssl.SSLContext;
+import java.sql.Date;
 
 import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.modele.ClasseSingleton;
@@ -182,20 +175,23 @@ public class BD {
             cst.execute();
             resSet=((OracleCallableStatement)cst).getCursor(2);
             while(resSet.next()) {
-                Date dateDebut = resSet.getDate(1);
-                Date dateFin = resSet.getDate(2);
-                String matiere = resSet.getString(3);
-                String classe = resSet.getString(4);
-                String salle = resSet.getString(5);
+                Date dateDebut = (Date) resSet.getDate(1);
+                int heureDebut = resSet.getInt(2);
+                int heureFin = resSet.getInt(3);
+                String matiere = resSet.getString(4);
+                String classe = resSet.getString(5);
+                String salle = resSet.getString(6);
 
+                System.out.println(dateDebut);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(dateDebut);
                 int day = calendar.get(Calendar.DAY_OF_WEEK);
-                int heureDebut = dateDebut.getHours();
-                int heureFin = dateFin.getHours();
+                /*
+                int heureDebut = calendar.get(Calendar.HOUR_OF_DAY);
+                calendar.setTime(dateFin);
+                int heureFin = calendar.get(Calendar.HOUR_OF_DAY);*/
 
                 String code = getCode(day, heureDebut, heureFin);
-
                 res.add(code);
                 res.add(matiere);
                 res.add(classe);
@@ -208,7 +204,8 @@ public class BD {
         deconnexion(co);
 
         MainActivity.detachLoadingFragment();
-        
+
+        System.out.println(res);
         return res;
     }
 
@@ -216,19 +213,19 @@ public class BD {
         String res = "";
 
         switch (day) {
-            case 0 :
+            case 2 :
                 res += "lun";
                 break;
-            case 1 :
+            case 3 :
                 res += "mar";
                 break;
-            case 2 :
+            case 4 :
                 res += "mer";
                 break;
-            case 3 :
+            case 5 :
                 res += "jeu";
                 break;
-            case 4 :
+            case 6 :
                 res += "ven";
                 break;
         }
