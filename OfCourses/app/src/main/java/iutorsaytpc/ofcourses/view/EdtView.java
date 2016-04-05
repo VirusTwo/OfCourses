@@ -72,7 +72,7 @@ public class EdtView extends RelativeLayout {
                 case 0:
                     code=ar.get(i);
                     //sert à récupérer le code et à s'en servir pour identifier la textView à modifier
-                    id = res.getIdentifier(code, "id", getApplicationContext().getPackageName());
+                    id = res.getIdentifier(code, "id",getPackageName());
                     view = (TextView) findViewById(id);
                     break;
 
