@@ -2,20 +2,17 @@ package iutorsaytpc.ofcourses;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-
-import iutorsaytpc.ofcourses.bd.BD;
+import android.view.ViewGroup;
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
 import iutorsaytpc.ofcourses.view.ConnexionView;
-
+import iutorsaytpc.ofcourses.view.ListeElevesView;
 public class MainActivity extends AppCompatActivity {
 
     //Fragment
@@ -23,26 +20,30 @@ public class MainActivity extends AppCompatActivity {
     private static FragmentManager fragmentManager;
     private static FragmentTransaction fragmentTransaction;
 
+    private ViewGroup viewGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setLogo(R.drawable.logo);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        viewGroup = (ViewGroup) findViewById(R.id.layoutParent);
 
-        TextView hello = (TextView) findViewById(R.id.hello);
         ConnexionView connexionView = new ConnexionView(this);
-        setContentView(connexionView);
+        //setContentView(connexionView);
         initFragment();
+        ListeElevesView listeElevesView = new ListeElevesView(this);
+        listeElevesView.createDemoDataListeEleve();
+
+        //viewGroup.addView(connexionView);
+        viewGroup.addView(listeElevesView);
+
+
+        //On peut retirer facilement la vue actuel de cette façon, les élèments de base de l'activity main restent
+        // viewGroup.removeAllViews();
 
     }
 
@@ -85,4 +86,6 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.layoutParent, loadingFragment);
         fragmentTransaction.commit();
     }
+
+
 }
