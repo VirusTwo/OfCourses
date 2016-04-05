@@ -71,13 +71,6 @@ create or replace procedure getPointBonus(id in ob_personne.id_personne%type, re
   end;
 /
 
-create or replace procedure setNote(id_n in ob_note.id_note%type, n in ob_note.note%type) as
-  begin
-    update ob_note N
-    set note = n
-    where id_note = id_n;
-  end;
-/
 
 create or replace function getMaxCC(id_c in ob_classe.id_classe%type, id_m in ob_matiere.id_matiere%type) return integer is
   res integer;
@@ -190,11 +183,19 @@ create or replace procedure getNotesCC(id in ob_personne.id_personne%type, res o
       end;
 /
 
-create or replace procedure setPointBonus(id_p in ob_personne.id_personne%type, po in ob_pointBonus%type, desc in ob_pointBonus.description%type) as
+create or replace procedure setPointBonus(id_p in ob_personne.id_personne%type, po in ob_pointBonus.id_pointBonus%type, descr in ob_pointBonus.description%type) as
   begin
     Update ob_pointBonus
-    set point = po, description = desc
+    set point = po, description = descr
     where (deref(sonEtudiant)).id_personne = id_p;
+  end;
+/
+
+create or replace procedure setNote(id_n in ob_note.id_note%type, n in ob_note.note%type) as
+  begin
+    update ob_note N
+    set note = n
+    where id_note = id_n;
   end;
 /
 
@@ -235,7 +236,7 @@ create or replace procedure getNotesFromEtudiant(idPersonne in ob_personne.id_pe
     open res for
       select N.id_note, N.note, P.description, N.type
       from ob_note N, ob_pointBonus P
-      where (deref(saMatiere)).id_matiere = idMatiere
+      where (deref(N.saMatiere)).id_matiere = idMatiere
       and (deref(N.sonEtudiant)).id_personne = idPersonne
       and (deref(P.sonEtudiant)).id_personne = idPersonne;
   end;
