@@ -27,4 +27,6 @@
     <string name="textView7">Notifications</string>
     <string name="textView8">English</string>
     <string name="textView9">Actual font :</string>
+    <string name="edt">Schedule</string>
+    <string name="listeGroupe">Group list</string>
 </resources>

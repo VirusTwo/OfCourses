@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="action_settings">Paramètres</string>
-    <string name="app_name">Options</string>
+    <string name="app_name">OfCourses</string>
     <string name="btnQuit">Sauver et Quitter</string>
     <string name="checkBox">Vert</string>
     <string name="checkBox2">Orange</string>
@@ -16,4 +16,6 @@
     <string name="textView7">Notifications</string>
     <string name="textView8">Français</string>
     <string name="textView9">Police actuelle :</string>
+    <string name="edt">Emploie du temps</string>
+    <string name="listeGroupe">Liste de groupe</string>
 </resources>

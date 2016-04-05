@@ -18,7 +18,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Emploi du temps"
+            android:text="@string/edt"
             android:layout_weight="1"
             android:id="@+id/edt"
             android:background="#98ca3c"
@@ -27,7 +27,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Liste de groupe"
+            android:text="@string/listeGroupe"
             android:layout_weight="1"
             android:id="@+id/listeGroupe"
             android:background="#98ca3c"
