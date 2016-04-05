@@ -28,11 +28,13 @@ public class FragmentController implements View.OnClickListener{
                 content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 content.removeAllViews();
                 content.addView(new EdtView(view.getContext()));
+                content.setContentDescription("EdtView");
                 break;
             case R.id.listeGroupe:
                 content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 content.removeAllViews();
                 content.addView(new ListeGroupesView(view.getContext()));
+                content.setContentDescription("ListeGroupeView");
                 break;
         }
     }
