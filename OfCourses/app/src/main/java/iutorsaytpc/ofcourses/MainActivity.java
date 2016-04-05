@@ -27,6 +27,7 @@ import iutorsaytpc.ofcourses.view.FragmentView;
 import iutorsaytpc.ofcourses.view.ListeElevesView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
 import iutorsaytpc.ofcourses.view.LoadingView;
+import iutorsaytpc.ofcourses.view.Options_Main;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, Options_Main.class);
+            startActivity(intent);
             return true;
         }
 

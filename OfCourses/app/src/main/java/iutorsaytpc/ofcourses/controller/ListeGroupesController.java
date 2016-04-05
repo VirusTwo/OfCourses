@@ -24,12 +24,14 @@ public class ListeGroupesController implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.buttonSuivant:
+                ClasseSingleton.setId_classe(view.getSelectedIdClasse());
+                MatiereSingleton.setId_matiere(view.getSelectedIdMatiere());
+                ClasseSingleton.setName_classe(view.getSelectedNameClasse());
+                MatiereSingleton.setName_matiere(view.getSelectedNameMatiere());
                 FrameLayout content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 content.removeAllViews();
                 content.addView(new ListeElevesView(view.getContext()));
                 content.setContentDescription("ListeEleveView");
-                ClasseSingleton.setId_classe(view.getSelectedIdClasse());
-                MatiereSingleton.setId_matiere(view.getSelectedIdMatiere());
                 break;
         }
     }
