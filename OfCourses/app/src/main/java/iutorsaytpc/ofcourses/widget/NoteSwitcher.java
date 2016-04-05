@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
+import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.bd.BD;
 
 /**
@@ -44,20 +45,22 @@ public class NoteSwitcher extends ViewSwitcher {
     }
 
     public void showNext(){
-        System.out.println(noteTextView.getText().toString());
-        System.out.println(noteEditText.getText().toString());
-        if(noteTextView.getText().toString().compareTo(noteEditText.getText().toString()) != 0 && Float.parseFloat(noteEditText.getText().toString()) != -1) {
+        if(noteTextView.getText().toString().compareTo(noteEditText.getText().toString()) != 0) {
             hadChanged = true;
+
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    BD.setNote(id_note, Float.parseFloat(noteEditText.getText().toString()));
+                    float note;
+                    if(noteEditText.getText().toString().compareTo("") == 0) note = -1;
+                    else note = Float.parseFloat(noteEditText.getText().toString());
+                    BD.setNote(id_note, note);
                 }
             }).start();
         }
         noteEditText.setEnabled(!noteEditText.isEnabled());
-        if(noteTextView.getText().toString().compareTo("") == 0) noteTextView.setText("");
-        else  noteTextView.setText(noteEditText.getText());
+        if(noteTextView.getText().toString().compareTo("") == 0) noteEditText.setText("");
+        else noteTextView.setText(noteEditText.getText());
         super.showNext();
     }
 }

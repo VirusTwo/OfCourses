@@ -102,6 +102,7 @@ public class ListeElevesView extends LinearLayout {
         tableEleve.addView(headRow);
     }
     public void switchallSwitch(){
+
         MainActivity.attachLoadingFragment();
 
         for(StudentRow a:studentRows){
@@ -132,7 +133,7 @@ public class ListeElevesView extends LinearLayout {
                         BD.setPointBonus(pop.getIdEtudiant(), pop.getSomme(), pop.getCommentaire());
                     }
                 }).start();
-
+                createDemoDataListeEleve();
                 participationDialog.dismiss();
             }
         });
@@ -182,10 +183,10 @@ public class ListeElevesView extends LinearLayout {
                         };
                         break;
                 }
-
                 new Thread(runnable).start();
                 marksDialog.dismiss();
                 createDemoDataListeEleve();
+
             }
         });
         builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -202,6 +203,7 @@ public class ListeElevesView extends LinearLayout {
         new Thread(new Runnable() {
             @Override
             public void run() {
+                if(!MainActivity.isLoadingFragmentAdded()) MainActivity.attachLoadingFragment();
                 res = BD.getNotes();
 
                 if (res != null) {
@@ -212,6 +214,8 @@ public class ListeElevesView extends LinearLayout {
 
                             int maxCC = (int) res.get(0);
                             int maxDS = (int) res.get(1);
+                            float moyenneCC = 0;
+                            float moyenneDS = 0;
                             ArrayList<Object> students = (ArrayList<Object>) res.get(2);
                             ArrayList<Object> notesCC = (ArrayList<Object>) res.get(3);
                             ArrayList<Object> notesDS = (ArrayList<Object>) res.get(4);
@@ -239,7 +243,7 @@ public class ListeElevesView extends LinearLayout {
                                 int id_personne = (int) students.get(i);
                                 String nom_personne = (String) students.get(i + 1);
 
-                                float[] notes = new float[2 * (maxCC + maxDS)];
+                                float[] notes = new float[2 * (maxCC + maxDS) + 1];
                                 int cpt = 0;
                                 for (int j = 0; j < maxCC * 2; j += 2) {
                                     int id_note = (int) notesCC.get(j + maxCC * i);
@@ -247,7 +251,9 @@ public class ListeElevesView extends LinearLayout {
                                     notes[cpt] = id_note;
                                     notes[cpt + 1] = note;
                                     cpt += 2;
+                                    moyenneCC += note;
                                 }
+                                moyenneCC /= maxCC;
 
                                 for (int j = 0; j < maxDS * 2; j += 2) {
                                     int id_note = (int) notesDS.get(j + maxDS * i);
@@ -255,12 +261,14 @@ public class ListeElevesView extends LinearLayout {
                                     notes[cpt] = id_note;
                                     notes[cpt + 1] = note;
                                     cpt += 2;
+                                    moyenneDS += note;
                                 }
-                                String res = "";
-                                for(int j = 1; j < notes.length; j+=2) {
-                                    res+=notes[j] + ", ";
-                                }
-                                System.out.println(res);
+                                System.out.println(moyenneDS);
+                                moyenneDS /= maxDS;
+                                System.out.println(moyenneDS);
+
+                                notes[notes.length - 1] = (moyenneDS * (float) 0.6 + moyenneCC * (float) 0.4);
+
 
                                 tmpRow = new StudentRow(getContext(), nom_personne, (String) pointBonus.get(i + 1), notes);
                                 tmpRow.generateRow();
@@ -270,6 +278,8 @@ public class ListeElevesView extends LinearLayout {
                         }
                     });
                 }
+
+                if(MainActivity.isLoadingFragmentAdded()) MainActivity.detachLoadingFragment();
             }
         }).start();
     }
