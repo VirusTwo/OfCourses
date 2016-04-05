@@ -1,6 +1,7 @@
-package com.example.lydia.edt.V;
+package iutorsaytpc.ofcourses.view;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import android.content.res.Resources;
@@ -10,11 +11,10 @@ import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-
-import com.example.lydia.edt.M.M;
-import com.example.lydia.edt.R;
-
 import java.util.ArrayList;
+
+import iutorsaytpc.ofcourses.R;
+import iutorsaytpc.ofcourses.bd.BD;
 
 /**
  * Created by XU Minghao on 2016/4/5.
@@ -29,23 +29,29 @@ public class EdtView extends RelativeLayout {
         this.context = context;
 
         inflate();
-        edt=BD.getCours();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                edt= BD.getCours();
 
-        updateLabel(edt);
-
-
-
-
+                ((Activity) getContext()).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateLabel(edt);
+                    }
+                });
+            }
+        }).start();
 
     }
     private void inflate() {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        layoutInflater.inflate(R.layout.edtView, this, true);
+        layoutInflater.inflate(R.layout.edt_content, this, true);
     }
 
     public void updateLabel(ArrayList<String> ar){
 
-        ar = new ArrayList<>();
+        //ar = new ArrayList<>();
         String code;
         String nomat;
         String numTP;
@@ -54,7 +60,7 @@ public class EdtView extends RelativeLayout {
         int quadr;
 
         //sert pour éviter les messages d'erreurs du type "textView may no be initialized"
-        TextView view = new TextView(this);
+        TextView view = new TextView(getContext());
 
         //sert pour récupérer le textView à modifier
         Resources res = getResources();
@@ -72,7 +78,7 @@ public class EdtView extends RelativeLayout {
                 case 0:
                     code=ar.get(i);
                     //sert à récupérer le code et à s'en servir pour identifier la textView à modifier
-                    id = res.getIdentifier(code, "id",getPackageName());
+                    id = res.getIdentifier(code, "id",getContext().getPackageName());
                     view = (TextView) findViewById(id);
                     break;
 
@@ -97,7 +103,7 @@ public class EdtView extends RelativeLayout {
                 case 3:
                     salle=ar.get(i);
                     salle=view.getText().toString()+salle;
-                    view.setText( salle.toString());
+                    view.setText(salle.toString());
                     break;
             }
         }

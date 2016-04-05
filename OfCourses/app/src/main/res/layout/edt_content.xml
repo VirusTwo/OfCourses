@@ -12,7 +12,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.example.lydia.edt.EDTActivity"
+        tools:context="com.iutorsaytpc.ofcourses.MainActivity"
         android:id="@+id/edtPage"
         android:background="#555555"
         android:weightSum="1">
@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="71dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/lblLlundi"
+                    android:text="@string/lblLundi"
                     android:id="@+id/lblLundi"
                     android:gravity="center"
                     android:layout_row="0"
@@ -81,7 +81,7 @@
                 <TextView
                     android:layout_width="71dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/LblMard"
+                    android:text="@string/lblMardi"
                     android:gravity="center"
                     android:id="@+id/lblMardi"
                     android:layout_row="0"
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="71dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/lblMer"
+                    android:text="@string/lblMercredi"
                     android:gravity="center"
                     android:id="@+id/lblMercredi"
                     android:layout_row="0"
@@ -113,7 +113,7 @@
                 <TextView
                     android:layout_width="71dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/lblJeu"
+                    android:text="@string/lblJeudi"
                     android:gravity="center"
                     android:id="@+id/lblJeudi"
                     android:layout_row="0"
@@ -125,7 +125,20 @@
                     android:layout_columnWeight="1"/>
 
                 <!-- Vendredi -->
-
+                <TextView
+                    android:layout_width="71dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lblVendredi"
+                    android:gravity="center"
+                    android:id="@+id/lblVendredi"
+                    android:layout_row="0"
+                    android:layout_column="5"
+                    android:textColor="#ffffff"
+                    android:background="#555555"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:layout_columnWeight="1"
+                    />
 
                 <!-- ========= Les plages horaires de la semaine ======= -->
 
@@ -263,21 +276,6 @@
 
 
                 <!-- 16h00 -->
-                <TextView
-                    android:layout_width="71dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/lblVend"
-                    android:gravity="center"
-                    android:id="@+id/lblVendredi"
-                    android:layout_row="0"
-                    android:layout_column="5"
-                    android:textColor="#ffffff"
-                    android:background="#555555"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_columnWeight="1"
-                    />
-
                 <TextView
                     android:layout_width="71dp"
                     android:layout_height="75dp"
