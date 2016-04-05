@@ -50,7 +50,7 @@ AND E.id_personne = 1;
 INSERT INTO ob_cours
 SELECT 2, TO_DATE('2016/03/24 14:00:00', 'YYYY/MM/DD HH24:MI:SS'), 14, 15, ref(M), ref(C), ref(S), ref(E)
 FROM ob_matiere M, ob_classe C, ob_salle S, ob_personne E, dual
-WHERE M.id_matiere = 1
+WHERE M.id_matiere = 2
 AND C.id_classe = 1
 AND S.id_salle = 1
 AND E.id_personne = 1;
