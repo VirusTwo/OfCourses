@@ -3,12 +3,9 @@ package iutorsaytpc.ofcourses.controller;
 import android.app.Activity;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.view.EdtView;
 import iutorsaytpc.ofcourses.view.FragmentView;
-import iutorsaytpc.ofcourses.view.ListeElevesView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
 
 /**
@@ -30,11 +27,13 @@ public class FragmentController implements View.OnClickListener{
                 content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 content.removeAllViews();
                 content.addView(new EdtView(view.getContext()));
+                content.setContentDescription("EdtView");
                 break;
             case R.id.listeGroupe:
                 content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 content.removeAllViews();
                 content.addView(new ListeGroupesView(view.getContext()));
+                content.setContentDescription("ListeGroupeView");
                 break;
         }
     }

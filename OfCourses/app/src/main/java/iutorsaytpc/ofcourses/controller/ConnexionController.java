@@ -3,12 +3,6 @@ package iutorsaytpc.ofcourses.controller;
 import android.app.Activity;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Objects;
-
-import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.view.ConnexionView;

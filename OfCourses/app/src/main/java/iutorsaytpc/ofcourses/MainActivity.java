@@ -1,30 +1,20 @@
 package iutorsaytpc.ofcourses;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-
-import java.io.LineNumberReader;
-
-import iutorsaytpc.ofcourses.controller.ListeGroupesController;
-import iutorsaytpc.ofcourses.fragment.ListeGroupeFragment;
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
 import iutorsaytpc.ofcourses.view.ConnexionView;
 import iutorsaytpc.ofcourses.view.FragmentView;
-import iutorsaytpc.ofcourses.view.ListeElevesView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
 import iutorsaytpc.ofcourses.view.LoadingView;
 import iutorsaytpc.ofcourses.view.Options_Main;
