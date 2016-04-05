@@ -1,19 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">OfCourses</string>
     <string name="action_settings">Paramètres</string>
-    <string name="app_name">Options</string>
-    <string name="btnQuit">Sauver et Quitter</string>
+    <string name="action_sign_in">Se connecter ou s'enregistrer</string>
+    <string name="action_sign_in_short">Se connecter</string>
+    <string name="error_invalid_email">Adresse email invalide</string>
+    <string name="error_invalid_password">Mot de passe trop court</string>
+    <string name="error_incorrect_password">Ce mot de passe est incorrect</string>
+
     <string name="checkBox">Vert</string>
     <string name="checkBox2">Orange</string>
     <string name="checkBox3">Bleu</string>
-    <string name="checkBox4">Activer les notifications</string>
+    <string name="checkBox4">Activer notifications</string>
     <string name="textView">Accessibilité</string>
-    <string name="textView2">Langue actuelle :</string>
-    <string name="textView3">Langue :</string>
-    <string name="textView4">Design</string>
+    <string name="textView2">Langage actuel :</string>
+    <string name="textView3">Langage :</string>
+    <string name="textView4">Apparrence</string>
     <string name="textView5">Police actuelle :</string>
     <string name="textView6">Couleur :</string>
     <string name="textView7">Notifications</string>
-    <string name="textView8">Français</string>
+    <string name="textView8">Anglais</string>
     <string name="textView9">Police actuelle :</string>
+
+    <string name="title_activity_liste_eleve">Les des élèves</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="add_mark_popup_title">Ajouter une note</string>
+    <string name="add_appreciation_popup_title">Ajouter une appréciation à un élève</string>
+    <string name="ok">Valider</string>
+    <string name="modifier">Modifier</string>
+    <string name="addAppreciation">Ajouter Appréciation</string>
+    <string name="addMarks">Ajouter Note</string>
+    <string name="save">Sauvegarder</string>
+    <string name="tp">TP : </string>
+    <string name="subject">Matière : </string>
+    <string name="listeOfStudents">Liste des élèves</string>
+    <string name="listeOfGroups">Liste des groupes</string>
+    <string name="chooseASubject">Choisissez une matière</string>
+    <string name="chooseAGroup">Choisissez un groupe</string>
+    <string name="chooseAStudent">Selectionner un étudiant</string>
+    <string name="participation">Participation :</string>
+    <string name="punctuality">Ponctualité :</string>
+    <string name="absence">Absence :</string>
+    <string name="concentration">Concentration :</string>
+    <string name="workBack">Travail Rendu : </string>
+    <string name="commentary">Commentaire : </string>
+    <string name="finalMark">Note Finale : </string>
+    <string name="next">Suivant</string>
+    <string name="title_activity_liste_groupe">listeGroupeActivity</string>
+    <string name="categories_evaluation">Catégories d'évaluation :</string>
+    <string name="scheduler">Emploi du temps</string>
+    <string name="listgroup">Liste de groupe</string>
+    <string name="connexion">Connexion</string>
+    <string name="login">Identifiant</string>
+    <string name="password">Mot de passe</string>
+    <string name="Groupe4CIUTOrsay">Groupe 4C : IUT Orsay</string>
 </resources>
