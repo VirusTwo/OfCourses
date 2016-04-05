@@ -83,7 +83,8 @@ Create or replace Type ob_pointBonus_ty AS Object (
     id_pointBonus INTEGER,
     description VARCHAR2(20),
     sonEtudiant REF ob_personne_ty,
-    point INTEGER
+    point INTEGER,
+    saMatiere ref ob_matiere_ty
 );
 /
 
@@ -91,6 +92,7 @@ Create or replace Type ob_note_ty AS Object (
     id_note INTEGER,
     coeff FLOAT,
     note FLOAT,
+    type varchar2(3),
     saMatiere REF ob_matiere_ty,
     sonEtudiant REF ob_personne_ty
 );

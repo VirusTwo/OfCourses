@@ -1,6 +1,8 @@
 package iutorsaytpc.ofcourses.controller;
 
+import android.app.Activity;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.view.ConnexionView;
+import iutorsaytpc.ofcourses.view.FragmentView;
 
 /**
  * Created by VirusTwoIUT on 11/03/2016.
@@ -28,13 +31,20 @@ public class ConnexionController implements View.OnClickListener {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        ArrayList<Objects> lol = BD.getCours();
-                        System.out.println(lol);
-                        int resultConnexion  = BD.isLogin(view.getLogin(),view.getPassword());
-                        System.out.println(resultConnexion);
+                        int id = BD.isLogin(view.getLogin(), view.getPassword());
+
+                        if(id >= 0) {
+                            ((Activity) view.getContext()).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    RelativeLayout content = ((RelativeLayout) ((Activity) view.getContext()).findViewById(R.id.layoutParent));
+                                    content.removeAllViews();
+                                    content.addView(new FragmentView(view.getContext()));
+                                }
+                            });
+                        }
                     }
                 }).start();
-
                 break;
         }
     }

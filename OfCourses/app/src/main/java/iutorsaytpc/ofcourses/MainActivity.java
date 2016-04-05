@@ -1,8 +1,12 @@
 package iutorsaytpc.ofcourses;
 
+import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,17 +14,31 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
+
+import java.io.LineNumberReader;
+
+import iutorsaytpc.ofcourses.controller.ListeGroupesController;
+import iutorsaytpc.ofcourses.fragment.ListeGroupeFragment;
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
 import iutorsaytpc.ofcourses.view.ConnexionView;
+import iutorsaytpc.ofcourses.view.FragmentView;
 import iutorsaytpc.ofcourses.view.ListeElevesView;
+import iutorsaytpc.ofcourses.view.ListeGroupesView;
+import iutorsaytpc.ofcourses.view.LoadingView;
+
 public class MainActivity extends AppCompatActivity {
 
     //Fragment
-    private static LoadingFragment loadingFragment = new LoadingFragment();
+    private static LoadingFragment loadingFragment;
+    private static LoadingView loadingView;
     private static FragmentManager fragmentManager;
     private static FragmentTransaction fragmentTransaction;
 
-    private ViewGroup viewGroup;
+    //Views
+    private static FragmentView fragmentView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,21 +48,17 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
 
-        viewGroup = (ViewGroup) findViewById(R.id.layoutParent);
+        //Réglage des onglets
+        fragmentView = new FragmentView(this);
 
-        ConnexionView connexionView = new ConnexionView(this);
-        //setContentView(connexionView);
+        //Réglage du fragment loading;
+        loadingView = new LoadingView(this);
+        loadingFragment = new LoadingFragment(loadingView);
         initFragment();
-        ListeElevesView listeElevesView = new ListeElevesView(this);
-        listeElevesView.createDemoDataListeEleve();
 
-        //viewGroup.addView(connexionView);
-        viewGroup.addView(listeElevesView);
-
-
-        //On peut retirer facilement la vue actuel de cette façon, les élèments de base de l'activity main restent
-        // viewGroup.removeAllViews();
-
+        //On lance la page de connexion
+        ConnexionView connexionView = new ConnexionView(this);
+        ((RelativeLayout) findViewById(R.id.layoutParent)).addView(connexionView);
     }
 
     @Override
@@ -87,5 +101,61 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    public static boolean isLoadingFragmentAdded() {
+        return loadingFragment.isAdded();
+    }
 
+    public static void errorConnexion () {
+        loadingView.errorConnnexion();
+    }
+
+    public static void errorLogin() {
+        loadingView.errorLogin();
+    }
+
+    public static void resetLoading() {
+        loadingView.reset();
+    }
+
+    @Override
+    public void onBackPressed() {
+        try{
+            FrameLayout onglets = (FrameLayout) findViewById(R.id.frameLayoutFragment);
+
+            if(onglets.getContentDescription() == "ListeEleveView"){
+                ListeGroupesView lgv = new ListeGroupesView(this);
+                onglets.removeAllViews();
+                onglets.addView(lgv);
+                onglets.setContentDescription("ListeGroupView");
+            }else{
+                new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                intent.addCategory(Intent.CATEGORY_HOME);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        }).setNegativeButton("no", null).show();
+            }
+        }catch(NullPointerException e){
+            new AlertDialog.Builder(this).setIcon(android.R.drawable.ic_dialog_alert).setTitle("Exit")
+                    .setMessage("Are you sure?")
+                    .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_HOME);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).setNegativeButton("no", null).show();
+        }
+    }
 }

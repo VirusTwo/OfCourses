@@ -26,7 +26,7 @@ public class StudentRow extends TableRow {
 
     public StudentRow(Context context,String nomEleve, String commentaire, float note[]){
         super(context);
-        this.noteSwitchers = new ArrayList<NoteSwitcher>();
+        this.noteSwitchers = new ArrayList<>();
         this.note = note.clone();
         this.nomEleve = nomEleve;
         this.commentaire = commentaire;
@@ -54,8 +54,8 @@ public class StudentRow extends TableRow {
         tmpTxtView.setLayoutParams(LPTEXT);
         addView(tmpTxtView);
 
-        for(float x:note){
-            noteSwitcher =  new NoteSwitcher(super.getContext(),x,this);
+        for(int i = 0; i < note.length - 1; i+=2){
+            noteSwitcher =  new NoteSwitcher(super.getContext(),note[i + 1],this, (int) note[i]);
             addView(noteSwitcher);
             noteSwitchers.add(noteSwitcher);
         }
@@ -67,7 +67,7 @@ public class StudentRow extends TableRow {
         addView(tmpTxtView);
 
         tmpTxtView = new TextView(super.getContext());
-        tmpTxtView.setText(String.valueOf(10));
+        tmpTxtView.setText(String.valueOf(note[note.length - 1]));
         tmpTxtView.setTextSize(15);
         tmpTxtView.setLayoutParams(LPTEXT);
         addView(tmpTxtView);

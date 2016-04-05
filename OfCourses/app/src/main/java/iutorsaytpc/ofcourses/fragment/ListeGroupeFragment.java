@@ -7,17 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import iutorsaytpc.ofcourses.R;
-import iutorsaytpc.ofcourses.view.LoadingView;
+import iutorsaytpc.ofcourses.view.ListeGroupesView;
 
 /**
- * Created by VirusTwoIUT on 11/03/2016.
+ * Created by guillaumemartinez on 30/03/2016
  */
 @SuppressLint("ValidFragment")
-public class LoadingFragment extends Fragment {
-    private View view;
+public class ListeGroupeFragment extends Fragment {
+    private ListeGroupesView view;
 
-    public LoadingFragment(LoadingView view) {
+    public ListeGroupeFragment(ListeGroupesView view) {
         this.view = view;
     }
 
@@ -25,5 +24,4 @@ public class LoadingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return this.view;
     }
-
 }
