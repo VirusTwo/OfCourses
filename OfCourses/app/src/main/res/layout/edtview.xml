@@ -1,0 +1,1147 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.lydia.edt.V.EdtView">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.example.lydia.edt.EDTActivity"
+        android:id="@+id/edtPage"
+        android:background="#555555"
+        android:weightSum="1">
+
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scrollView2" >
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/horizontalScrollView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" >
+
+                <GridLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:columnCount="6"
+                    android:rowCount="13"
+
+                    android:background="#ffff"
+
+                    android:layout_margin="10dp"
+                    android:gravity="center">
+
+
+                    <TextView
+                        android:layout_width="73dp"
+                        android:layout_height="wrap_content"
+                        android:text="L"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_row="0"
+                        android:layout_column="0"
+                        android:textColor="#555555"
+                        android:layout_columnWeight="1"
+                        android:background="#555555" />
+
+
+
+                    <!-- =============== Les jours de la semaine ======= -->
+
+                    <!-- Lundi -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblLlundi"
+                        android:id="@+id/lblLundi"
+                        android:gravity="center"
+                        android:layout_row="0"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- Mardi -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/LblMard"
+                        android:gravity="center"
+                        android:id="@+id/lblMardi"
+                        android:layout_row="0"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"/>
+
+
+                    <!-- Mercredi -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblMer"
+                        android:gravity="center"
+                        android:id="@+id/lblMercredi"
+                        android:layout_row="0"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"/>
+
+
+                    <!-- Jeudi -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblJeu"
+                        android:gravity="center"
+                        android:id="@+id/lblJeudi"
+                        android:layout_row="0"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"/>
+
+                    <!-- Vendredi -->
+
+
+                    <!-- ========= Les plages horaires de la semaine ======= -->
+
+                    <!-- 8h -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="08:00"
+                        android:id="@+id/lbl8h"
+                        android:layout_row="1"
+                        android:layout_column="0"
+                        android:background="#555555"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        />
+
+
+                    <!-- 9h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="09:00"
+                        android:id="@+id/lbl9h"
+                        android:layout_row="2"
+                        android:layout_column="0"
+                        android:background="#555555"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        />
+
+
+
+                    <!-- 10h00 -->
+
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="10:00"
+                        android:id="@+id/lbl10h"
+                        android:layout_row="3"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        android:background="#555555"
+                        />
+
+
+
+
+                    <!-- 11h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="11:00"
+                        android:id="@+id/lbl11h"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:layout_row="4"
+                        android:layout_column="0"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        android:background="#555555"
+                        />
+
+
+                    <!-- 12h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="12:00"
+                        android:id="@+id/lbl12h"
+                        android:layout_row="5"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:background="#555555"
+                        android:layout_columnWeight="1"
+                        />
+
+
+
+                    <!-- 13-h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="13:00"
+                        android:id="@+id/lbl13h"
+                        android:layout_row="6"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        />
+
+
+
+                    <!-- 14h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="14:00"
+                        android:background="#555555"
+                        android:id="@+id/lbl4h"
+                        android:layout_row="7"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="15:00"
+                        android:id="@+id/lbl15h"
+                        android:layout_row="8"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- 16h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/lblVend"
+                        android:gravity="center"
+                        android:id="@+id/lblVendredi"
+                        android:layout_row="0"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="16:00"
+                        android:id="@+id/lbl6h"
+                        android:layout_row="9"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- 17 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="17:00"
+                        android:id="@+id/lbl17h"
+                        android:layout_row="10"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+
+
+                        />
+
+
+
+                    <!-- 18h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text="18:00"
+                        android:id="@+id/lbl18h"
+                        android:layout_row="11"
+                        android:layout_column="0"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+
+                        />
+
+
+                    <!-- ========= Les cours ======= -->
+
+                    <!-- Lundi -->
+
+                    <!-- Lundia 8 à 9h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun0809"
+                        android:layout_row="1"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        android:background="#555555"
+
+                        />
+
+                    <!-- Lundia 9 à 10h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun0910"
+                        android:layout_row="2"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:textSize="18dp"
+                        android:background="#555555"
+                        android:layout_columnWeight="1"
+
+                        />
+
+                    <!-- Lundia 10 à 11h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1011"
+                        android:layout_row="3"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+
+                    <!-- Lundia 11 à 12h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1112"
+                        android:layout_row="4"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+                    <!-- Lundia 12 à 13h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1213"
+                        android:layout_row="5"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+
+                    <!-- Lundia 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1314"
+                        android:layout_row="6"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+
+                    <!-- Lundia 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1415"
+                        android:layout_row="7"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+                    <!-- Lundi 15 à 16h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1516"
+                        android:layout_row="8"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+                    <!-- Lundi 16 à 17h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1617"
+                        android:layout_row="9"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+                    <!-- Lundia 17 à 18h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1718"
+                        android:layout_row="10"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+                    <!-- Lundia 18 à 19h00 -->
+                    <TextView
+                        android:layout_width="73dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/lun1819"
+                        android:layout_row="11"
+                        android:layout_column="1"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+
+                        />
+
+                    <!-- Mardi -->
+
+                    <!-- mar 8 9 -->
+
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/Mar0809"
+                        android:layout_row="1"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- Mardi 9 à 10h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar0910"
+                        android:layout_row="2"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- Mardi 10 à 11h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1011"
+                        android:layout_row="3"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- Mardi 11 à 12h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1112"
+                        android:layout_row="4"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- Mardi 12 à 13h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1213"
+                        android:layout_row="5"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- Mardi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1314"
+                        android:layout_row="6"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- Mardi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1415"
+                        android:layout_row="7"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- Mardi 15 à 16h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1516"
+                        android:layout_row="8"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- mardi 16 à 17h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1617"
+                        android:layout_row="9"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- mar a 17 à 18h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1718"
+                        android:layout_row="10"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- mardi 18 à 19h00 -->
+                    <TextView
+                        android:layout_width="73dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mar1819"
+                        android:layout_row="11"
+                        android:layout_column="2"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- mercredi -->
+
+                    <!-- mercredi 8 à 9h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer0809"
+                        android:layout_row="1"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        />
+
+
+                    <!-- mercredi 9 à 10h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer0910"
+                        android:layout_row="2"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        />
+
+                    <!-- merdi 10 à 11h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1011"
+                        android:layout_row="3"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- merdi 11 à 12h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1112"
+                        android:layout_row="4"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- merdi 12 à 13h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1213"
+                        android:layout_row="5"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- merdi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1314"
+                        android:layout_row="6"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- merdi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1415"
+                        android:layout_row="7"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- merdi 15 à 16h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1516"
+                        android:layout_row="8"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- merdi 16 à 17h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1617"
+                        android:layout_row="9"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- mer a 17 à 18h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1718"
+                        android:layout_row="10"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- merdi 18 à 19h00 -->
+                    <TextView
+                        android:layout_width="73dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/mer1819"
+                        android:layout_row="11"
+                        android:layout_column="3"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- jeudi -->
+
+                    <!-- jeudi 8 à 9h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu0809"
+                        android:layout_row="1"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        />
+
+                    <!-- jeudi 9 à 10h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu0910"
+                        android:layout_row="2"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        />
+
+                    <!-- jeudi 10 à 11h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1011"
+                        android:layout_row="3"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- jeudi 11 à 12h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1112"
+                        android:layout_row="4"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- jeudi 12 à 13h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1213"
+                        android:layout_row="5"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- jeudi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1314"
+                        android:layout_row="6"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- jeudi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1415"
+                        android:layout_row="7"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- jeudi 15 à 16h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1516"
+                        android:layout_row="8"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- jeudi 16 à 17h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1617"
+                        android:layout_row="9"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- jeu a 17 à 18h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1718"
+                        android:layout_row="10"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- jeudi 18 à 19h00 -->
+                    <TextView
+                        android:layout_width="73dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/jeu1819"
+                        android:layout_row="11"
+                        android:layout_column="4"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+
+                    <!-- vendredi -->
+
+                    <!-- vendi 8 à 9h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven0809"
+                        android:layout_row="1"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        />
+
+                    <!-- vendi 9 à 10h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven0910"
+                        android:layout_row="2"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        />
+
+                    <!-- vendi 10 à 11h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1011"
+                        android:layout_row="3"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- vendi 11 à 12h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1112"
+                        android:layout_row="4"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- vendi 12 à 13h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1213"
+                        android:layout_row="5"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- vendi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1314"
+                        android:layout_row="6"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+
+                    <!-- vendi 14 à 15h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1415"
+                        android:layout_row="7"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- vendi 15 à 16h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1516"
+                        android:layout_row="8"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- vendi 16 à 17h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1617"
+                        android:layout_row="9"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- ven a 17 à 18h00 -->
+                    <TextView
+                        android:layout_width="71dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1718"
+                        android:layout_row="10"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                    <!-- vendi 18 à 19h00 -->
+                    <TextView
+                        android:layout_width="73dp"
+                        android:layout_height="75dp"
+                        android:text=""
+                        android:id="@+id/ven1819"
+                        android:layout_row="11"
+                        android:layout_column="5"
+                        android:textColor="#ffffff"
+                        android:background="#555555"
+                        android:textSize="18dp"
+                        android:layout_columnWeight="1"
+                        />
+
+                </GridLayout>
+
+            </HorizontalScrollView>
+
+        </ScrollView>
+
+    </RelativeLayout>
+
+
+</FrameLayout>
