@@ -3,16 +3,11 @@ package iutorsaytpc.ofcourses.controller;
 import android.app.Activity;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Objects;
-
-import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.view.ConnexionView;
 import iutorsaytpc.ofcourses.view.FragmentView;
+//import iutorsaytpc.ofcourses.view.EdtView;
 
 /**
  * Created by VirusTwoIUT on 11/03/2016.
@@ -40,6 +35,9 @@ public class ConnexionController implements View.OnClickListener {
                                     RelativeLayout content = ((RelativeLayout) ((Activity) view.getContext()).findViewById(R.id.layoutParent));
                                     content.removeAllViews();
                                     content.addView(new FragmentView(view.getContext()));
+                                    //ajout de l'edt dans le frameLayout
+                                    /*FrameLayout contentFrame = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
+                                    contentFrame.addView(new EdtView(view.getContext()));*/
                                 }
                             });
                         }
