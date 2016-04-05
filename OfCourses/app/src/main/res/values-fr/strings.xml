@@ -16,6 +16,9 @@
     <string name="textView7">Notifications</string>
     <string name="textView8">Français</string>
     <string name="textView9">Police actuelle :</string>
-    <string name="edt">Emploie du temps</string>
-    <string name="listeGroupe">Liste de groupe</string>
+    <string name="lblLundi">Lundi</string>
+    <string name="lblMardi">Mardi</string>
+    <string name="lblMercredi">Mercredi</string>
+    <string name="lblJeudi">Jeudi</string>
+    <string name="lblVendredi">Vendredi</string>
 </resources>
