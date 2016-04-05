@@ -1,4 +1,4 @@
-package com.example.lydia.edt.V;
+package iutorsaytpc.ofcourses.view;
 
 
 import android.content.Context;

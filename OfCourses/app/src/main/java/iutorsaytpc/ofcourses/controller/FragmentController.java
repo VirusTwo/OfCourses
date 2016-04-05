@@ -6,7 +6,7 @@ import android.widget.FrameLayout;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.view.FragmentView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
-//import iutorsaytpc.ofcourses.view.EdtView;
+import iutorsaytpc.ofcourses.view.EdtView;
 
 /**
  * Created by Tilloman on 30/03/2016.
@@ -24,10 +24,10 @@ public class FragmentController implements View.OnClickListener{
         switch (v.getId()){
             case R.id.edt:
                 //changement de vue vers edt
-                /*FrameLayout contentedt = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
+                FrameLayout contentedt = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
                 contentedt.removeAllViews();
-                contentedt.addView(new Edtview(view.getContext()));
-                contentedt.setContentDescription("EditView");*/
+                contentedt.addView(new EdtView(view.getContext()));
+                contentedt.setContentDescription("EdtView");
                 break;
             case R.id.listeGroupe:
                 FrameLayout contentlg = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
