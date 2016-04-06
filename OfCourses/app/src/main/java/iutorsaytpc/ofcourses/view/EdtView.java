@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 
 /**
  * Created by XU Minghao on 2016/4/5.
@@ -42,7 +43,6 @@ public class EdtView extends RelativeLayout {
                 });
             }
         }).start();
-
     }
     private void inflate() {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

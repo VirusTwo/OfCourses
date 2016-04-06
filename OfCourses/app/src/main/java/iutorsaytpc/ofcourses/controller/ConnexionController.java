@@ -37,9 +37,9 @@ public class ConnexionController implements View.OnClickListener {
                             ((Activity) view.getContext()).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    RelativeLayout content = ((RelativeLayout) ((Activity) view.getContext()).findViewById(R.id.layoutParent));
-                                    content.removeAllViews();
-                                    content.addView(new FragmentView(view.getContext()));
+                                    FragmentView tmpView = new FragmentView(view.getContext());
+                                    ((MainActivity) view.getContext()).setViewShowed(tmpView);
+                                    ((MainActivity) view.getContext()).setContentFragment();
                                 }
                             });
                         }
