@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.view.EdtView;
 import iutorsaytpc.ofcourses.view.FragmentView;
@@ -27,14 +28,11 @@ public class FragmentController implements View.OnClickListener{
         FrameLayout content = null;
         switch (v.getId()){
             case R.id.edt:
-                content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
-                content.removeAllViews();
-                content.addView(new EdtView(view.getContext()));
+                ((MainActivity) view.getContext()).setFragmentShowed(new EdtView(view.getContext()));
                 break;
             case R.id.listeGroupe:
-                content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
-                content.removeAllViews();
-                content.addView(new ListeGroupesView(view.getContext()));
+
+                ((MainActivity) view.getContext()).setFragmentShowed(new ListeGroupesView(view.getContext()));
                 break;
         }
     }

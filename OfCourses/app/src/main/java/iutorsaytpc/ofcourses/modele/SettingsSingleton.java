@@ -1,7 +1,14 @@
 package iutorsaytpc.ofcourses.modele;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class SettingsSingleton {
     private static SettingsSingleton ourInstance;
@@ -12,6 +19,7 @@ public class SettingsSingleton {
     private String nomFont;
     private int selectionLangue;
     private int selectionFont;
+    private boolean settingsHasChanged = false;
     static {
         ourInstance = new SettingsSingleton();
     }
@@ -30,7 +38,7 @@ public class SettingsSingleton {
         this.selectionFont = 0;
     }
 
-    public Typeface getFont(AppCompatActivity a) {
+    public Typeface getFont(Context a) {
         return Typeface.createFromAsset(a.getAssets(), "fonts/" + this.font);
     }
 
@@ -88,5 +96,24 @@ public class SettingsSingleton {
 
     public void setSelectionLangue(int selectionLangue) {
         this.selectionLangue = selectionLangue;
+    }
+
+    public boolean getSettingsHasChanged() { return settingsHasChanged; }
+
+    public void setSettingsHasChanged(boolean fontHasChanged) { this.settingsHasChanged = fontHasChanged; }
+
+    public void setAllFontInView(View v){
+        if (v instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) v;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+
+                View child = viewGroup.getChildAt(i);
+                if(child instanceof TextView)
+                    ((TextView)child).setTypeface(SettingsSingleton.getInstance().getFont(child.getContext()));
+                else
+                    setAllFontInView(child);
+
+            }
+        }
     }
 }

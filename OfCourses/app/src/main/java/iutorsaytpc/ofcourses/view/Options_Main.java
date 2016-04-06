@@ -53,7 +53,6 @@ public class Options_Main extends AppCompatActivity {
 
         settings = SettingsSingleton.getInstance();
 
-        System.out.println("TEEEEEEEEESSSSSSSSSSSSSSTTTTTTTTTTTTLAAAAAAAAAAAAAAANGUUUUUUUUUUUUUUUUUUE");
         bool = settings.getBooool();
         bool2 = settings.getBoolL();
         if (bool == true) {
@@ -196,6 +195,7 @@ public class Options_Main extends AppCompatActivity {
                 fontLabel = "arial.ttf";
                 nomFont = "Arial";
             }
+            SettingsSingleton.getInstance().setSettingsHasChanged(true);
         }
 
         public void onNothingSelected(AdapterView parent) {

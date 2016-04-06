@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.controller.ConnexionController;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 
 /**
  * Created by VirusTwoIUT on 11/03/2016.

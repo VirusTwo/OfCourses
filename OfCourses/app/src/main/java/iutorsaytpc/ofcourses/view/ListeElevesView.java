@@ -8,12 +8,17 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -25,6 +30,7 @@ import iutorsaytpc.ofcourses.controller.ConnexionController;
 import iutorsaytpc.ofcourses.controller.ListeEleveController;
 import iutorsaytpc.ofcourses.modele.ClasseSingleton;
 import iutorsaytpc.ofcourses.modele.MatiereSingleton;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 import iutorsaytpc.ofcourses.popup.PopupAppreciation;
 import iutorsaytpc.ofcourses.popup.PopupNote;
 import iutorsaytpc.ofcourses.widget.StudentRow;
@@ -36,6 +42,7 @@ import iutorsaytpc.ofcourses.widget.StudentRow;
 public class ListeElevesView extends LinearLayout {
 
     private Context context;
+    private ListeElevesView myInstance;
     private Button btnAddAppreciation;
     private Button btnAddNote;
     private Button btnModifier;
@@ -56,12 +63,14 @@ public class ListeElevesView extends LinearLayout {
 
     public ListeElevesView(Context context) {
         super(context);
+        this.myInstance = this;
         this.context = context;
 
         inflate();
         bindViews();
 
         createDemoDataListeEleve();
+
     }
 
     private void inflate() {
@@ -119,8 +128,7 @@ public class ListeElevesView extends LinearLayout {
         if(inEdit) {
             btnModifier.setText(this.getContext().getString(R.string.modifier));
             inEdit = false;
-        }
-        else{
+        } else {
             btnModifier.setText(super.getContext().getString(R.string.save));
             inEdit = true;
         }
@@ -293,6 +301,7 @@ public class ListeElevesView extends LinearLayout {
                                 tableEleve.addView(tmpRow);
                                 studentRows.add(tmpRow);
                             }
+                            SettingsSingleton.getInstance().setAllFontInView(myInstance);
                         }
                     });
                 }

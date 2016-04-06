@@ -1,14 +1,18 @@
 package iutorsaytpc.ofcourses.view;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.controller.FragmentController;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 
 /**
  * Created by Tilloman on 30/03/2016.
@@ -24,6 +28,7 @@ public class FragmentView extends LinearLayout {
 
         inflate();
         bindViews();
+
     }
 
     private void inflate() {

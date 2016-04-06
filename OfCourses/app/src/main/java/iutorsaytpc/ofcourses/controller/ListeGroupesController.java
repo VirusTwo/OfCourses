@@ -5,9 +5,11 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
+import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.modele.ClasseSingleton;
 import iutorsaytpc.ofcourses.modele.MatiereSingleton;
+import iutorsaytpc.ofcourses.view.EdtView;
 import iutorsaytpc.ofcourses.view.ListeElevesView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
 
@@ -28,10 +30,7 @@ public class ListeGroupesController implements View.OnClickListener {
                 MatiereSingleton.setId_matiere(view.getSelectedIdMatiere());
                 ClasseSingleton.setName_classe(view.getSelectedNameClasse());
                 MatiereSingleton.setName_matiere(view.getSelectedNameMatiere());
-                FrameLayout content = ((FrameLayout) ((Activity) view.getContext()).findViewById(R.id.frameLayoutFragment));
-                content.removeAllViews();
-                content.addView(new ListeElevesView(view.getContext()));
-                content.setContentDescription("ListeEleveView");
+                ((MainActivity) view.getContext()).setFragmentShowed(new ListeElevesView(view.getContext()));
                 break;
         }
     }
