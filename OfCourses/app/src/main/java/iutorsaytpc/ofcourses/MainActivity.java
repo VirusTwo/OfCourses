@@ -90,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         //Détache le fragments actif et la vue active
-        contentFragment.removeAllViews();
+        if(contentFragment != null)
+            contentFragment.removeAllViews();
         contentView.removeAllViews();
         super.onStop();
     }

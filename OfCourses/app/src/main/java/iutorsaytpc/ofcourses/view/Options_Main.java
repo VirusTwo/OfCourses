@@ -29,7 +29,6 @@ import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 
 public class Options_Main extends AppCompatActivity {
-
     Boolean bool;
     Boolean bool2;
     private Button btnQuitS;
@@ -46,7 +45,6 @@ public class Options_Main extends AppCompatActivity {
         setContentView(R.layout.activity_options__main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         initialiser();
 
@@ -74,6 +72,8 @@ public class Options_Main extends AppCompatActivity {
                 settings.savedBoolL();
                 settings.setLangue(languageToLoad);
                 setLangue();
+                SettingsSingleton.getInstance().setSettingsHasChanged(true);
+                finish();
             }
         });
 
@@ -174,9 +174,6 @@ public class Options_Main extends AppCompatActivity {
         Configuration config = new Configuration();
         config.locale = locale;
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
     }
 
 
@@ -195,7 +192,7 @@ public class Options_Main extends AppCompatActivity {
                 fontLabel = "arial.ttf";
                 nomFont = "Arial";
             }
-            SettingsSingleton.getInstance().setSettingsHasChanged(true);
+
         }
 
         public void onNothingSelected(AdapterView parent) {
