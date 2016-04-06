@@ -19,8 +19,8 @@ import iutorsaytpc.ofcourses.modele.SettingsSingleton;
  */
 public class FragmentView extends LinearLayout {
     private Context context;
-    private Button edt;
-    private Button listeGroupe;
+    private static Button edt;
+    private static Button listeGroupe;
 
     public FragmentView(Context context) {
         super(context);
@@ -45,5 +45,13 @@ public class FragmentView extends LinearLayout {
 
         edt.setOnClickListener(controller);
         listeGroupe.setOnClickListener(controller);
+
+        //Affiche le message de bienvenue
+        ((FrameLayout) findViewById(R.id.frameLayoutFragment)).addView(new WelcomeView(getContext()));
+    }
+
+    public static void refreshTexts() {
+        edt.setText(R.string.scheduler);
+        listeGroupe.setText(R.string.listeOfGroups);
     }
 }

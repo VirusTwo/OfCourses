@@ -24,6 +24,15 @@ create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexi
   end;
 /
 
+create or replace function getNomPersonne(id in ob_personne.id_personne%type) return varchar2 is
+  res varchar2;
+  begin
+    select nom.prenom into res
+    from ob_personne
+    where id_personne = id;
+  end;
+/
+
 create or replace procedure getMatieres(id in ob_personne.id_personne%type, res out sys_refcursor) as
   begin
     open res for

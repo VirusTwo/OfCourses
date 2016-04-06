@@ -6,6 +6,7 @@ package iutorsaytpc.ofcourses.modele;
 public class EnseignantSingleton {
 
     private static int id_personne;
+    private static String nom_prenom;
 
     public static int getId() {
         return id_personne;
@@ -15,4 +16,11 @@ public class EnseignantSingleton {
         EnseignantSingleton.id_personne = id_personne;
     }
 
+    public static String getNom() {
+        return nom_prenom;
+    }
+
+    public static void setNom_personne(String nom_prenom) {
+        EnseignantSingleton.nom_prenom = nom_prenom;
+    }
 }

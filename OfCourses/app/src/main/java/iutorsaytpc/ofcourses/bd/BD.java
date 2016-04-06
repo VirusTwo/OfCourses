@@ -44,21 +44,15 @@ public class BD {
 		return co;
 	}
 
-	private ResultSet requeteSelect(String requete, Connection co, int type) {
-		ResultSet res=null;
-		try {
-			Statement st;
-			if(type==0) st=co.createStatement();
-			else st=co.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			res=st.executeQuery(requete);
-		}
-		catch(SQLException e) {
-			System.out.println("Problème lors de l'execution de la requête " + requete);
-			e.printStackTrace();
-		}
-
-		return res;
-	}
+    private static void deconnexion(Connection co) {
+        try {
+            co.close();
+            System.out.println("Connexion fermée.");
+        } catch (SQLException e) {
+            System.out.println("Impossible de fermer la connexion.");
+            e.printStackTrace();
+        }
+    }
 
 	public static String getNomClasse() {
 
@@ -89,15 +83,6 @@ public class BD {
 		return res;
 	}
 
-	private static void deconnexion(Connection co) {
-		try {
-			co.close();
-			System.out.println("Connexion fermée.");
-		} catch (SQLException e) {
-			System.out.println("Impossible de fermer la connexion.");
-			e.printStackTrace();
-		}
-	}
 	public static int isLogin(final String log, final String mdp) {
         MainActivity.attachLoadingFragment();
 
@@ -125,6 +110,12 @@ public class BD {
             cst.setString(3, mdp);
             cst.executeQuery();
             res = cst.getInt(1);
+
+            cst = co.prepareCall("{ ? = call getNomPersonne(?) }");
+            cst.registerOutParameter(1, Types.VARCHAR);
+            cst.setInt(2, res);
+            cst.executeQuery();
+            EnseignantSingleton.setNom_personne(cst.getString(1));
         } catch (SQLException e) {
             e.printStackTrace();
             MainActivity.errorLogin();

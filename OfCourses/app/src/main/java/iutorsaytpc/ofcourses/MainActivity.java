@@ -1,33 +1,24 @@
 package iutorsaytpc.ofcourses;
 
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import java.io.LineNumberReader;
-
-import iutorsaytpc.ofcourses.controller.ListeGroupesController;
-import iutorsaytpc.ofcourses.fragment.ListeGroupeFragment;
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
 import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 import iutorsaytpc.ofcourses.view.ConnexionView;
 import iutorsaytpc.ofcourses.view.FragmentView;
-import iutorsaytpc.ofcourses.view.ListeElevesView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
 import iutorsaytpc.ofcourses.view.LoadingView;
 import iutorsaytpc.ofcourses.view.Options_Main;
@@ -39,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private static LoadingView loadingView;
     private static FragmentManager fragmentManager;
     private static FragmentTransaction fragmentTransaction;
-
-    //Views
-    private static FragmentView fragmentView;
 
     //Le content du main activity et le viewFragment
     private RelativeLayout contentView;
@@ -79,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
             setViewShowed(connexionView);
         }else{
             setViewShowed(currentView);
+            //réaffiche le texte des onglets/toolbar
+            FragmentView.refreshTexts();
+            ((Button) findViewById(R.id.action_settings)).setText(R.string.action_settings);
         }
         //Si il y a un fragment d'actif, alors on l'affiche dans le ViewFragment
         if(currentFragment!=null)

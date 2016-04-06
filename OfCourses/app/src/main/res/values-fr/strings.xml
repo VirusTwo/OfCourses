@@ -58,4 +58,5 @@
     <string name="title_activity_main">OfCourses</string>
     <string name="scheduler">Emplois du temps</string>
     <string name="Groupe4CIUTOrsay">Groupe 4C : IUT Orsay</string>
+    <string name="welcome">Bienvenue</string>
 </resources>
