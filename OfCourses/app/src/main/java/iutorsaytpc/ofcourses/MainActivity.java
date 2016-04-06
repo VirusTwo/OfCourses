@@ -1,32 +1,26 @@
 package iutorsaytpc.ofcourses;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import java.io.LineNumberReader;
-
-import iutorsaytpc.ofcourses.controller.ListeGroupesController;
-import iutorsaytpc.ofcourses.fragment.ListeGroupeFragment;
 import iutorsaytpc.ofcourses.fragment.LoadingFragment;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 import iutorsaytpc.ofcourses.view.ConnexionView;
 import iutorsaytpc.ofcourses.view.FragmentView;
-import iutorsaytpc.ofcourses.view.ListeElevesView;
 import iutorsaytpc.ofcourses.view.ListeGroupesView;
 import iutorsaytpc.ofcourses.view.LoadingView;
+import iutorsaytpc.ofcourses.view.Options_Main;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,9 +30,14 @@ public class MainActivity extends AppCompatActivity {
     private static FragmentManager fragmentManager;
     private static FragmentTransaction fragmentTransaction;
 
-    //Views
-    private static FragmentView fragmentView;
+    //Le content du main activity et le viewFragment
+    private RelativeLayout contentView;
+    private static FrameLayout contentFragment;
 
+    //Les vues actives
+    private static View currentView;
+    private static View currentFragment;
+    private boolean connected = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,17 +47,70 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
 
-        //Réglage des onglets
-        fragmentView = new FragmentView(this);
-
         //Réglage du fragment loading;
         loadingView = new LoadingView(this);
         loadingFragment = new LoadingFragment(loadingView);
         initFragment();
 
-        //On lance la page de connexion
-        ConnexionView connexionView = new ConnexionView(this);
-        ((RelativeLayout) findViewById(R.id.layoutParent)).addView(connexionView);
+        //On récupère le Relative layout du mainactivity
+        contentView = ( (RelativeLayout)findViewById(R.id.layoutParent));
+
+    }
+
+    @Override
+    protected void onPostResume() {
+        
+        //Si la vue active est null alors on affiche la vue connexion, sinon on réaffiche la vue active
+        if(currentView==null){
+            ConnexionView connexionView = new ConnexionView(this);
+            ((RelativeLayout) findViewById(R.id.layoutParent)).addView(connexionView);
+            setViewShowed(connexionView);
+        }else{
+            setViewShowed(currentView);
+            //réaffiche le texte des onglets/toolbar
+            try {
+                FragmentView.refreshTexts();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                System.out.println("On se trouve sur la page connexion");
+            }
+        }
+        //S'il y a un fragment d'actif, alors on l'affiche dans le ViewFragment
+        if(currentFragment!=null)
+            setFragmentShowed(currentFragment);
+
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onStop() {
+        //Détache le fragments actif et la vue active
+        if(contentFragment != null)
+            contentFragment.removeAllViews();
+        contentView.removeAllViews();
+        super.onStop();
+    }
+
+    public void setViewShowed(View v){
+        SettingsSingleton.getInstance().setAllFontInView(v);
+        //Affiche la vue v
+        contentView.removeAllViews();
+        contentView.addView(v);
+        currentView= v;
+    }
+
+
+    public void setFragmentShowed(View v){
+        SettingsSingleton.getInstance().setAllFontInView(v);
+        //Affiche le fragment v dans la vue fragment
+        contentFragment.removeAllViews();
+        contentFragment.addView(v);
+        currentFragment= v;
+    }
+
+    public void setContentFragment() {
+        //Récupère le FrameLayout pour les fragments
+        this.contentFragment = (FrameLayout)findViewById(R.id.frameLayoutFragment);;
     }
 
     @Override
@@ -66,6 +118,12 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SettingsSingleton.getInstance().setAllFontInView((View) findViewById(R.id.layoutParent));
     }
 
     @Override
@@ -77,6 +135,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, Options_Main.class);
+            startActivity(intent);
             return true;
         }
 
@@ -116,6 +176,15 @@ public class MainActivity extends AppCompatActivity {
     public static void resetLoading() {
         loadingView.reset();
     }
+
+    public boolean isConnected() {
+        return connected;
+    }
+
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
 
     @Override
     public void onBackPressed() {

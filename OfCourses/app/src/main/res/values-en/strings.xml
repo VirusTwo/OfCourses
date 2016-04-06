@@ -8,10 +8,10 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">Ce mot de passe est incorrect</string>
-    <string name="title_activity_liste_groupe">listeGroupeActivity</string>
+    <string name="error_incorrect_password">This password is invalid</string>
+    <string name="title_activity_liste_groupe">List of groups</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="hello_world">null</string>
 
     <string name="btnQuit">Quit and Save</string>
     <string name="checkBox">Green</string>
@@ -27,4 +27,39 @@
     <string name="textView7">Notifications</string>
     <string name="textView8">English</string>
     <string name="textView9">Actual font :</string>
+
+    <string name="lblLundi">Monday</string>
+    <string name="lblMardi">Tuesday</string>
+    <string name="lblMercredi">Wednesday</string>
+    <string name="lblJeudi">Thursay</string>
+    <string name="lblVendredi">Friday</string>
+    <string name="absence">Absence :</string>
+    <string name="section_format">null</string>
+    <string name="tp">TP :</string>
+    <string name="workBack">Returned work</string>
+    <string name="addMarks">Add mark</string>
+    <string name="add_appreciation_popup_title">Add an appreciation to a studeny</string>
+    <string name="addAppreciation">Add appreciation</string>
+    <string name="add_mark_popup_title">Add mark</string>
+    <string name="chooseAGroup">Choose a group</string>
+    <string name="chooseAStudent">Select a student</string>
+    <string name="commentary">Comment : </string>
+    <string name="concentration">Concentration : </string>
+    <string name="chooseASubject">Choose a subject</string>
+    <string name="finalMark">Final mark : </string>
+    <string name="listeOfGroups">List of groups</string>
+    <string name="listeOfStudents">List of students</string>
+    <string name="modifier">Modify</string>
+    <string name="next">Next</string>
+    <string name="ok">Validate</string>
+    <string name="participation">Participation : </string>
+    <string name="punctuality">Ponctuality</string>
+    <string name="save">Save</string>
+    <string name="subject">Subject</string>
+    <string name="title_activity_liste_eleve">List of students</string>
+    <string name="categories_evaluation">Categories of evalutions : </string>
+    <string name="title_activity_main">OfCourses</string>
+    <string name="scheduler">Scheduler</string>
+    <string name="Groupe4CIUTOrsay">Group 4C : IUT Orsay</string>
+    <string name="welcome">Welcome</string>
 </resources>

@@ -28,13 +28,20 @@ public class NoteSwitcher extends ViewSwitcher {
         this.eleve = eleve;
         this.id_note = id_note;
         noteTextView = new TextView(super.getContext());
-        if(note == -1) noteTextView.setText("");
-        else noteTextView.setText(String.valueOf(note));
+        noteEditText = new EditText(super.getContext());
+
+        if(note == -1){
+            noteTextView.setText("");
+            noteEditText.setText("");
+        }
+        else{
+            noteTextView.setText(String.valueOf(note));
+            noteEditText.setText(String.valueOf(note));
+        }
+
         noteTextView.setTextSize(15);
         noteTextView.setLayoutParams(StudentRow.LPTEXT);
         addView(noteTextView);
-        noteEditText = new EditText(super.getContext());
-        noteEditText.setText(String.valueOf(note));
         noteEditText.setTextSize(12);
         noteEditText.setPadding(5, 0, 0, -5);
         noteEditText.setBackgroundColor(Color.WHITE);
@@ -59,7 +66,10 @@ public class NoteSwitcher extends ViewSwitcher {
             }).start();
         }
         noteEditText.setEnabled(!noteEditText.isEnabled());
-        if(noteTextView.getText().toString().compareTo("") == 0) noteEditText.setText("");
+        if(noteEditText.getText().toString().compareTo("") == 0) {
+            noteEditText.setText("");
+            noteTextView.setText("");
+        }
         else noteTextView.setText(noteEditText.getText());
         super.showNext();
     }

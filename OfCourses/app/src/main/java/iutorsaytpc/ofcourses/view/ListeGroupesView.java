@@ -25,6 +25,7 @@ import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.controller.ConnexionController;
 import iutorsaytpc.ofcourses.controller.ListeEleveController;
 import iutorsaytpc.ofcourses.controller.ListeGroupesController;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 import iutorsaytpc.ofcourses.popup.PopupAppreciation;
 import iutorsaytpc.ofcourses.popup.PopupNote;
 import iutorsaytpc.ofcourses.widget.StudentRow;

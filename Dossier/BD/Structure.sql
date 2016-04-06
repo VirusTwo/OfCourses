@@ -71,7 +71,8 @@ Create or replace Type ob_connexion_ty AS Object (
 Create or replace Type ob_cours_ty AS Object (
     id_cours INTEGER,
     dateDebut DATE,
-    dateFin  DATE,
+    heureDebut integer,
+    heureFin integer,
     saMatiere REF ob_matiere_ty,
     saClasse REF ob_classe_ty,
     saSalle REF ob_salle_ty,

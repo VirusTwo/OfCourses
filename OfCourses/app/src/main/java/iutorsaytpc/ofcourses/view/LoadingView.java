@@ -7,6 +7,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import iutorsaytpc.ofcourses.R;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 
 /**
  * Created by guillaumemartinez on 30/03/2016

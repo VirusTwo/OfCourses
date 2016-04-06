@@ -1,22 +1,26 @@
 package iutorsaytpc.ofcourses.view;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import iutorsaytpc.ofcourses.MainActivity;
 import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.controller.FragmentController;
+import iutorsaytpc.ofcourses.modele.SettingsSingleton;
 
 /**
  * Created by Tilloman on 30/03/2016.
  */
 public class FragmentView extends LinearLayout {
     private Context context;
-    private Button edt;
-    private Button listeGroupe;
+    private static Button edt;
+    private static Button listeGroupe;
 
     public FragmentView(Context context) {
         super(context);
@@ -24,6 +28,7 @@ public class FragmentView extends LinearLayout {
 
         inflate();
         bindViews();
+
     }
 
     private void inflate() {
@@ -40,5 +45,19 @@ public class FragmentView extends LinearLayout {
 
         edt.setOnClickListener(controller);
         listeGroupe.setOnClickListener(controller);
+
+        //Affiche le message de bienvenue
+      //  ((FrameLayout) findViewById(R.id.frameLayoutFragment)).addView(new WelcomeView(getContext()));
+    }
+
+    public static void refreshTexts() {
+        edt.setText(R.string.scheduler);
+        listeGroupe.setText(R.string.listeOfGroups);
+        try {
+            WelcomeView.refreshText();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("Nous ne sommes pas dans le bail de bienvenue");
+        }
     }
 }

@@ -24,6 +24,17 @@ create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexi
   end;
 /
 
+create or replace function getNomPersonne(id in ob_personne.id_personne%type) return varchar2 is
+  res varchar2(50);
+  begin
+    select nom||' '||prenom into res
+    from ob_personne
+    where id_personne = id;
+    
+    return res;
+  end;
+/
+
 create or replace procedure getMatieres(id in ob_personne.id_personne%type, res out sys_refcursor) as
   begin
     open res for
@@ -46,7 +57,7 @@ create or replace procedure getClasses(id in ob_personne.id_personne%type, res o
 create or replace procedure getCours(id in ob_personne.id_personne%type, res out sys_refcursor) as
   begin
     open res for
-      select dateDebut, dateFin, (deref(saMatiere)).nom, (deref(saClasse)).nom, (deref(saSalle)).num
+      select dateDebut, heureDebut, heureFin, (deref(saMatiere)).nom, (deref(saClasse)).nom, (deref(saSalle)).num
       from ob_cours C
       where (deref(sonEnseignant)).id_personne = id;
   end;
