@@ -23,6 +23,8 @@ import iutorsaytpc.ofcourses.R;
 import iutorsaytpc.ofcourses.bd.BD;
 import iutorsaytpc.ofcourses.controller.ConnexionController;
 import iutorsaytpc.ofcourses.controller.ListeEleveController;
+import iutorsaytpc.ofcourses.modele.ClasseSingleton;
+import iutorsaytpc.ofcourses.modele.MatiereSingleton;
 import iutorsaytpc.ofcourses.popup.PopupAppreciation;
 import iutorsaytpc.ofcourses.popup.PopupNote;
 import iutorsaytpc.ofcourses.widget.StudentRow;
@@ -38,6 +40,9 @@ public class ListeElevesView extends LinearLayout {
     private Button btnAddNote;
     private Button btnModifier;
     private Button btnSauvergarder;
+
+    private TextView txtViewNameClasse;
+    private TextView txtViewNameMatiere;
 
     private TableLayout tableEleve;
     private ArrayList<StudentRow> studentRows = new ArrayList<StudentRow>();
@@ -71,12 +76,21 @@ public class ListeElevesView extends LinearLayout {
         btnModifier = (Button) findViewById(R.id.modifierButton);
         btnSauvergarder = (Button) findViewById(R.id.sauvegarderButton);
 
+
+        txtViewNameClasse = (TextView) findViewById(R.id.textViewTP);
+        txtViewNameMatiere = (TextView) findViewById(R.id.textViewMatiere);
+
         tableEleve = (TableLayout) findViewById(R.id.tableEleve);
 
         btnAddAppreciation.setOnClickListener(controller);
         btnAddNote.setOnClickListener(controller);
         btnModifier.setOnClickListener(controller);
         btnSauvergarder.setOnClickListener(controller);
+
+        String tmpvar = MatiereSingleton.getName_matiere();
+        txtViewNameMatiere.setText(MatiereSingleton.getName_matiere());
+        tmpvar = ClasseSingleton.getName_classe();
+        txtViewNameClasse.setText(ClasseSingleton.getName_classe());
     }
 
     public void createHeadTable(String header[]) {
@@ -156,8 +170,6 @@ public class ListeElevesView extends LinearLayout {
 
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                System.out.print(noteDialog.getEtudiant());
-                System.out.print(noteDialog.getNote());
                 System.out.print(noteDialog.getTypeEval());
                 //Toast.makeText(getApplicationContext(), "Vous avez ajouter une note à " + noteDialog.getEtudiant() + "\n et il a eu  " + noteDialog.getNote() + " à un " + noteDialog.getTypeEval(), Toast.LENGTH_SHORT).show();
 

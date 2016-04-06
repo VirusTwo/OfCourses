@@ -5,28 +5,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Note :"
-        android:id="@+id/noteLblTxt"
-        android:textStyle="bold"
-        android:layout_alignBaseline="@+id/noteEleve"
-        android:layout_alignBottom="@+id/noteEleve"
-        android:layout_alignParentStart="true"
-        android:textColor="@android:color/black" />
-
-    <EditText
-        android:layout_width="61dp"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/noteEleve"
-        android:layout_gravity="center_horizontal"
-        android:numeric="integer|decimal"
-        android:layout_below="@+id/spinnerEtudiant"
-        android:layout_toEndOf="@+id/noteLblTxt" />
-        <!--android:layout_alignStart="@+id/linearLayout"-->
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,8 +12,6 @@
         android:text="Catégorie d&apos;évaluation :"
         android:id="@+id/typeTestLbl"
         android:textStyle="bold"
-        android:layout_below="@+id/spinnerEtudiant"
-        android:layout_alignStart="@+id/noteLblTxt"
         android:layout_marginTop="54dp"
         android:textColor="@android:color/black" />
 
@@ -46,60 +22,5 @@
         android:layout_marginStart="32dp"
         android:layout_alignTop="@+id/typeTestLbl"
         android:layout_toEndOf="@+id/typeTestLbl" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Choisissez l&apos;étudiant :"
-        android:id="@+id/lblEtudiant"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/noteLblTxt"
-        android:textColor="@android:color/black" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/spinnerEtudiant"
-        android:layout_alignTop="@+id/lblEtudiant"
-        android:layout_alignStart="@+id/spinnerTypeTest" />
-<!--
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.16"
-        android:id="@+id/linearLayout"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="31dp"
-            android:text="Valider"
-            android:id="@+id/buttonValider"
-            android:layout_gravity="right"
-            android:background="@drawable/greenbutton"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textColor="#ffffff"
-            android:onClick="Validation"
-            android:layout_marginTop="44dp"
-            android:layout_below="@+id/spinnerTypeTest"
-            android:layout_alignEnd="@+id/noteEleve">
-        </Button>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="Annuler"
-            android:id="@+id/buttonAnnuler"
-            android:background="@drawable/greenbutton"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:textColor="#ffffff"
-            android:layout_toEndOf="@+id/buttonValider" />
-    </LinearLayout>
--->
 
 </RelativeLayout>
