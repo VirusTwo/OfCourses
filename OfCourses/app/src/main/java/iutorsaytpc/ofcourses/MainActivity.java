@@ -11,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -68,9 +67,14 @@ public class MainActivity extends AppCompatActivity {
         }else{
             setViewShowed(currentView);
             //réaffiche le texte des onglets/toolbar
-            FragmentView.refreshTexts();
+            try {
+                FragmentView.refreshTexts();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
+                System.out.println("On se trouve sur la page connexion");
+            }
         }
-        //Si il y a un fragment d'actif, alors on l'affiche dans le ViewFragment
+        //S'il y a un fragment d'actif, alors on l'affiche dans le ViewFragment
         if(currentFragment!=null)
             setFragmentShowed(currentFragment);
 
