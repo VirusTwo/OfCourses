@@ -12,6 +12,9 @@ import iutorsaytpc.ofcourses.modele.EnseignantSingleton;
  * Created by guillaumemartinez on 06/04/2016
  */
 public class WelcomeView extends RelativeLayout {
+
+    private static TextView welcome;
+
     public WelcomeView(Context context) {
         super(context);
 
@@ -27,5 +30,10 @@ public class WelcomeView extends RelativeLayout {
     private void bindViews() {
         TextView nom = (TextView) findViewById(R.id.nomEnseignantText);
         nom.setText(EnseignantSingleton.getNom());
+        welcome = (TextView) findViewById(R.id.welcomeText);
+    }
+
+    public static void refreshText() {
+        welcome.setText(R.string.welcome);
     }
 }

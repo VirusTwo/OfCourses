@@ -53,5 +53,11 @@ public class FragmentView extends LinearLayout {
     public static void refreshTexts() {
         edt.setText(R.string.scheduler);
         listeGroupe.setText(R.string.listeOfGroups);
+        try {
+            WelcomeView.refreshText();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            System.out.println("Nous ne sommes pas dans le bail de bienvenue");
+        }
     }
 }

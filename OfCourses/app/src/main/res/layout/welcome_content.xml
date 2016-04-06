@@ -10,6 +10,7 @@
         android:layout_above="@+id/nomEnseignantText"
         android:layout_centerHorizontal="true"
         android:text="@string/welcome"
+        android:id="@+id/welcomeText"
         android:textSize="40sp"/>
 
     <TextView
