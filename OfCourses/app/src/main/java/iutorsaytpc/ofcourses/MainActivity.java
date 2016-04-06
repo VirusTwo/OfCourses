@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setLogo(R.drawable.logo);
 
-        //Réglage des onglets
-
         //Réglage du fragment loading;
         loadingView = new LoadingView(this);
         loadingFragment = new LoadingFragment(loadingView);
