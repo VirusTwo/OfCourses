@@ -80,19 +80,9 @@ public class MainActivity extends AppCompatActivity {
         }else{
             setViewShowed(currentView);
         }
-        //Si il y a eu des changements de settings, alors on charge la nouvelle police pour la vue
-        if (SettingsSingleton.getInstance().getSettingsHasChanged()) {
-            SettingsSingleton.getInstance().setAllFontInView(currentView);
-            SettingsSingleton.getInstance().setSettingsHasChanged(false);
-        }
         //Si il y a un fragment d'actif, alors on l'affiche dans le ViewFragment
-        if(currentFragment!=null){
+        if(currentFragment!=null)
             setFragmentShowed(currentFragment);
-            //Si il y a eu des changements de settings, alors on charge la nouvelle police pour les view du fragments
-            if (SettingsSingleton.getInstance().getSettingsHasChanged()) {
-                SettingsSingleton.getInstance().setAllFontInView(currentFragment);
-            }
-        }
 
         super.onPostResume();
     }
@@ -106,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setViewShowed(View v){
+        SettingsSingleton.getInstance().setAllFontInView(v);
         //Affiche la vue v
         contentView.removeAllViews();
         contentView.addView(v);
@@ -114,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void setFragmentShowed(View v){
+        SettingsSingleton.getInstance().setAllFontInView(v);
         //Affiche le fragment v dans la vue fragment
         contentFragment.removeAllViews();
         contentFragment.addView(v);
