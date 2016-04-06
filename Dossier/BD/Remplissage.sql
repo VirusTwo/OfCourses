@@ -7,88 +7,92 @@ DELETE FROM ob_personne;
 DELETE FROM ob_pointbonus;
 DELETE FROM ob_salle;
 
-INSERT INTO ob_salle
-VALUES(1,'I208');
+/*GUIZMO il faut rajouter un lien entre matiere et prof */
 
-INSERT INTO ob_matiere
-VALUES(1, 'Poo', 8);
 
-INSERT INTO ob_matiere
-VALUES(2, 'Maths', 8);
+BEGIN 
 
-INSERT INTO ob_classe
-VALUES(1, '3C');
+  /* ajout des salles */
+  addSalle(1, 'I208');
+  addSalle(2, 'I209');
+  
+END;
+/
 
-INSERT INTO ob_personne
-SELECT 1, 'MARTINEZ', 'Guizmo', 'guizmo@mail.fr', 'enseignant', ref(Cl)
-FROM ob_classe Cl
-WHERE Cl.id_classe = 1;
+BEGIN
+  /* ajout des classes */
+  addClasse(2, '4c');
+  addClasse(1, '3C');
+END;
+/
 
-INSERT INTO ob_personne
-SELECT 2, 'MARTINEZ', 'GuizmoEtudiant', 'guizmo@mail.fr', 'etudiant', ref(Cl)
-FROM ob_classe Cl
-WHERE Cl.id_classe = 1;
+BEGIN
+  /* ajout des matières */
+  addUneMatiere(1, 'JAVA', 8);
+  addUneMatiere(2,'CODAGE', 3);
+  
+END;
+/
 
-INSERT INTO ob_personne
-SELECT 3, 'LAMERE', 'SimonEtudiant', 'guizmo@mail.fr', 'etudiant', ref(Cl)
-FROM ob_classe Cl
-WHERE Cl.id_classe = 1;
 
-INSERT INTO ob_connexion
-SELECT 1,'a', 'a', ref(E)
-FROM ob_personne E
-WHERE id_personne = 1;
+BEGIN
+  /* ajout des Enseigants  idEn, nomEn, prenomEn, emailEn,'enseignant', ref(C)*/
+  addEnseignant(1, 'MARTINEZ', 'Guizmo', 'guizmo@mail.fr', 1);
+  addEnseignant(2, 'POKORSKI', 'Alexis', 'p-alexis@mail.fr', 2);
+  
+END;
+/
 
-INSERT INTO ob_cours
-SELECT 1, TO_DATE('2016/03/21 8:00:00', 'YYYY/MM/DD HH24:MI:SS'), 9, 10, ref(M), ref(C), ref(S), ref(E)
-FROM ob_matiere M, ob_classe C, ob_salle S, ob_personne E, dual
-WHERE M.id_matiere = 1
-AND C.id_classe = 1
-AND S.id_salle = 1
-AND E.id_personne = 1;
+BEGIN
 
-INSERT INTO ob_cours
-SELECT 2, TO_DATE('2016/03/24 14:00:00', 'YYYY/MM/DD HH24:MI:SS'), 14, 15, ref(M), ref(C), ref(S), ref(E)
-FROM ob_matiere M, ob_classe C, ob_salle S, ob_personne E, dual
-WHERE M.id_matiere = 2
-AND C.id_classe = 1
-AND S.id_salle = 1
-AND E.id_personne = 1;
+  addConnexion(1, 'guizmo','coucou',1);
+  addConnexion(2, 'palexis','hello',2);
+  
+END;
+/
 
-INSERT INTO ob_note
-SELECT 1, 1, 20, 'CC1', ref(M), ref(E)
-FROM ob_matiere M, ob_personne E
-WHERE id_matiere = 1
-AND id_personne = 2;
+BEGIN
 
-INSERT INTO ob_note
-SELECT 2, 1, 3.5, 'CC1', ref(M), ref(E)
-FROM ob_matiere M, ob_personne E
-WHERE id_matiere = 1
-AND id_personne = 3;
+  /* classe 4C idClasse = 1 */
+  addEtudiant(3, 'CREBOUW', 'Cyril', 'c-cyril@mail.fr',1);
+  addEtudiant(4, 'SAUVARD', 'Clément', 's-clement@mail.fr',1);
+  addEtudiant(5, 'LEMONIER', 'Simon', 'l-lemonier@mail.fr',1);
+  addEtudiant(6, 'TOUTIN', 'Antoine', 't-antoine@mail.fr',1);
+  
+  /* classe 3C idClasse = 2 */
+  addEtudiant(7, 'LACROIX', 'Julien', 'l-julien@mail.fr',2);
+  addEtudiant(8, 'MOULE', 'Martin', 'm-martin@mail.fr',2);
+  addEtudiant(9, 'SKY', 'Anastasia', 's-anastasia@mail.fr',2);
+  addEtudiant(10, 'LACOU', 'Sandra', 'l-sandra@mail.fr',2);
+  
+END;
+/
 
-INSERT INTO ob_note
-SELECT 3, 1, 19, 'DS1', ref(M), ref(E)
-FROM ob_matiere M, ob_personne E
-WHERE id_matiere = 1
-AND id_personne = 2;
+BEGIN
+  
+  /* addNote(idNote in INTEGER, coeffNote in FLOAT, note in FLOAT, matiere in ob_matiere.id_matiere%type, etudiant in ob_personne.id_personne%type)*/
+  
+  /* notes pour JAVA idNote = 1 */
+  addNote(1, 2, 13, 1, 3);
+  addNote(2, 2, 17, 1, 4);
+  addNote(3, 2, 15, 1, 5);
+  addNote(4, 2, 11, 1, 6);
+  addNote(5, 2, 11, 1, 7);
+  addNote(6, 2, 18, 1, 8);
+  addNote(7, 2, 16, 1, 9);
+  addNote(8, 2, 13, 1, 10);
+  
+  /* nots pour CODAGE idNote = 2 */
+  addNote(9, 3, 14, 2, 3);
+  addNote(10, 3, 16, 2, 4);
+  addNote(3, 3, 14, 2, 5);
+  addNote(4, 3, 15, 2, 6);
+  addNote(5, 3, 17, 2, 7);
+  addNote(6, 3, 12, 2, 8);
+  addNote(7, 3, 11, 2, 9);
+  addNote(8, 3, 16, 2, 10);
+  
+END;
+/
 
-INSERT INTO ob_note
-SELECT 4, 1, 3, 'DS1', ref(M), ref(E)
-FROM ob_matiere M, ob_personne E
-WHERE id_matiere = 1
-AND id_personne = 3;
 
-INSERT INTO ob_pointBonus
-SELECT 1, '', ref(E), -1, ref(M)
-FROM ob_personne E, ob_matiere M
-WHERE id_personne = 2
-and id_matiere = 1;
-
-INSERT INTO ob_pointBonus
-SELECT 2, 'abc', ref(E), 5, ref(M)
-FROM ob_personne E, ob_matiere M
-WHERE id_personne = 3
-and id_matiere = 1;
-
-COMMIT;

@@ -24,17 +24,6 @@ create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexi
   end;
 /
 
-create or replace function getNomPersonne(id in ob_personne.id_personne%type) return varchar2 is
-  res varchar2(50);
-  begin
-    select nom||' '||prenom into res
-    from ob_personne
-    where id_personne = id;
-    
-    return res;
-  end;
-/
-
 create or replace procedure getMatieres(id in ob_personne.id_personne%type, res out sys_refcursor) as
   begin
     open res for
@@ -57,7 +46,7 @@ create or replace procedure getClasses(id in ob_personne.id_personne%type, res o
 create or replace procedure getCours(id in ob_personne.id_personne%type, res out sys_refcursor) as
   begin
     open res for
-      select dateDebut, heureDebut, heureFin, (deref(saMatiere)).nom, (deref(saClasse)).nom, (deref(saSalle)).num
+      select dateDebut, dateFin, (deref(saMatiere)).nom, (deref(saClasse)).nom, (deref(saSalle)).num
       from ob_cours C
       where (deref(sonEnseignant)).id_personne = id;
   end;
@@ -253,61 +242,108 @@ create or replace procedure getNotesFromEtudiant(idPersonne in ob_personne.id_pe
   end;
 /
 
-/*
-create or replace procedure addUneMatiere(numMatiere in INTEGER, nomMatiere in VARCHAR, coeffMatiere in FLOAT) AS 
+create or replace function getNomSaClasse(id in ob_personne.id_personne%type) return ob_classe.nom%type is
+  res ob_classe.nom%type;
+  begin
+    select (deref(saClasse)).nom into res
+    from ob_personne P
+    where id_personne = id;
+    return res;
+  end;
+/
+
+create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexion.mdp%type) return ob_personne.id_personne%type is
+  res ob_personne.id_personne%type := -1;
+  begin
+    select (deref(sonEnseignant)).id_personne into res
+    from ob_connexion C
+    where login = l
+    and mdp = m;
+    
+    return res;
+  end;
+/
+
+create or replace procedure addUneMatiere(idMatiere in INTEGER, nomMatiere in VARCHAR, coeffMatiere in FLOAT) AS 
 BEGIN
   INSERT INTO ob_matiere
-    VALUES(numMatiere, nomMatiere, coeffMatiere);
+    VALUES(idMatiere, nomMatiere, coeffMatiere);
 END;
 /
 
-create or replace procedure addUnCours(numCours in INTEGER, debCours in DATE,  finCours in DATE, matiere in ob_matiere%type , classeCours in ob_classe%type, salle in ob_salle%type, edt in ob_edt%type ) AS
+create or replace procedure addUnCours(numCours in INTEGER, debCours in DATE,  finCours in DATE, heureDeb in INTEGER, heureFin in INTEGER, matiere in ob_matiere.id_matiere%type , classe in OB_CLASSE.ID_CLASSE%type, salle in OB_SALLE.ID_SALLE%type, sonEns ob_personne.id_personne%type) AS
 BEGIN
     INSERT INTO ob_cours
-    VALUES(numCours, debCours, finCours, matiere, classeCours, salle, edt);
+    SELECT numCours, debCours, finCours, heureDeb, heureFin, REF(M), REF(C), REF(S), REF(Ens)
+    FROM ob_matiere M, ob_classe C, ob_salle S, ob_personne Ens
+    WHERE id_matiere = matiere
+    AND id_classe = classe
+    AND id_salle = salle
+    AND id_personne = sonEns;
 END;
 /
 
-create or replace procedure addSalle(idSalle in INTEGER, numSalle in INTEGER ) AS
+create or replace procedure addSalle(idSalle in INTEGER, numSalle in VARCHAR2 ) AS
 BEGIN
     INSERT INTO ob_salle
     VALUES(idSalle, numSalle);
 END;
 /
 
-create or replace procedure addEdt(idEdt in INTEGER) AS
+create or replace procedure addClasse(idClasse in INTEGER, nomClasse in VARCHAR2 ) AS
 BEGIN
-    INSERT INTO ob_salle
-    VALUES(idEdt);
+    INSERT INTO ob_classe
+    VALUES(idClasse, nomClasse);
 END;
 /
 
-create or replace procedure addEtudiant( idEt in INTEGER,nomEt in VARCHAR , prenomEt in VARCHAR , emailPEt in VARCHAR ,saClasse in OB_CLASSE.ID_CLASSE%type , edt in ob_edt%type ) AS
-BEGIN
-    INSERT INTO ob_personne
-    VALUES(idEt, nomPEt, prenomEt, emailEt,'etudiant', saClasse, edt );
-END;
-/
 
-create or replace procedure addEnseignant(idEt in INTEGER,nomEt  in VARCHAR , prenomEt  in VARCHAR ,  emailPEt  in VARCHAR ,saClasse in OB_CLASSE.ID_CLASSE%type, edt in OB_EDT.ID_EDT%type ) AS
+create or replace procedure addEnseignant( idEn in INTEGER, nomEn in VARCHAR , prenomEn in VARCHAR , emailEn in VARCHAR ,idClasse in ob_classe.id_classe%type ) IS
 BEGIN
     INSERT INTO ob_personne
-    VALUES(idEt, nomPEt, prenomEt, emailEt,'enseignant', saClasse, edt);
+    select idEn, nomEn, prenomEn, emailEn,'enseignant', ref(C)
+    from ob_classe C
+    where id_classe = idClasse;
 END;
 /
 
 
-create or replace procedure addConnexion( intCo in INTEGER,login in VARCHAR ,  mdp  in VARCHAR , sonEns in ob_personne%type) AS
+create or replace procedure addEtudiant(idEt in INTEGER,nomEt  in VARCHAR , prenomEt  in VARCHAR ,  emailEt  in VARCHAR ,idClasse in OB_CLASSE.ID_CLASSE%type) AS
+BEGIN
+    INSERT INTO ob_personne
+    select idEt, nomEt, prenomEt, emailEt,'etudiant', REF(C)
+    from ob_classe C
+    where id_classe = idClasse;
+END;
+/
+
+
+create or replace procedure addConnexion( idCo in INTEGER,login in VARCHAR2 ,  mdp  in VARCHAR2 , sonEns in ob_personne.id_personne%type) AS
 BEGIN
     INSERT INTO ob_connexion
-    VALUES(intCo, login, mdp, sonEns);
+    select idCo, login, mdp, REF(E)
+    from ob_personne E
+    where id_personne = sonEns;
 END;
 /
 
-create or replace procedure addPointsBonus(idPointB in INTEGER, descritpion in VARCHAR, sonEtudiant in ob_pointBonus%type) AS
+create or replace procedure addPointsBonus(idPointB in INTEGER, descritpion in VARCHAR2, sonEtudiant in ob_personne.id_personne%type, point in INTEGER) AS
 BEGIN
     INSERT INTO ob_pointBonus
-    VALUES(idPointB, descritpion, sonEtudiant);
+    SELECT idPointB, descritpion, REF(Et), point
+    FROM ob_personne Et
+    WHERE id_personne = sonEtudiant;
 END;
 /
-*/
+
+create or replace procedure addNote(idNote in INTEGER, coeffNote in FLOAT, note in FLOAT, matiere in ob_matiere.id_matiere%type, etudiant in ob_personne.id_personne%type) AS
+BEGIN 
+    INSERT INTO ob_note
+    SELECT idNote, coeffNote, note, REF(M), REF(E)
+    FROM ob_matiere M, ob_personne E
+    WHERE id_matiere = matiere
+    AND id_personne = etudiant;
+END;
+/
+
+
