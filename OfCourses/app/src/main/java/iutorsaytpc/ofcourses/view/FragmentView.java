@@ -47,7 +47,7 @@ public class FragmentView extends LinearLayout {
         listeGroupe.setOnClickListener(controller);
 
         //Affiche le message de bienvenue
-        ((FrameLayout) findViewById(R.id.frameLayoutFragment)).addView(new WelcomeView(getContext()));
+      //  ((FrameLayout) findViewById(R.id.frameLayoutFragment)).addView(new WelcomeView(getContext()));
     }
 
     public static void refreshTexts() {

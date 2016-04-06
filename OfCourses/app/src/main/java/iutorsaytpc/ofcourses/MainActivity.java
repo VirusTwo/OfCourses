@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostResume() {
+        
         //Si la vue active est null alors on affiche la vue connexion, sinon on réaffiche la vue active
         if(currentView==null){
             ConnexionView connexionView = new ConnexionView(this);
