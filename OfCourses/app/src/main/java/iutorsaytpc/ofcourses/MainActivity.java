@@ -59,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onPostResume() {
+        //Update de la toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         //Si la vue active est null alors on affiche la vue connexion, sinon on réaffiche la vue active
         if(currentView==null){
             ConnexionView connexionView = new ConnexionView(this);
