@@ -38,6 +38,7 @@ public class Options_Main extends AppCompatActivity {
     SettingsSingleton settings;
     private Spinner spin1;
     private Spinner spin2;
+    private CheckBox checkBoxNotif;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class Options_Main extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         initialiser();
+        checkBoxNotif = (CheckBox) findViewById(R.id.checkBox4);
 
 
         settings = SettingsSingleton.getInstance();
@@ -60,12 +62,18 @@ public class Options_Main extends AppCompatActivity {
             setLangue();
             settings.boolFalse();
         }
-
+        checkBoxNotif.setChecked(settings.getCheckedNotif());
 
         btnQuitS = (Button) findViewById(R.id.btnQuit);
         btnQuitS.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (checkBoxNotif.isChecked()){
+                    settings.setCheckedNotif(true);
+                }
+                else {
+                    settings.setCheckedNotif(false);
+                }
                 settings.setNomFont(nomFont);
                 settings.setFontSingleton(fontLabel);
                 settings.savedBool();
@@ -132,6 +140,7 @@ public class Options_Main extends AppCompatActivity {
         //getSupportActionBar().setLogo(R.mipmap.logo);
         addListenerToSpinner();
         addItemToSpinner();
+
     }
 
     public void setFont() {
@@ -144,7 +153,6 @@ public class Options_Main extends AppCompatActivity {
         TextView sept = (TextView) findViewById(R.id.textView7);
         TextView huit = (TextView) findViewById(R.id.textView8);
         TextView neuf = (TextView) findViewById(R.id.textView9);
-        CheckBox c4 = (CheckBox) findViewById(R.id.checkBox4);
         CheckBox c2 = (CheckBox) findViewById(R.id.checkBox2);
         CheckBox c3 = (CheckBox) findViewById(R.id.checkBox3);
         CheckBox c = (CheckBox) findViewById(R.id.checkBox);
@@ -164,7 +172,7 @@ public class Options_Main extends AppCompatActivity {
         c.setTypeface(font);
         c2.setTypeface(font);
         c3.setTypeface(font);
-        c4.setTypeface(font);
+        checkBoxNotif.setTypeface(font);
         b.setTypeface(font);
     }
 
@@ -179,7 +187,11 @@ public class Options_Main extends AppCompatActivity {
 
     public class CustomOnItemSelectedListener implements OnItemSelectedListener {
         public void onItemSelected(AdapterView parent, View view, int pos, long id) {
-            Toast.makeText(parent.getContext(), "Choix  : " + pos + parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+            Boolean Checked;
+            Checked = settings.getCheckedNotif();
+            if (Checked == true) {
+                Toast.makeText(parent.getContext(), "Choix  : " + parent.getItemAtPosition(pos).toString(), Toast.LENGTH_SHORT).show();
+            }
             if (parent == findViewById(R.id.spinnerLangue) && pos == 0) {
                 languageToLoad = "fr";
             } else if (parent == findViewById(R.id.spinnerLangue) && pos == 1) {
