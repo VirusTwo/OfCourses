@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
             setViewShowed(currentView);
             //réaffiche le texte des onglets/toolbar
             FragmentView.refreshTexts();
-            ((Button) findViewById(R.id.action_settings)).setText(R.string.action_settings);
         }
         //Si il y a un fragment d'actif, alors on l'affiche dans le ViewFragment
         if(currentFragment!=null)
