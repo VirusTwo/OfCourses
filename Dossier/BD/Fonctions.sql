@@ -25,11 +25,13 @@ create or replace function isLogin(l in ob_connexion.login%type, m in ob_connexi
 /
 
 create or replace function getNomPersonne(id in ob_personne.id_personne%type) return varchar2 is
-  res varchar2;
+  res varchar2(50);
   begin
-    select nom.prenom into res
+    select nom||' '||prenom into res
     from ob_personne
     where id_personne = id;
+    
+    return res;
   end;
 /
 
