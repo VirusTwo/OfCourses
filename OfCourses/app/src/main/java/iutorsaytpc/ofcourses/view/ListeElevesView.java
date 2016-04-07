@@ -247,6 +247,7 @@ public class ListeElevesView extends LinearLayout {
                             ArrayList<Object> notesDS = (ArrayList<Object>) res.get(4);
                             ArrayList<Object> pointBonus = (ArrayList<Object>) res.get(5);
                             StudentRow tmpRow;
+                            System.out.println(notesCC);
 
                             //HEADER
                             String header[] = new String[3 + maxCC + maxDS];
@@ -289,10 +290,16 @@ public class ListeElevesView extends LinearLayout {
                                     cpt += 2;
                                     moyenneDS += note;
                                 }
-                                System.out.println(moyenneDS);
-                                moyenneDS /= maxDS;
-                                System.out.println(moyenneDS);
+                                String lol = "";
+                                String lolid = "";
+                                for(int j = 1; j < notes.length; j+=2) {
+                                    lol += notes[j] + ", ";
+                                    lolid += notes[j - 1];
+                                }
+                                System.out.println(lol);
+                                System.out.println(lolid);
 
+                                moyenneDS /= maxDS;
                                 notes[notes.length - 1] = (moyenneDS * (float) 0.6 + moyenneCC * (float) 0.4);
 
 

@@ -347,14 +347,14 @@ public class BD {
         //Récupération des notes CC/DS pour chaque élève (prendre en compte le nombre de note max pour la suite
         try {
             //Récupération du nombre max de controle CC
-            cst=co.prepareCall(" { ? = call getMaxCC(?, ?) } ");
+            cst=co.prepareCall(" { ? = call getNbNoteMaxCC(?, ?) } ");
             cst.registerOutParameter(1, Types.INTEGER);
             cst.setInt(2, ClasseSingleton.getId());
             cst.setInt(3, MatiereSingleton.getId());
             cst.execute();
             maxCC = cst.getInt(1);
             //Récupération du nombre max de controle DS
-            cst=co.prepareCall(" { ? = call getMaxDS(?, ?) } ");
+            cst=co.prepareCall(" { ? = call getNbNoteMaxDS(?, ?) } ");
             cst.registerOutParameter(1, Types.INTEGER);
             cst.setInt(2, ClasseSingleton.getId());
             cst.setInt(3, MatiereSingleton.getId());
@@ -364,11 +364,12 @@ public class BD {
             //Récupération des notes CC pour chaque eleve
             for (int i = 0; i < students.size(); i+=2) {
                 int id_student = (int) students.get(i);
-                cst = co.prepareCall(" { call getNotesCC(?, ?) } ");
+                cst = co.prepareCall(" { call getNotesCC(?, ?, ?) } ");
                 cst.setInt(1, id_student);
-                cst.registerOutParameter(2, OracleTypes.CURSOR);
+                cst.setInt(2, MatiereSingleton.getId());
+                cst.registerOutParameter(3, OracleTypes.CURSOR);
                 cst.execute();
-                resSet = ((OracleCallableStatement) cst).getCursor(2);
+                resSet = ((OracleCallableStatement) cst).getCursor(3);
                 while (resSet.next()) {
                     notesCC.add(resSet.getInt(1));
                     notesCC.add(resSet.getFloat(2));
@@ -377,11 +378,12 @@ public class BD {
             //Récupération des notes DS pour chaque eleve
             for (int i = 0; i < students.size(); i+=2) {
                 int id_student = (int) students.get(i);
-                cst = co.prepareCall(" { call getNotesDS(?, ?) } ");
+                cst = co.prepareCall(" { call getNotesDS(?, ?, ?) } ");
                 cst.setInt(1, id_student);
-                cst.registerOutParameter(2, OracleTypes.CURSOR);
+                cst.setInt(2, MatiereSingleton.getId());
+                cst.registerOutParameter(3, OracleTypes.CURSOR);
                 cst.execute();
-                resSet = ((OracleCallableStatement) cst).getCursor(2);
+                resSet = ((OracleCallableStatement) cst).getCursor(3);
                 while (resSet.next()) {
                     notesDS.add(resSet.getInt(1));
                     notesDS.add(resSet.getFloat(2));
@@ -391,11 +393,12 @@ public class BD {
             //Récupération des points bonus
             for (int i = 0; i < students.size(); i+=2) {
                 int id_student = (int) students.get(i);
-                cst = co.prepareCall(" { call getPointBonus(?, ?) } ");
+                cst = co.prepareCall(" { call getPointBonus(?, ?, ?) } ");
                 cst.setInt(1, id_student);
-                cst.registerOutParameter(2, OracleTypes.CURSOR);
+                cst.setInt(2, MatiereSingleton.getId());
+                cst.registerOutParameter(3, OracleTypes.CURSOR);
                 cst.execute();
-                resSet = ((OracleCallableStatement) cst).getCursor(2);
+                resSet = ((OracleCallableStatement) cst).getCursor(3);
                 while (resSet.next()) {
                     pointBonus.add(resSet.getInt(1));
                     pointBonus.add(resSet.getString(2));
@@ -410,9 +413,6 @@ public class BD {
         res.add(maxDS);
 
         res.add(students);
-
-        System.out.println(notesCC);
-        System.out.println(notesDS);
 
         res.add(notesCC);
         res.add(notesDS);
@@ -541,10 +541,11 @@ public class BD {
         }
 
         try {
-            cst = co.prepareCall("{ call setPointBonus(?, ?, ?) }");
+            cst = co.prepareCall("{ call setPointBonus(?, ?, ?, ?) }");
             cst.setInt(1, id_personne);
             cst.setInt(2, MatiereSingleton.getId());
             cst.setString(3, description);
+            cst.setInt(4, MatiereSingleton.getId());
             cst.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();

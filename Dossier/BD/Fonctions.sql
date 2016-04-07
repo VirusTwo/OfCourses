@@ -1,4 +1,4 @@
-create or replace function getNomClasse(id in ob_personne.id_personne%type) return ob_classe.nom%type is
+ create or replace function getNomClasse(id in ob_personne.id_personne%type) return ob_classe.nom%type is
   res ob_classe.nom%type;
   begin
     select (deref(saClasse)).nom into res
@@ -73,12 +73,13 @@ create or replace procedure getStudentFromClass(id in ob_classe.id_classe%type, 
   end;
 /
 
-create or replace procedure getPointBonus(id in ob_personne.id_personne%type, res out sys_refcursor) as
+create or replace procedure getPointBonus(id in ob_personne.id_personne%type, id_m in ob_matiere.id_matiere%type, res out sys_refcursor) as
   begin
     open res for
       select point, description
       from ob_pointBonus B
-      where (deref(B.sonEtudiant)).id_personne = id;
+      where (deref(B.sonEtudiant)).id_personne = id
+      and (deref(saMatiere)).id_matiere = id_m;
   end;
 /
 
@@ -122,7 +123,7 @@ create or replace procedure addCC(id_c in ob_classe.id_classe%type, id_m in ob_m
     and fonction = 'etudiant';
   begin
   idNoteMax := getIdNoteMax;
-  nbCC := getMaxCC(id_c, id_m);
+  nbCC := getNbNoteMaxCC(id_c, id_m);
   OPEN id_student;
     LOOP
       FETCH id_student INTO id;
@@ -149,7 +150,7 @@ create or replace procedure addDS(id_c in ob_classe.id_classe%type, id_m in ob_m
     and fonction = 'etudiant';
   begin
   idNoteMax := getIdNoteMax;
-  nbDS := getMaxDS(id_c, id_m);
+  nbDS := getNbNoteMaxDS(id_c, id_m);
   OPEN id_student;
     LOOP
       FETCH id_student INTO id;
@@ -174,31 +175,36 @@ create or replace function getIdNoteMax return integer is
   end;
 /
 
-create or replace procedure getNotesDS(id in ob_personne.id_personne%type, res out sys_refcursor) as
+create or replace procedure getNotesDS(id in ob_personne.id_personne%type, id_m in ob_matiere.id_matiere%type, res out sys_refcursor) as
   begin
     open res for
       select id_note, note, type
       from ob_note N
       where (deref(N.sonEtudiant)).id_personne = id
-      and REGEXP_LIKE (N.type, '^DS(*)');
+      and REGEXP_LIKE (N.type, '^DS(*)')
+      and (deref(saMatiere)).id_matiere = id_m
+      order by id_note;
       end;
 /
 
-create or replace procedure getNotesCC(id in ob_personne.id_personne%type, res out sys_refcursor) as
+create or replace procedure getNotesCC(id in ob_personne.id_personne%type, id_m in ob_matiere.id_matiere%type, res out sys_refcursor) as
   begin
     open res for
       select id_note, note, type
       from ob_note N
       where (deref(N.sonEtudiant)).id_personne = id
-      and REGEXP_LIKE (N.type, '^CC(*)');
+      and REGEXP_LIKE (N.type, '^CC(*)')
+      and (deref(saMatiere)).id_matiere = id_m
+      order by id_note;
       end;
 /
 
-create or replace procedure setPointBonus(id_p in ob_personne.id_personne%type, po in ob_pointBonus.id_pointBonus%type, descr in ob_pointBonus.description%type) as
+create or replace procedure setPointBonus(id_p in ob_personne.id_personne%type, po in ob_pointBonus.id_pointBonus%type, descr in ob_pointBonus.description%type, id_m in ob_matiere.id_matiere%type) as
   begin
     Update ob_pointBonus
     set point = po, description = descr
-    where (deref(sonEtudiant)).id_personne = id_p;
+    where (deref(sonEtudiant)).id_personne = id_p
+    and (deref(saMatiere)).id_matiere = id_m;
   end;
 /
 
@@ -212,33 +218,49 @@ create or replace procedure setNote(id_n in ob_note.id_note%type, n in ob_note.n
 
 create or replace function getNbNoteMaxCC(idClasse in ob_classe.id_classe%type, idMatiere in ob_matiere.id_matiere%type) return integer is
   res integer;
-  begin
-    select MAX(COUNT(id_note)) into res
+  id integer;
+  cursor curseur is 
+    select COUNT(*) into res
     from ob_personne P, ob_note N
     where (deref(P.saClasse)).id_classe = idClasse
     and (deref(N.saMatiere)).id_matiere = idMatiere
     and (deref(N.sonEtudiant)).id_personne = P.id_personne
     and REGEXP_LIKE (N.type, '^CC(*)')
-    and fonction = 'etudiant'
     group by id_note;
-    DBMS_OUTPUT.PUT_LINE(res); 
-    return res;
+  begin
+    res := 0;
+    OPEN curseur;
+    LOOP
+      FETCH curseur INTO id;
+      EXIT WHEN curseur%NOTFOUND;
+      res := res + 1;
+    END loop;
+    close curseur;
+    return res / 2;
   end;
 /
 
 create or replace function getNbNoteMaxDS(idClasse in ob_classe.id_classe%type, idMatiere in ob_matiere.id_matiere%type) return integer is
   res integer;
-  begin
-    select MAX(COUNT(id_note)) into res
+  id integer;
+  cursor curseur is 
+    select COUNT(*) into res
     from ob_personne P, ob_note N
     where (deref(P.saClasse)).id_classe = idClasse
     and (deref(N.saMatiere)).id_matiere = idMatiere
     and (deref(N.sonEtudiant)).id_personne = P.id_personne
-    and fonction = 'etudiant'
     and REGEXP_LIKE (N.type, '^DS(*)')
     group by id_note;
-    
-    return res;
+  begin
+    res := 0;
+    OPEN curseur;
+    LOOP
+      FETCH curseur INTO id;
+      EXIT WHEN curseur%NOTFOUND;
+      res := res + 1;
+    END loop;
+    close curseur;
+    return res / 2;
   end;
 /
 
@@ -249,7 +271,8 @@ create or replace procedure getNotesFromEtudiant(idPersonne in ob_personne.id_pe
       from ob_note N, ob_pointBonus P
       where (deref(N.saMatiere)).id_matiere = idMatiere
       and (deref(N.sonEtudiant)).id_personne = idPersonne
-      and (deref(P.sonEtudiant)).id_personne = idPersonne;
+      and (deref(P.sonEtudiant)).id_personne = idPersonne
+      and (deref(P.saMatiere)).id_matiere = idMatiere;
   end;
 /
 
