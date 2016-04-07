@@ -79,6 +79,30 @@ FROM ob_matiere M, ob_personne E
 WHERE id_matiere = 1
 AND id_personne = 3;
 
+INSERT INTO ob_note
+SELECT 5, 1, 3, 'DS1', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 2
+AND id_personne = 2;
+
+INSERT INTO ob_note
+SELECT 6, 1, 3, 'DS1', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 2
+AND id_personne = 3;
+
+INSERT INTO ob_note
+SELECT 7, 1, 3.5, 'CC1', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 2
+AND id_personne = 2;
+
+INSERT INTO ob_note
+SELECT 8, 1, 3.5, 'CC1', ref(M), ref(E)
+FROM ob_matiere M, ob_personne E
+WHERE id_matiere = 2
+AND id_personne = 3;
+
 INSERT INTO ob_pointBonus
 SELECT 1, '', ref(E), -1, ref(M)
 FROM ob_personne E, ob_matiere M
@@ -90,5 +114,17 @@ SELECT 2, 'abc', ref(E), 5, ref(M)
 FROM ob_personne E, ob_matiere M
 WHERE id_personne = 3
 and id_matiere = 1;
+
+INSERT INTO ob_pointBonus
+SELECT 3, 'ptdr', ref(E), -1, ref(M)
+FROM ob_personne E, ob_matiere M
+WHERE id_personne = 2
+and id_matiere = 2;
+
+INSERT INTO ob_pointBonus
+SELECT 4, 'lol mdr', ref(E), 5, ref(M)
+FROM ob_personne E, ob_matiere M
+WHERE id_personne = 3
+and id_matiere = 2;
 
 COMMIT;
