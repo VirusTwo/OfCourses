@@ -49,11 +49,11 @@
     <string name="checkBox2">Orange</string>
     <string name="checkBox3">Bleu</string>
     <string name="checkBox4">Activer les notifications</string>
-    <string name="lblJeudi">Jeudi</string>
-    <string name="lblLundi">Lundi</string>
-    <string name="lblMardi">Mardi</string>
-    <string name="lblMercredi">Mercredi</string>
-    <string name="lblVendredi">Vendredi</string>
+    <string name="lblJeudi">Jeu</string>
+    <string name="lblLundi">Lun</string>
+    <string name="lblMardi">Mar</string>
+    <string name="lblMercredi">Mer</string>
+    <string name="lblVendredi">Ven</string>
     <string name="hello_world">null</string>
     <string name="scheduler">Emplois du temps</string>
     <string name="Groupe4CIUTOrsay">Groupe 4C : IUT Orsay</string>

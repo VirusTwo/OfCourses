@@ -28,11 +28,11 @@
     <string name="textView8">English</string>
     <string name="textView9">Actual font :</string>
 
-    <string name="lblLundi">Monday</string>
-    <string name="lblMardi">Tuesday</string>
-    <string name="lblMercredi">Wednesday</string>
-    <string name="lblJeudi">Thursay</string>
-    <string name="lblVendredi">Friday</string>
+    <string name="lblLundi">Mon</string>
+    <string name="lblMardi">Tue</string>
+    <string name="lblMercredi">Wed</string>
+    <string name="lblJeudi">Thu</string>
+    <string name="lblVendredi">Fri</string>
     <string name="absence">Absence :</string>
     <string name="section_format">null</string>
     <string name="tp">TP :</string>

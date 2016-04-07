@@ -16,11 +16,11 @@
     <string name="textView7">Notifications</string>
     <string name="textView8">Français</string>
     <string name="textView9">Police actuelle :</string>
-    <string name="lblLundi">Lundi</string>
-    <string name="lblMardi">Mardi</string>
-    <string name="lblMercredi">Mercredi</string>
-    <string name="lblJeudi">Jeudi</string>
-    <string name="lblVendredi">Vendredi</string>
+    <string name="lblLundi">Lun</string>
+    <string name="lblMardi">Mar</string>
+    <string name="lblMercredi">Mer</string>
+    <string name="lblJeudi">Jeu</string>
+    <string name="lblVendredi">Ven</string>
     <string name="absence">Absence :</string>
     <string name="action_sign_in">Se connecter ou s\'enregistrer</string>
     <string name="categories_evaluation">Catégories d\'évaluation :</string>

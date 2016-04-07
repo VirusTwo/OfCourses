@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static View currentView;
     private static View currentFragment;
     private boolean connected = false;
+    private static boolean attachedFragment = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,17 +149,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void detachLoadingFragment() {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-        fragmentTransaction.remove(loadingFragment);
-        fragmentTransaction.commit();
+        if(attachedFragment) {
+            fragmentTransaction = fragmentManager.beginTransaction();
+            //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            fragmentTransaction.remove(loadingFragment);
+            fragmentTransaction.commit();
+            attachedFragment = false;
+        }
     }
 
     public static void attachLoadingFragment() {
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        fragmentTransaction.add(R.id.layoutParent, loadingFragment);
-        fragmentTransaction.commit();
+        if(!attachedFragment){
+            attachedFragment = true;
+            fragmentTransaction = fragmentManager.beginTransaction();
+            //fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            fragmentTransaction.add(R.id.layoutParent, loadingFragment);
+            fragmentTransaction.commit();
+        }
     }
 
     public static boolean isLoadingFragmentAdded() {
