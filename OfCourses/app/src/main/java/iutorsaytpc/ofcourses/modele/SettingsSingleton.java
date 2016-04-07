@@ -20,6 +20,7 @@ public class SettingsSingleton {
     private int selectionLangue;
     private int selectionFont;
     private boolean settingsHasChanged = false;
+    private boolean CheckedNotif = true;
     static {
         ourInstance = new SettingsSingleton();
     }
@@ -42,6 +43,12 @@ public class SettingsSingleton {
         return Typeface.createFromAsset(a.getAssets(), "fonts/" + this.font);
     }
 
+    public void setCheckedNotif (Boolean b){
+        this.CheckedNotif = b;
+    }
+    public Boolean getCheckedNotif(){
+        return this.CheckedNotif;
+    }
     public void setFontSingleton(String f) {
         this.font = f;
     }
