@@ -20,7 +20,7 @@ INSERT INTO ob_classe
 VALUES(1, '3C');
 
 INSERT INTO ob_personne
-SELECT 1, 'MARTINEZ', 'Guizmo', 'guizmo@mail.fr', 'enseignant', ref(Cl)
+SELECT 1, 'LAMERE', 'Simon', 'guizmo@mail.fr', 'enseignant', ref(Cl)
 FROM ob_classe Cl
 WHERE Cl.id_classe = 1;
 
@@ -35,7 +35,7 @@ FROM ob_classe Cl
 WHERE Cl.id_classe = 1;
 
 INSERT INTO ob_connexion
-SELECT 1,'a', 'a', ref(E)
+SELECT 1,'lamere', 'simon', ref(E)
 FROM ob_personne E
 WHERE id_personne = 1;
 
@@ -54,6 +54,7 @@ WHERE M.id_matiere = 2
 AND C.id_classe = 1
 AND S.id_salle = 1
 AND E.id_personne = 1;
+
 
 INSERT INTO ob_note
 SELECT 1, 1, 20, 'CC1', ref(M), ref(E)
